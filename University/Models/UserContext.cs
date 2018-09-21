@@ -10,7 +10,7 @@ namespace University.Models
 {
     public class UserContext : DbContext
     {
-        public UserContext():base("DBConext")
+        public UserContext():base("DBContext")
         { }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }

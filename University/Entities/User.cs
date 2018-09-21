@@ -24,22 +24,20 @@ namespace University.Entities
        // [Compare("Password", ErrorMessage = "Confirm your Password")]
         //public string ConfirmPassword { get; set; }
         public string Hobbies { get; set; }
-      public int CountryId { get; set; }
-        public int StateId { get; set; }
-        public int CityId { get; set; }
-        public int ZipCode { get; set; }
-
+       
         public int CourseId { get; set; }
      
         public int RoleId { get; set; }
         public bool IsActive { get; set; }
          public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
-        [DisplayName("Role")]
+       
         public ICollection<Role>Roles { get; set; }
         public ICollection<Course> courses{ get; set; }
 
 
-
+        public virtual Address Addresses { get; set; }
+        public ICollection<Course> Courses { get; set; }
+        public ICollection<Role> Roles { get; set; }
     }
 }

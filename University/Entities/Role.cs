@@ -15,5 +15,7 @@ namespace University.Entities
         [Required]
         [MaxLength(255)]
         public string RoleName { get; set; }
+
+        public ICollection<UserInRole> UserInRole { get; set; }
     }
 }

@@ -10,11 +10,15 @@ namespace University.Entities
     [Table(" TeacherInSubject")]
     public class TeacherInSubject
     {
-        [Required]
-        [Key, Column(Order = 1)]
+      
+        [Key]
+        public int Id { get; set; }
+        [ForeignKey("User Id")]
+
         public int UserId { get; set; }
-        [Required]
-        [Key, Column(Order = 2)]
+        [ForeignKey("Subject Id")]
         public int SubjectId { get; set; }
+        public ICollection<Subject> Subjects { get; set; }
+        public virtual User Users { get; set; }
     }
 }

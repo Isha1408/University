@@ -10,11 +10,18 @@ namespace University.Entities
     [Table(" SubjectInCourse")]
     public class SubjectInCourse
     {
-        [Required]
-        [Key, Column(Order = 1)]
+      
+        [Key]
+    
+        public int Id { get; set; }
+
+        [ForeignKey("Subject Id")]
         public int SubjectId { get; set; }
-        [Required]
-        [Key, Column(Order = 2)]
-        public int CourseId{ get; set; }
+
+        [ForeignKey("Course Id")]
+        public int CourseId { get; set; }
+
+    public ICollection<Course> Courses { get; set; }
+    public ICollection<Subject> Subjects { get; set; }
     }
 }

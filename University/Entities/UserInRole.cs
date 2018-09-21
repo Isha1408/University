@@ -4,18 +4,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
 namespace University.Entities
 {
     [Table(" UserInRole")]
     public class UserInRole
     {
-
-        [Required]
-        [Key, Column(Order = 1)]
+      
+        [Key]
+        public int Id { get; set; }
+      
+        
         public int RoleId { get; set; }
-        [Required]
-        [Key, Column(Order = 2)]
+      
+      
         public string UserId { get; set; }
+        public  virtual Role Roles { get; set; }
+        public virtual User Users{ get; set; }
     }
-}
+} 
