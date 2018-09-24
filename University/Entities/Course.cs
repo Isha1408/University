@@ -15,5 +15,7 @@ namespace University.Entities
         [Required]
         [MaxLength(255)]
         public string CourseName { get; set; }
+        public virtual  ICollection<User> Users { get; set; }
+        public virtual ICollection<SubjectInCourse> SubjectInCourses { get; set; }
     }
 }

@@ -13,12 +13,13 @@ namespace University.Entities
       
         [Key]
         public int Id { get; set; }
-        [ForeignKey("User Id")]
+        //[ForeignKey("User Id")]
 
         public int UserId { get; set; }
-        [ForeignKey("Subject Id")]
+
+       // [ForeignKey("Subject Id")]
         public int SubjectId { get; set; }
-        public ICollection<Subject> Subjects { get; set; }
-        public virtual User Users { get; set; }
+        public virtual Subject Subject { get; set; }
+        public virtual User User { get; set; }
     }
 }

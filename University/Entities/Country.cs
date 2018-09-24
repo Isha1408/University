@@ -15,5 +15,7 @@ namespace University.Entities
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
+        public ICollection<Address> Addresses { get; set; }
+        public ICollection<State> States { get; set; }
     }
 }

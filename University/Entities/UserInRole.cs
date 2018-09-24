@@ -14,13 +14,14 @@ namespace University.Entities
       
         [Key]
         public int Id { get; set; }
-      
-        
+
+        //[ForeignKey("Role Id")]
         public int RoleId { get; set; }
-      
-      
+        public virtual Role Role { get; set; }
+
+       // [ForeignKey("User Id")]
         public string UserId { get; set; }
-        public  virtual Role Roles { get; set; }
-        public virtual User Users{ get; set; }
+      
+        public virtual User User{ get; set; }
     }
 } 

@@ -11,19 +11,27 @@ namespace University.Entities
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("User Id")]
+ 
         public int UserId { get; set; }
-        [ForeignKey("Country Id")]
-        public int CountryId { get; set; }
-        [ForeignKey("State Id")]
-        public int StateId { get; set; }
-        [ForeignKey("City Id")]
-        public int CityId { get; set; }   
-        public int ZipCode { get; set; }
+       // [ForeignKey("User Id")]
         public virtual User Users { get; set; }
-        public ICollection<Country> Country { get; set; }
-        public ICollection<State> States{ get; set; }
-        public ICollection<City>Cities { get; set; }
+     
+        public int CountryId { get; set; }
+      //  [ForeignKey("Country Id")]
+        public virtual Country Country { get; set; }
+       
+        public int StateId { get; set; }
+       // [ForeignKey("State Id")]
+        public virtual State State { get; set; }
+        
+        public int CityId { get; set; }
+        //[ForeignKey("City Id")]
+        public virtual City City { get; set; }
+        public int ZipCode { get; set; }
+  
+       
+     
+       
 
     }
 }

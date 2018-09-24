@@ -21,23 +21,25 @@ namespace University.Entities
         public bool IsVerified { get; set; }
         public string Password { get; set; }
         //[DataType(DataType.Password)]
-       // [Compare("Password", ErrorMessage = "Confirm your Password")]
+        // [Compare("Password", ErrorMessage = "Confirm your Password")]
         //public string ConfirmPassword { get; set; }
         public string Hobbies { get; set; }
-       
-        public int CourseId { get; set; }
-     
-        public int RoleId { get; set; }
         public bool IsActive { get; set; }
-         public DateTime DateCreated { get; set; }
-        public DateTime DateModified { get; set; }
+      
        
-        public ICollection<Role>Roles { get; set; }
-        public ICollection<Course> courses{ get; set; }
+        public int RoleId { get; set; }
+        //[ForeignKey("Role Id")]
+        public virtual Role Role { get; set; }
+      
+        public int CourseId { get; set; }
+        //[ForeignKey("Course Id")]
+        public virtual Course course { get; set; }
+        public virtual ICollection< Address> Address { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
+        public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
+        public virtual ICollection<UserInRole> UserInRoles{ get; set; }
 
 
-        public virtual Address Addresses { get; set; }
-        public ICollection<Course> Courses { get; set; }
-        public ICollection<Role> Roles { get; set; }
     }
 }

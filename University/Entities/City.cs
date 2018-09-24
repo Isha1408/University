@@ -15,5 +15,11 @@ namespace University.Entities
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
+        public int StateId { get; set; }
+        //[ForeignKey("State Id")]
+        public virtual State State { get; set; }
+
+        public ICollection<Address> Addresses { get; set; }
+
     }
 }

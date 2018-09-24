@@ -10,18 +10,19 @@ namespace University.Entities
     [Table(" SubjectInCourse")]
     public class SubjectInCourse
     {
-      
+
         [Key]
-    
+
         public int Id { get; set; }
 
-        [ForeignKey("Subject Id")]
+        // [ForeignKey("Subject Id")]
         public int SubjectId { get; set; }
+        public virtual Subject Subject { get; set; }
 
-        [ForeignKey("Course Id")]
+        //[ForeignKey("Course Id")]
         public int CourseId { get; set; }
 
-    public ICollection<Course> Courses { get; set; }
-    public ICollection<Subject> Subjects { get; set; }
+        public virtual Course Course { get; set; }
+
     }
 }
