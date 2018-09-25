@@ -8,8 +8,12 @@ using System.Web;
 namespace University.Entities
 {
     [Table("City")]
-    public class City
+    public partial class City
     {
+        public City()
+        {
+            this.Addresses = new HashSet<Address>();
+        }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CityId { get; set; }
         [Required]
@@ -20,6 +24,7 @@ namespace University.Entities
         public virtual State State { get; set; }
 
         public ICollection<Address> Addresses { get; set; }
+        public bool IsActive { get; set; }
 
     }
 }

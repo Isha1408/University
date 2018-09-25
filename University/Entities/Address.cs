@@ -19,11 +19,11 @@ namespace University.Entities
         public int CountryId { get; set; }
       //  [ForeignKey("Country Id")]
         public virtual Country Country { get; set; }
-       
+
         public int StateId { get; set; }
-       // [ForeignKey("State Id")]
+        // [ForeignKey("State Id")]
         public virtual State State { get; set; }
-        
+
         public int CityId { get; set; }
         //[ForeignKey("City Id")]
         public virtual City City { get; set; }

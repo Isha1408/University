@@ -10,12 +10,13 @@ namespace University.Entities
     [Table("State")]
     public  class State
     {
-        //public State()
-        //{
-
-        //}
+        public State()
+        {
+            this.Addresses = new HashSet<Address>();
+            this.Cities = new HashSet<City>();
+        }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int StateId { get; set; }
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
@@ -24,5 +25,6 @@ namespace University.Entities
         public virtual Country Country{ get; set; }
         public ICollection<Address> Addresses { get; set; }
         public ICollection<City> Cities { get; set; }
+        public bool IsActive { get; set; }
     }
 }

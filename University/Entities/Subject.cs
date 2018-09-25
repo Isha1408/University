@@ -19,5 +19,6 @@ namespace University.Entities
         public string Name { get; set; }
         public virtual ICollection< SubjectInCourse> SubjectInCourses { get; set; }
         public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
+        public bool IsActive { get; set; }
     }
 }

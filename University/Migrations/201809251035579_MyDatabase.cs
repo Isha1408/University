@@ -3,7 +3,7 @@ namespace University.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class MyDataBase : DbMigration
+    public partial class MyDatabase : DbMigration
     {
         public override void Up()
         {
@@ -14,9 +14,10 @@ namespace University.Migrations
                         CityId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 255),
                         StateId = c.Int(nullable: false),
+                        IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.CityId)
-                .ForeignKey("dbo.State", t => t.StateId, cascadeDelete: true)
+                .ForeignKey("dbo.State", t => t.StateId, cascadeDelete: false)//changes done
                 .Index(t => t.StateId);
             
             CreateTable(
@@ -46,6 +47,7 @@ namespace University.Migrations
                     {
                         CountryId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 255),
+                        IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.CountryId);
             
@@ -56,9 +58,10 @@ namespace University.Migrations
                         StateId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 255),
                         CountryId = c.Int(nullable: false),
+                        IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.StateId)
-                .ForeignKey("dbo.Country", t => t.CountryId, cascadeDelete: true)
+                .ForeignKey("dbo.Country", t => t.CountryId, cascadeDelete: false)//changes done
                 .Index(t => t.CountryId);
             
             CreateTable(
@@ -115,6 +118,7 @@ namespace University.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 255),
+                        IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -138,6 +142,7 @@ namespace University.Migrations
                     {
                         RoleId = c.Int(nullable: false, identity: true),
                         RoleName = c.String(nullable: false, maxLength: 255),
+                        IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.RoleId);
             
