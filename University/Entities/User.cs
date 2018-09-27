@@ -31,20 +31,23 @@ namespace University.Entities
         public string ConfirmPassword { get; set; }
         public string Hobbies { get; set; }
         public bool IsActive { get; set; }
-      
-       
+
+       public virtual Address Address { get; set; }
         public int RoleId { get; set; }
-        //[ForeignKey("Role Id")]
+        [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }
       
-        public int CourseId { get; set; }
-        //[ForeignKey("Course Id")]
+       public int CourseId { get; set; }
+       [ForeignKey("CourseId")]
         public virtual Course course { get; set; }
-        public virtual ICollection< Address> Address { get; set; }
+       
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
         public virtual ICollection<UserInRole> UserInRoles{ get; set; }
+        //custom attributes
+       // public string RoleName { get; set; }
+       // public string CourseName { get; set; }
 
 
     }

@@ -15,9 +15,17 @@ namespace University.Controllers
         {
             return View();
         }
-
+        // Get :User
         public ActionResult Registration()
         {
+            using (UserContext db = new UserContext())
+            {
+                List<Role> list = db.Roles.ToList();
+                ViewBag.RoleList = new SelectList(list, "RoleId", "RoleName");
+                List<Course> courseList = db.Courses.ToList();
+                ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
+
+            }
             return View();
         }
         [HttpPost]
@@ -27,14 +35,44 @@ namespace University.Controllers
             {
                 using (UserContext db = new UserContext())
                 {
-                    db.Users.Add(user);
+
+                    List<Role> list = db.Roles.ToList();
+                    ViewBag.RoleList = new SelectList(list, "RoleId", "RoleName");
+                    List<Course> courseList = db.Courses.ToList();
+                    ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
+
+                    User obj = new User();
+                    obj.UserId = user.UserId;
+                    obj.FirstName = user.FirstName;
+                    obj.LastName = user.LastName;
+                    obj.Gender = user.Gender;
+                    obj.Hobbies = user.Hobbies;
+                    obj.Password = user.Password;
+                    obj.ConfirmPassword = user.ConfirmPassword;
+                    obj.IsVerified = user.IsVerified;
+                    obj.Email = user.Email;
+                    obj.DateOfBirth = user.DateOfBirth;
+                    obj.DateCreated = user.DateCreated;
+                    obj.DateModified = user.DateModified;
+
+                    obj.RoleId = user.RoleId;
+                    obj.CourseId = user.CourseId;
+                    obj.Address = user.Address;
+                    obj.IsActive = user.IsActive;
+
+                    db.Users.Add(obj);
+                    db.SaveChanges();
+
+                    int latestUserId = obj.UserId;
+                    UserInRole userInRole = new UserInRole();
+                    userInRole.RoleId = user.RoleId;
+                    userInRole.UserId = latestUserId;
+                    db.UserInRoles.Add(userInRole);
                     db.SaveChanges();
                 }
-                ModelState.Clear();
-              //  ViewBag.Message = user.FirstName + "" + user.LastName + "" + user.EmailId + "" + user.Gender + "" + user.Password + "" + user.ConfirmPassword + "" + user.Roles + "" + user.UserId + "" + user.UserName + "" + user.Courses + "Succesfully Registered.";
-
             }
-            return View();
+            return View(user);
+
         }
 
 

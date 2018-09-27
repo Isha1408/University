@@ -17,9 +17,14 @@ namespace University.Entities
         }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CountryId { get; set; }
+
+
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
+
+
+
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection< State> States { get; set; }
         public bool IsActive { get; set; }

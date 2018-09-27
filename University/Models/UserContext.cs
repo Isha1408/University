@@ -12,30 +12,10 @@ namespace University.Models
     {
         public UserContext():base("DBContext")
         { }
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //   // modelBuilder.Entity<State>().** HasOptional **(x => x.Country).WithMany(e => e.States);
-        //    throw new UnintentionalCodeFirstException();
-        //}
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    // configures one-to-many relationship
-        //    modelBuilder.Entity<State>()
-        //        .HasRequired<Country>(s => s.Id)
-        //        .WithMany(g => g.States)
-        //        .HasForeignKey<int>(s => s.Id);
-        //}
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    configures one-to - many relationship
-        //    modelBuilder.Entity<Address>()
-        //        .HasRequired<State>(s => s.Id)
-        //        .WithMany(g => g.Addresses)
-        //        .HasForeignKey<int>(s => s.StateId);
-        //}
+        
     
     public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserInRole> UserInRoles { get; set; }
         public virtual DbSet<Country> Country { get; set; }
@@ -46,5 +26,6 @@ namespace University.Models
         public virtual DbSet<SubjectInCourse> SubjectInCourses { get; set; }
         public virtual DbSet<TeacherInSubject> TeacherInSubjects { get; set; }
 
+      
     }
 }

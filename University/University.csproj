@@ -159,7 +159,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Entities\Address.cs" />
@@ -173,14 +172,12 @@
     <Compile Include="Entities\TeacherInSubject.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserInRole.cs" />
-    <Compile Include="Extensions\ICollectionExtensions.cs" />
-    <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201809251035579_MyDatabase.cs" />
-    <Compile Include="Migrations\201809251035579_MyDatabase.Designer.cs">
-      <DependentUpon>201809251035579_MyDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201809270925531_MyDB.cs" />
+    <Compile Include="Migrations\201809270925531_MyDB.Designer.cs">
+      <DependentUpon>201809270925531_MyDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\UserContext.cs" />
@@ -229,6 +226,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />
+    <Content Include="Views\Shared\BackTolistButtonPartial.cshtml" />
+    <Content Include="Views\Shared\CreateButtonPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -248,8 +247,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201809251035579_MyDatabase.resx">
-      <DependentUpon>201809251035579_MyDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201809270925531_MyDB.resx">
+      <DependentUpon>201809270925531_MyDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,12 +16,18 @@ namespace University.Entities
         }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CityId { get; set; }
+
+
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
-        public int StateId { get; set; }
-        //[ForeignKey("State Id")]
+
+
+       public int StateId { get; set; }
+       [ForeignKey("StateId")]
         public virtual State State { get; set; }
+
+
 
         public ICollection<Address> Addresses { get; set; }
         public bool IsActive { get; set; }

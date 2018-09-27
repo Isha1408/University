@@ -12,9 +12,14 @@ namespace University.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CourseId { get; set; }
+
+
+
         [Required]
         [MaxLength(255)]
         public string CourseName { get; set; }
+
+
         public bool IsActive { get; set; }
         public virtual  ICollection<User> Users { get; set; }
         public virtual ICollection<SubjectInCourse> SubjectInCourses { get; set; }

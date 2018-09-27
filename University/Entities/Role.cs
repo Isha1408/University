@@ -12,11 +12,13 @@ namespace University.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RoleId { get; set; }
+
+
         [Required]
         [MaxLength(255)]
         public string RoleName { get; set; }
 
-        public virtual  ICollection<UserInRole> UserInRole { get; set; }
+     
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<UserInRole> UserInRoles { get; set; }
         public bool IsActive { get; set; }

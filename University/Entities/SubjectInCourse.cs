@@ -14,15 +14,16 @@ namespace University.Entities
         [Key]
 
         public int Id { get; set; }
-
-        // [ForeignKey("Subject Id")]
         public int SubjectId { get; set; }
+        [ForeignKey("SubjectId")]
+        
         public virtual Subject Subject { get; set; }
 
-        //[ForeignKey("Course Id")]
-        public int CourseId { get; set; }
+       
+       public int CourseId { get; set; }
+       [ForeignKey("CourseId")]
 
-        public virtual Course Course { get; set; }
+       public virtual Course Course { get; set; }
 
     }
 }
