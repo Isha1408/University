@@ -10,7 +10,8 @@ namespace University.Entities
     public class Address
     {
         [Key]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int AddressId { get; set; }
 
 
         public string AddressLine1 { get; set; }

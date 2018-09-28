@@ -13,7 +13,7 @@ namespace University.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201809270925531_MyDB"; }
+            get { return "201809280706337_MyDB"; }
         }
         
         string IMigrationMetadata.Source

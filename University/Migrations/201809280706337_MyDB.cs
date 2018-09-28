@@ -11,7 +11,7 @@ namespace University.Migrations
                 "dbo.Addresses",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        AddressId = c.Int(nullable: false, identity: true),
                         AddressLine1 = c.String(),
                         AddressLine2 = c.String(),
                         CountryId = c.Int(nullable: false),
@@ -19,7 +19,7 @@ namespace University.Migrations
                         CityId = c.Int(nullable: false),
                         ZipCode = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.AddressId)
                 .ForeignKey("dbo.City", t => t.CityId, cascadeDelete: true)
                 .ForeignKey("dbo.State", t => t.StateId, cascadeDelete: true)
                 .ForeignKey("dbo.Country", t => t.CountryId, cascadeDelete: true)
@@ -78,19 +78,19 @@ namespace University.Migrations
                         ConfirmPassword = c.String(),
                         Hobbies = c.String(),
                         IsActive = c.Boolean(nullable: false),
+                        AddressId = c.Int(nullable: false),
                         RoleId = c.Int(nullable: false),
                         CourseId = c.Int(nullable: false),
                         DateCreated = c.DateTime(nullable: false),
                         DateModified = c.DateTime(nullable: false),
-                        Address_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.Addresses", t => t.Address_Id)
+                .ForeignKey("dbo.Addresses", t => t.AddressId, cascadeDelete: true)
                 .ForeignKey("dbo.Course", t => t.CourseId, cascadeDelete: true)
                 .ForeignKey("dbo.Role", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.AddressId)
                 .Index(t => t.RoleId)
-                .Index(t => t.CourseId)
-                .Index(t => t.Address_Id);
+                .Index(t => t.CourseId);
             
             CreateTable(
                 "dbo.Course",
@@ -176,7 +176,7 @@ namespace University.Migrations
             DropForeignKey("dbo.TeacherInSubject", "SubjectId", "dbo.Subject");
             DropForeignKey("dbo.SubjectInCourse", "SubjectId", "dbo.Subject");
             DropForeignKey("dbo.SubjectInCourse", "CourseId", "dbo.Course");
-            DropForeignKey("dbo.User", "Address_Id", "dbo.Addresses");
+            DropForeignKey("dbo.User", "AddressId", "dbo.Addresses");
             DropForeignKey("dbo.State", "CountryId", "dbo.Country");
             DropForeignKey("dbo.Addresses", "CountryId", "dbo.Country");
             DropForeignKey("dbo.City", "StateId", "dbo.State");
@@ -188,9 +188,9 @@ namespace University.Migrations
             DropIndex("dbo.TeacherInSubject", new[] { "UserId" });
             DropIndex("dbo.SubjectInCourse", new[] { "CourseId" });
             DropIndex("dbo.SubjectInCourse", new[] { "SubjectId" });
-            DropIndex("dbo.User", new[] { "Address_Id" });
             DropIndex("dbo.User", new[] { "CourseId" });
             DropIndex("dbo.User", new[] { "RoleId" });
+            DropIndex("dbo.User", new[] { "AddressId" });
             DropIndex("dbo.State", new[] { "CountryId" });
             DropIndex("dbo.City", new[] { "StateId" });
             DropIndex("dbo.Addresses", new[] { "CityId" });
