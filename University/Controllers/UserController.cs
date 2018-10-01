@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,23 +24,23 @@ namespace University.Controllers
         {
             using (UserContext db = new UserContext())
             {
-                 List<Role> roleList = GetRoles();
+                List<Role> roleList = GetRoles();
                 //List<Role> list = db.Roles.ToList();
                 ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
                 List<Course> courseList = db.Courses.ToList();
                 ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
-                List<Country> countryList = db.Country.ToList();
-                ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-                int k = ViewBag.CountryList;
-                List<State> stateList = GetStates(k);
-               ViewBag.StateList = new SelectList(stateList, "StateId", "StateName");
-               List<City> cityList = GetCity(ViewBag.StateList.StateId);
-               ViewBag.CityList = new SelectList(cityList, "CityId", "CityName");
-
+                //List<Country> countryList = db.Country.ToList();
+                //ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+                //int k = ViewBag.CountryList;
+                //List<State> stateList = GetStates(k);
+                //ViewBag.StateList = new SelectList(stateList, "StateId", "StateName");
+                //List<City> cityList = GetCity(ViewBag.StateList.StateId);
+                //ViewBag.CityList = new SelectList(cityList, "CityId", "CityName");
+                CountryBind();
 
             }
             return View();
-        }
+     }
         [HttpPost]
         public ActionResult Registration(User user)
         {
@@ -46,17 +49,19 @@ namespace University.Controllers
                 using (UserContext db = new UserContext())
                 {
                     List<Role> roleList = GetRoles();
-                   // List<Role> list = db.Roles.ToList();
+                    //List<Role> list = db.Roles.ToList();
                     ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
                     List<Course> courseList = db.Courses.ToList();
                     ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
-                    List<Country> countryList = db.Country.ToList();
-                    ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+                    //List<Country> countryList = db.Country.ToList();
+                    //ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+                    CountryBind();
 
-                    List<State> stateList = GetStates(ViewBag.CountryList.CountryId);
-                    ViewBag.StateList = new SelectList(stateList, "StateId", "StateName");
-                    List<City> cityList = GetCity(ViewBag.StateList.StateId);
-                    ViewBag.CityList = new SelectList(cityList, "CityId", "CityName");
+                    //List<State> stateList = GetStates(Country.CountryId);
+                    ////List<State> stateList = stateList.Where(x => stateList.Any(p => x.CountryId == p.CountryId));
+                    //ViewBag.StateList = new SelectList(stateList, "StateId", "StateName");
+                    //List<City> cityList = GetCity(stateId);
+                    //ViewBag.CityList = new SelectList(cityList, "CityId", "CityName");
 
                     User obj = new User();
                     obj.UserId = user.UserId;
@@ -80,7 +85,7 @@ namespace University.Controllers
                     db.Users.Add(obj);
                     db.SaveChanges();
 
-                   
+
                     Address address = new Address();
                     address.AddressId = address.AddressId;
                     address.CountryId = address.CountryId;
@@ -112,22 +117,59 @@ namespace University.Controllers
                 return k.ToList();
             }
         }
-        
-        public static List<State> GetStates(int countryId)
+        public DataSet GetCountry()
         {
-            using (var db = new UserContext())
-            {
-                var k = db.States.Where(x => x.CountryId == countryId);
-                return k.ToList();
-            }
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
+
+            SqlCommand com = new SqlCommand("Select * from Country", con);
+          
+
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            return ds;
+
         }
-        public static List<City> GetCity(int stateId)
+        public void CountryBind()
         {
-            using (var db = new UserContext())
+
+            DataSet ds = GetCountry();
+            List<SelectListItem> countryList = new List<SelectListItem>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
             {
-                var k = db.City.Where(x => x.StateId == stateId);
-                return k.ToList();
+                countryList.Add(new SelectListItem { Text = dr["Name"].ToString(), Value = dr["CountryId"].ToString() });
+
             }
+            ViewBag.Country = countryList;
+        }
+
+        public DataSet GetStates(string countryId)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
+
+            SqlCommand com = new SqlCommand("Select * from State where CountryId == @cId",con);
+            com.Parameters.AddWithValue("@cId", countryId);
+
+                SqlDataAdapter da = new SqlDataAdapter(com);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+
+                return ds;
+             
+        }
+        
+        public JsonResult StateBind(string countryId)
+        {
+           
+            DataSet ds = GetStates(countryId);
+            List<SelectListItem> stateList = new List<SelectListItem>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                stateList.Add(new SelectListItem { Text = dr["Name"].ToString(), Value = dr["StateId"].ToString() });
+
+            }
+            return Json(stateList, JsonRequestBehavior.AllowGet);
         }
     }
 }
