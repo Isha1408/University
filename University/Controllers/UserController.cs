@@ -25,19 +25,13 @@ namespace University.Controllers
             using (UserContext db = new UserContext())
             {
                 List<Role> roleList = GetRoles();
-                //List<Role> list = db.Roles.ToList();
+                
                 ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
                 List<Course> courseList = db.Courses.ToList();
                 ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
-                //List<Country> countryList = db.Country.ToList();
-                //ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-                //int k = ViewBag.CountryList;
-                //List<State> stateList = GetStates(k);
-                //ViewBag.StateList = new SelectList(stateList, "StateId", "StateName");
-                //List<City> cityList = GetCity(ViewBag.StateList.StateId);
-                //ViewBag.CityList = new SelectList(cityList, "CityId", "CityName");
+                
                 CountryBind();
-
+          
             }
             return View();
      }
@@ -55,7 +49,9 @@ namespace University.Controllers
                     ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
                     //List<Country> countryList = db.Country.ToList();
                     //ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-                    CountryBind();
+                   CountryBind();
+                    //StateBind(countryId);
+                   
 
                     //List<State> stateList = GetStates(Country.CountryId);
                     ////List<State> stateList = stateList.Where(x => stateList.Any(p => x.CountryId == p.CountryId));
@@ -64,6 +60,7 @@ namespace University.Controllers
                     //ViewBag.CityList = new SelectList(cityList, "CityId", "CityName");
 
                     User obj = new User();
+                    Address address = new Address();
                     obj.UserId = user.UserId;
                     obj.FirstName = user.FirstName;
                     obj.LastName = user.LastName;
@@ -74,25 +71,32 @@ namespace University.Controllers
                     obj.IsVerified = user.IsVerified;
                     obj.Email = user.Email;
                     obj.DateOfBirth = user.DateOfBirth;
+                   //obj.DateCreated = DateTime.Now;
+                    //obj.DateModified = DateTime.Now;
+
                     obj.DateCreated = user.DateCreated;
                     obj.DateModified = user.DateModified;
-
+                    obj.Address.CountryId = address.CountryId;
+                    obj.Address.StateId = address.StateId;
+                    obj.Address.CityId = address.CityId;
                     obj.RoleId = user.RoleId;
                     obj.CourseId = user.CourseId;
-                    obj.Address = user.Address;
+                   
                     obj.IsActive = user.IsActive;
                     obj.AddressId = user.AddressId;
+                   
                     db.Users.Add(obj);
                     db.SaveChanges();
 
-
-                    Address address = new Address();
-                    address.AddressId = address.AddressId;
+                    int NewAddressId = obj.AddressId;
+                    
                     address.CountryId = address.CountryId;
                     address.StateId = address.StateId;
                     address.CityId = address.CityId;
                     address.AddressLine1 = address.AddressLine1;
                     address.AddressLine2 = address.AddressLine2;
+                    address.ZipCode = address.ZipCode;
+                    address.AddressId = NewAddressId;
                     db.Addresses.Add(address);
                     db.SaveChanges();
 
@@ -142,14 +146,15 @@ namespace University.Controllers
 
             }
             ViewBag.Country = countryList;
+            
         }
 
-        public DataSet GetStates(string countryId)
+        public DataSet GetStates(int countryId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
 
-            SqlCommand com = new SqlCommand("Select * from State where CountryId == @cId",con);
-            com.Parameters.AddWithValue("@cId", countryId);
+            SqlCommand com = new SqlCommand("Select * from State where CountryId=@catid",con);
+            com.Parameters.AddWithValue("@catid", countryId);
 
                 SqlDataAdapter da = new SqlDataAdapter(com);
                 DataSet ds = new DataSet();
@@ -158,18 +163,51 @@ namespace University.Controllers
                 return ds;
              
         }
-        
-        public JsonResult StateBind(string countryId)
+        public JsonResult StateBind(int countryId)
         {
-           
+
             DataSet ds = GetStates(countryId);
             List<SelectListItem> stateList = new List<SelectListItem>();
+
+
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 stateList.Add(new SelectListItem { Text = dr["Name"].ToString(), Value = dr["StateId"].ToString() });
 
             }
+           
             return Json(stateList, JsonRequestBehavior.AllowGet);
         }
+        public DataSet GetCity(int stateId)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
+
+            SqlCommand com = new SqlCommand("Select * from City where StateId=@staid", con);
+            com.Parameters.AddWithValue("@staid", stateId);
+
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            return ds;
+
+        }
+        public JsonResult CityBind(int stateId)
+        {
+
+            DataSet ds = GetCity(stateId);
+
+            List<SelectListItem> cityList = new List<SelectListItem>();
+
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                cityList.Add(new SelectListItem { Text = dr["Name"].ToString(), Value = dr["CityId"].ToString() });
+
+            }
+         
+            return Json(cityList, JsonRequestBehavior.AllowGet);
+        }
+      
     }
 }
