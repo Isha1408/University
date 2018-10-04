@@ -13,6 +13,7 @@ namespace University.Controllers
 {
     public class UserController : Controller
     {
+        UserContext db = new UserContext();
         // GET: User
         public ActionResult Index()
         {
@@ -34,85 +35,160 @@ namespace University.Controllers
           
             }
             return View();
-     }
+         }
         [HttpPost]
-        public ActionResult Registration(User user)
+        public ActionResult Registration(UserModel user)
         {
             if (ModelState.IsValid)
             {
-                using (UserContext db = new UserContext())
-                {
-                    List<Role> roleList = GetRoles();
-                    //List<Role> list = db.Roles.ToList();
-                    ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
-                    List<Course> courseList = db.Courses.ToList();
-                    ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
-                    //List<Country> countryList = db.Country.ToList();
-                    //ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-                   CountryBind();
-                    //StateBind(countryId);
+
+
+                List<Role> roleList = GetRoles();
+
+                ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
+                List<Course> courseList = db.Courses.ToList();
+                ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
+
+                CountryBind();
+
+             //  User obj = new User();
+                
+
+            //    obj.UserId = user.UserId;
+            //    obj.FirstName = user.FirstName;
+            //    obj.LastName = user.LastName;
+            //    obj.Gender = user.Gender;
+            //    obj.Hobbies = user.Hobbies;
+            //    obj.Password = user.Password;
+            //    obj.ConfirmPassword = user.ConfirmPassword;
+            //    obj.IsVerified = user.IsVerified;
+            //    obj.Email = user.Email;
+            //    obj.DateOfBirth = user.DateOfBirth;
+
+            //    obj.IsActive = user.IsActive;
+            //    obj.AddressId = user.AddressId;
+            //    obj.DateCreated = user.DateCreated;
+            //    obj.DateModified = user.DateModified;
+            //    obj.RoleId = user.RoleId;
+            //    obj.CourseId = user.CourseId;
+           
+            //db.Users.Add(obj);
+            //db.SaveChanges();
+
+            //   Model.Address address = new Address();
+            
+            //address.AddressId = userModel.AddressId;
+            //address.AddressLine1 = userModel.AddressLine1;
+            //address.AddressLine2 = userModel.AddressLine2;
+
+            //address.CountryId = userModel.CountryId;
+            //address.StateId = userModel.StateId;
+            //address.CityId = userModel.CityId;
+       
                    
-
-                    //List<State> stateList = GetStates(Country.CountryId);
-                    ////List<State> stateList = stateList.Where(x => stateList.Any(p => x.CountryId == p.CountryId));
-                    //ViewBag.StateList = new SelectList(stateList, "StateId", "StateName");
-                    //List<City> cityList = GetCity(stateId);
-                    //ViewBag.CityList = new SelectList(cityList, "CityId", "CityName");
-
-                    User obj = new User();
-                    Address address = new Address();
-                    obj.UserId = user.UserId;
-                    obj.FirstName = user.FirstName;
-                    obj.LastName = user.LastName;
-                    obj.Gender = user.Gender;
-                    obj.Hobbies = user.Hobbies;
-                    obj.Password = user.Password;
-                    obj.ConfirmPassword = user.ConfirmPassword;
-                    obj.IsVerified = user.IsVerified;
-                    obj.Email = user.Email;
-                    obj.DateOfBirth = user.DateOfBirth;
-                   //obj.DateCreated = DateTime.Now;
-                    //obj.DateModified = DateTime.Now;
-
-                    obj.DateCreated = user.DateCreated;
-                    obj.DateModified = user.DateModified;
-                    obj.Address.CountryId = address.CountryId;
-                    obj.Address.StateId = address.StateId;
-                    obj.Address.CityId = address.CityId;
-                    obj.RoleId = user.RoleId;
-                    obj.CourseId = user.CourseId;
                    
-                    obj.IsActive = user.IsActive;
-                    obj.AddressId = user.AddressId;
                    
-                    db.Users.Add(obj);
-                    db.SaveChanges();
+             //db.Addresses.Add(address);
+             db.SaveChanges();
 
-                    int NewAddressId = obj.AddressId;
+                    //int NewAddressId = obj.AddressId;
                     
-                    address.CountryId = address.CountryId;
-                    address.StateId = address.StateId;
-                    address.CityId = address.CityId;
-                    address.AddressLine1 = address.AddressLine1;
-                    address.AddressLine2 = address.AddressLine2;
-                    address.ZipCode = address.ZipCode;
-                    address.AddressId = NewAddressId;
-                    db.Addresses.Add(address);
-                    db.SaveChanges();
+                    //address.CountryId = address.CountryId;
+                    //address.StateId = address.StateId;
+                    //address.CityId = address.CityId;
+                    //address.AddressLine1 = address.AddressLine1;
+                    //address.AddressLine2 = address.AddressLine2;
+                    //address.ZipCode = address.ZipCode;
+                    //address.AddressId = NewAddressId;
+                    //db.Addresses.Add(address);
+                    //db.SaveChanges();
 
 
-                    int latestUserId = obj.UserId;
-                    UserInRole userInRole = new UserInRole();
-                    userInRole.RoleId = user.RoleId;
-                    userInRole.UserId = latestUserId;
-                    db.UserInRoles.Add(userInRole);
-                    db.SaveChanges();
-                }
-            }
+                   // int latestUserId = obj.UserId;
+                   // UserInRole userInRole = new UserInRole();
+                   // userInRole.RoleId = user.RoleId;
+                   // userInRole.UserId = latestUserId;
+                   // db.UserInRoles.Add(userInRole);
+                   // db.SaveChanges();
+        }
+    
             return View(user);
 
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(User user)
+        {
+
+            using (UserContext db = new UserContext())
+            {
+                var userDetails = db.Users.Where(x => x.Email== user.Email && x.Password == user.Password).FirstOrDefault();
+                //Code to Authenticate Identity Of user.
+                if (userDetails != null)
+                {
+
+                    if (userDetails.RoleId == 1)
+                    {
+                        Session["UserId"] = userDetails.UserId.ToString();
+                        Session["UserName"] = userDetails.Email.ToString();
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else if (userDetails.RoleId == 2)
+                    {
+                        Session["User"] = userDetails;
+
+                        return RedirectToAction("Index", "Student");
+                    }
+                    else if (userDetails.RoleId == 3)
+                    {
+                        Session["UserId"] = userDetails.UserId.ToString();
+                        Session["UserName"] = userDetails.Email.ToString();
+                        return RedirectToAction("Index", "Teacher");
+                    }
+                    else if (userDetails.RoleId == 4)
+                    {
+                        Session["UserId"] = userDetails.UserId.ToString();
+                        Session["UserName"] = userDetails.Email.ToString();
+                        return RedirectToAction("Index", "Teacher");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "UserName or Password is wrong");
+
+                }
+
+            }
+            return View();
+        }
+
+        public ActionResult LogOut()
+        {
+            if (Session["UserId"] != null)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+        // Get All Roles
         public static List<Role> GetRoles()
         {
             using (var db = new UserContext())
@@ -121,6 +197,11 @@ namespace University.Controllers
                 return k.ToList();
             }
         }
+        /// <summary>
+        /// Get All Countries
+        /// </summary>
+        /// <returns></returns>
+        
         public DataSet GetCountry()
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
@@ -135,6 +216,7 @@ namespace University.Controllers
             return ds;
 
         }
+      
         public void CountryBind()
         {
 
@@ -148,7 +230,11 @@ namespace University.Controllers
             ViewBag.Country = countryList;
             
         }
-
+        /// <summary>
+        /// Get all states
+        /// </summary>
+        /// <param name="countryId"></param>
+        /// <returns></returns>
         public DataSet GetStates(int countryId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
@@ -178,6 +264,11 @@ namespace University.Controllers
            
             return Json(stateList, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// Get all Cities
+        /// </summary>
+        /// <param name="stateId"></param>
+        /// <returns></returns>
         public DataSet GetCity(int stateId)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);

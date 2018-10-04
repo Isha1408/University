@@ -10,9 +10,6 @@ namespace University.Models
 {
     public class UserModel
     {
-        // public User User { get; set; }
-        //  public Address Address { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int UserId { get; set; }
         //[Required(ErrorMessage = "FirstName is required")]
@@ -31,27 +28,33 @@ namespace University.Models
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Confirm your Password")]
         public string ConfirmPassword { get; set; }
+        public bool IsVerified { get; set; }
         public string Hobbies { get; set; }
-       // public bool IsActive { get; set; }
+        public int AddressId { get; set; }
 
 
+        public string AddressLine1 { get; set; }
+
+
+        public string AddressLine2 { get; set; }
+        public int CountryId { get; set; }
+        public int StateId { get; set; }
+        public int CityId { get; set; }
+       
+      
         public int RoleId { get; set; }
-        //[ForeignKey("Role Id")]
-       // public virtual Role Role { get; set; }
+
 
         public int CourseId { get; set; }
-        //[ForeignKey("Course Id")]
-      //  public virtual Course course { get; set; }
-       // public virtual ICollection<Address> Address { get; set; }
-        //public DateTime DateCreated { get; set; }
-        //public DateTime DateModified { get; set; }
-        //public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
-        //public virtual ICollection<UserInRole> UserInRoles { get; set; }
-        
-            
-            //custom attributes
-        public string RoleName { get; set; }
-        public string CourseName { get; set; }
+        public int ZipCode { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
+        public bool IsActive { get; set; }
+
+
+
+
+
 
 
     }

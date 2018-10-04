@@ -162,6 +162,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserViewController.cs" />
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\City.cs" />
     <Compile Include="Entities\State.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -231,10 +233,12 @@
     <Content Include="Views\Shared\BackTolistButtonPartial.cshtml" />
     <Content Include="Views\Shared\CreateButtonPartial.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />
+    <Content Include="Views\UserView\UserReg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\View\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
