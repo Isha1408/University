@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using University.Entities;
 
 namespace University.Models
 {
     public class UserModel
     {
-        [Key]
+        
         public int UserId { get; set; }
         //[Required(ErrorMessage = "FirstName is required")]
         public string FirstName { get; set; }
@@ -26,23 +27,22 @@ namespace University.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Confirm your Password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Confirm your Password")]
         public string ConfirmPassword { get; set; }
         public bool IsVerified { get; set; }
         public string Hobbies { get; set; }
         public int AddressId { get; set; }
-
-
         public string AddressLine1 { get; set; }
-
-
         public string AddressLine2 { get; set; }
         public int CountryId { get; set; }
+        //public IEnumerable<SelectListItem>Country { get; set; }
         public int StateId { get; set; }
+        //public IEnumerable<SelectListItem> State { get; set; }
         public int CityId { get; set; }
-       
-      
+        //public IEnumerable<SelectListItem> City { get; set; }
+
         public int RoleId { get; set; }
+        //public IEnumerable<SelectListItem> Role { get; set; }
 
 
         public int CourseId { get; set; }

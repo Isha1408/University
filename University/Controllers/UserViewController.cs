@@ -27,76 +27,82 @@ namespace University.Controllers
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
             List<Course> courseList = db.Courses.ToList();
             ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
-            //List<Country> countryList = db.Country.ToList();
-            //ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            List<Country> countryList = db.Country.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
             
-            CountryBind();
-
-
+            //CountryBind();
+            
             return View();
         }
         
         [HttpPost]
-
-        public ActionResult UserReg(UserModel userModel)
+        public ActionResult UserReg(UserModel ObjuserModel)
         {
-            if (ModelState.IsValid)
+            List<Role> roleList = GetRoles();
+
+            ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
+            List<Course> courseList = db.Courses.ToList();
+            ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
+            //CountryBind();
+            List<Country> countryList = db.Country.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+
+            ObjuserModel.UserId = 1;
+            ObjuserModel.AddressId = 1;
+
+            try
             {
+                    Address address = new Address();
+
+                    address.AddressId = ObjuserModel.AddressId;
+                    address.AddressLine1 = ObjuserModel.AddressLine1;
+                    address.AddressLine2 = ObjuserModel.AddressLine2;
+
+                    address.CountryId = ObjuserModel.CountryId;
+                    address.StateId = ObjuserModel.StateId;
+                    address.CityId = ObjuserModel.CityId;
+
+                    db.Addresses.Add(address);
+                    db.SaveChanges();
+
+                    int latestAddressId = address.AddressId;
+                    User obj = new User();
 
 
-                List<Role> roleList = GetRoles();
+                    obj.UserId = ObjuserModel.UserId;
+                    obj.FirstName = ObjuserModel.FirstName;
+                    obj.LastName = ObjuserModel.LastName;
+                    obj.Gender = ObjuserModel.Gender;
+                    obj.Hobbies = ObjuserModel.Hobbies;
+                    obj.Password = ObjuserModel.Password;
+                    obj.ConfirmPassword = ObjuserModel.ConfirmPassword;
+                    obj.IsVerified = ObjuserModel.IsVerified;
+                    obj.Email = ObjuserModel.Email;
+                    obj.DateOfBirth = ObjuserModel.DateOfBirth;
 
-                ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
-                List<Course> courseList = db.Courses.ToList();
-                ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
-               
-                CountryBind();
+                    obj.IsActive = ObjuserModel.IsActive;
 
-                User obj = new User();
+                    obj.DateCreated = ObjuserModel.DateCreated;
+                    obj.DateModified = ObjuserModel.DateModified;
+                    obj.RoleId = ObjuserModel.RoleId;
+                    obj.CourseId = ObjuserModel.CourseId;
+                    obj.AddressId = ObjuserModel.AddressId;
+                    db.Users.Add(obj);
+                    db.SaveChanges();
 
 
-                obj.UserId = userModel.UserId;
-                obj.FirstName = userModel.FirstName;
-                obj.LastName = userModel.LastName;
-                obj.Gender = userModel.Gender;
-                obj.Hobbies = userModel.Hobbies;
-                obj.Password = userModel.Password;
-                obj.ConfirmPassword = userModel.ConfirmPassword;
-                obj.IsVerified = userModel.IsVerified;
-                obj.Email = userModel.Email;
-                obj.DateOfBirth = userModel.DateOfBirth;
-
-                obj.IsActive = userModel.IsActive;
-                obj.AddressId = userModel.AddressId;
-                obj.DateCreated = userModel.DateCreated;
-                obj.DateModified = userModel.DateModified;
-                obj.RoleId = userModel.RoleId;
-                obj.CourseId = userModel.CourseId;
-
-                db.Users.Add(obj);
-                db.SaveChanges();
-
-                Address address = new Address();
-
-                address.AddressId = userModel.AddressId;
-                address.AddressLine1 = userModel.AddressLine1;
-                address.AddressLine2 = userModel.AddressLine2;
-
-                address.CountryId = userModel.CountryId;
-                address.StateId = userModel.StateId;
-                address.CityId = userModel.CityId;
-
-                db.Addresses.Add(address);
-                db.SaveChanges();
-
-                int latestUserId = obj.UserId;
-                UserInRole userInRole = new UserInRole();
-                userInRole.RoleId = userModel.RoleId;
-                userInRole.UserId = latestUserId;
-                db.UserInRoles.Add(userInRole);
-                db.SaveChanges();
+                    int latestUserId = obj.UserId;
+                    UserInRole userInRole = new UserInRole();
+                    userInRole.RoleId = ObjuserModel.RoleId;
+                    userInRole.UserId = latestUserId;
+                    db.UserInRoles.Add(userInRole);
+                    db.SaveChanges();
+                }
+            catch(Exception ex)
+            {
+                return View(ex);
             }
-            return View(userModel);
+            return View();
         
 
         }
@@ -142,7 +148,6 @@ namespace University.Controllers
             }
             ViewBag.Country = countryList;
             
-          // return (ViewBag.Country);
         }
         /// <summary>
         /// Get all states
@@ -204,12 +209,9 @@ namespace University.Controllers
             DataSet ds = GetCity(stateId);
 
             List<SelectListItem> cityList = new List<SelectListItem>();
-
-
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 cityList.Add(new SelectListItem { Text = dr["Name"].ToString(), Value = dr["CityId"].ToString() });
-
             }
 
             return Json(cityList, JsonRequestBehavior.AllowGet);
