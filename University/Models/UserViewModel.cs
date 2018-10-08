@@ -9,9 +9,9 @@ using University.Entities;
 
 namespace University.Models
 {
-    public class UserModel
+    public class UserViewModel
     {
-        
+        [Key]
         public int UserId { get; set; }
         //[Required(ErrorMessage = "FirstName is required")]
         public string FirstName { get; set; }

@@ -37,7 +37,7 @@ namespace University.Controllers
             return View();
          }
         [HttpPost]
-        public ActionResult Registration(UserModel user)
+        public ActionResult Registration(UserViewModel user)
         {
             if (ModelState.IsValid)
             {

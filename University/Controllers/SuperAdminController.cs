@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using University.Entities;
@@ -12,18 +11,26 @@ using University.Models;
 
 namespace University.Controllers
 {
-    public class UserViewController : Controller
+    public class SuperAdminController : Controller
     {
-        UserContext db = new UserContext();
-
-        public object tran { get; private set; }
-
+        private UserContext db=new UserContext();
+        // GET: SuperAdmin
         public ActionResult Index()
+        {
+
+            var returnedResult = db.Users.Where(x => x.RoleId != 1).ToList();
+            return View(returnedResult);
+
+        }
+
+        // GET: SuperAdmin/Details/5
+        public ActionResult Details(int id)
         {
             return View();
         }
-        // GET: UserView
-        public ActionResult UserReg()
+
+        // GET: SuperAdmin/Create
+        public ActionResult CreateUser()
         {
             List<Role> roleList = GetRoles();
 
@@ -36,7 +43,7 @@ namespace University.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserReg(UserViewModel objUserModel)
+        public ActionResult CreateUser(UserViewModel objUserModel)
         {
             List<Role> roleList = GetRoles();
 
@@ -97,93 +104,79 @@ namespace University.Controllers
                 db.UserInRoles.Add(userInRole);// User and their Roles are saved in the UserInRole Table.
                 db.SaveChanges();
 
+                return RedirectToAction("Index");
+
                 // tran.Commit();
 
-            
+
             }
-           
+
             catch (Exception ex)
             {
-               // tran.Rollback();
+                // tran.Rollback();
                 //throw;
                 return View(ex);
-    }
-           
-            return View();
+            }
 
-}
-        public ActionResult Login()
+          
+
+        }
+
+        // GET: SuperAdmin/Edit/5
+        public ActionResult Edit(int id)
         {
             return View();
         }
+
+        // POST: SuperAdmin/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(User user)
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            var userDetails = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
-            //Code to Authenticate Identity Of user.
-            if (userDetails != null)
+            try
             {
+                // TODO: Add update logic here
 
-                if (userDetails.RoleId == 1)
-                {
-                    Session["UserId"] = userDetails.UserId.ToString();
-                    Session["UserName"] = userDetails.Email.ToString();
-                    return RedirectToAction("Index", "Home");
-
-                }
-                else if (userDetails.RoleId == 2)
-                {
-                    Session["User"] = userDetails;
-
-                    return RedirectToAction("Index", "Home");
-                }
-                else if (userDetails.RoleId == 3)
-                {
-                    Session["UserId"] = userDetails.UserId.ToString();
-                    Session["UserName"] = userDetails.Email.ToString();
-                    return RedirectToAction("Index", "Home");
-                }
-                else if (userDetails.RoleId == 4)
-                {
-                    Session["UserId"] = userDetails.UserId.ToString();
-                    Session["UserName"] = userDetails.Email.ToString();
-                    return RedirectToAction("Index", "Home");
-                }
+                return RedirectToAction("Index");
             }
-            else
+            catch
             {
-                ModelState.AddModelError("", "UserName or Password is wrong");
-
+                return View();
             }
+        }
 
-
+        // GET: SuperAdmin/Delete/5
+        public ActionResult Delete(int id)
+        {
             return View();
         }
 
-        public ActionResult LogOut()
+        // POST: SuperAdmin/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            if (Session["UserId"] != null)
+            try
             {
-                return RedirectToAction("Login");
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
             }
-            else
+            catch
             {
-                return RedirectToAction("Index", "Home");
+                return View();
             }
         }
 
-        // Get All Roles
 
         public static List<Role> GetRoles()
         {
             using (var db = new UserContext())
             {
-                var k = db.Roles.Where(x => x.RoleId != 1 && x.RoleId != 2);
+                var k = db.Roles.Where(x => x.RoleId != 1 );
                 return k.ToList();
             }
         }
-      
+
+
         /// <summary>
         /// Get all states
         /// </summary>
@@ -204,6 +197,7 @@ namespace University.Controllers
             return ds;
 
         }
+
         /// <summary>
         /// Code to bind States.
         /// </summary>
@@ -263,4 +257,3 @@ namespace University.Controllers
         }
     }
 }
-

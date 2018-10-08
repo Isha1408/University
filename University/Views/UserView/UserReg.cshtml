@@ -1,4 +1,4 @@
-﻿@model University.Models.UserModel
+﻿@model University.Models.UserViewModel
 
 @{
     ViewBag.Title = "UserReg";
@@ -9,40 +9,11 @@
 
 <script>
 
-    $("#country").change(function () {
-        var id = $(this).val();
-        alert(id);
-        $("#state").empty();
-        $.getJSON("StateBind", { countryId: id }, function (data) {
-            debugger;
-            var v = "<option>..Select State..</option>";
-            $.each(data, function (i, v1) {
-                v += "<option Value=" + v1.Value + ">" + v1.Text + "</option>";
-
-            });
-            $("#state").html(v);
-        });
-    });
-
-    $("#state").change(function () {
-        debugger;
-        var id = $(this).val();
-        $("#city").empty();
-        $.getJSON("CityBind", { stateId: id }, function (data) {
-            debugger;
-            var v = "<option>..Select City..</option>";
-            $.each(data, function (i, v1) {
-                v += "<option Value=" + v1.Value + ">" + v1.Text + "</option>";
-
-            });
-            $("#city").html(v);
-        });
-    });
-
+   
 
 
     $(document).ready(function () {
-        debugger;
+       
         $("#country").change(function () {
             var id = $(this).val();
             alert(id);
@@ -240,7 +211,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
@@ -254,7 +225,7 @@
             @Html.EditorFor(model => model.DateModified, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.DateModified, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
