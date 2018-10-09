@@ -85,7 +85,7 @@ namespace University.Controllers
                 obj.DateModified = DateTime.Now;
                 obj.RoleId = objUserModel.RoleId;
                 obj.CourseId = objUserModel.CourseId;
-                obj.AddressId = objUserModel.AddressId;
+                obj.AddressId =latestAddressId;
                 db.Users.Add(obj);//Data is saved in the User Table.
                 db.SaveChanges();
 

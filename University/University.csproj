@@ -239,6 +239,8 @@
     <Content Include="Views\UserView\Login.cshtml" />
     <Content Include="Views\SuperAdmin\Index.cshtml" />
     <Content Include="Views\SuperAdmin\CreateUser.cshtml" />
+    <Content Include="Views\SuperAdmin\Edit.cshtml" />
+    <Content Include="Views\SuperAdmin\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

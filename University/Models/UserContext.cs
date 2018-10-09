@@ -26,6 +26,6 @@ namespace University.Models
         public virtual DbSet<SubjectInCourse> SubjectInCourses { get; set; }
         public virtual DbSet<TeacherInSubject> TeacherInSubjects { get; set; }
 
-    
+        
     }
 }
