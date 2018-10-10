@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace University.Entities
         public int StateId { get; set; }
         [Required]
         [MaxLength(255)]
+        [DisplayName("State")]
         public string Name { get; set; }
         public int CountryId { get; set; }
         [ForeignKey("CountryId")]

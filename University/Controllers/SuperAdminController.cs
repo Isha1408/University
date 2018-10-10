@@ -25,7 +25,7 @@ namespace University.Controllers
         }
 
         // GET: SuperAdmin/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
             {
                 if (id == null)
@@ -70,9 +70,12 @@ namespace University.Controllers
                 return View(objUserViewModel);
             }
         }
-
-        // GET: SuperAdmin/Create
-        public ActionResult CreateUser()
+        /// <summary>
+        /// GET: SuperAdmin/Create
+        /// </summary>
+        /// <returns></returns>
+        
+        public ActionResult Create()
         {
             List<Role> roleList = GetRoles();
 
@@ -83,9 +86,14 @@ namespace University.Controllers
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
             return View();
         }
+        /// <summary>
+        /// Post method 
+        /// </summary>
+        /// <param name="objUserModel"></param>
+        /// <returns></returns>
 
         [HttpPost]
-        public ActionResult CreateUser(UserViewModel objUserModel)
+        public ActionResult Create(UserViewModel objUserModel)
         {
             List<Role> roleList = GetRoles();
 
@@ -163,14 +171,21 @@ namespace University.Controllers
           
 
         }
+        /// <summary>
+        ///  GET: SuperAdmin/Edit/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
-        // GET: SuperAdmin/Edit/5
+        
         public ActionResult Edit(int id)
         {
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = objCourseList;
+            List<Country> countryList = db.Country.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
 
             if (id == 0 )
             {
@@ -231,8 +246,15 @@ namespace University.Controllers
         {
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = new SelectList(db.Users.ToList(), "RoleId", "RoleName");
+            List<Course> objCourseList = db.Courses.ToList();
+            ViewBag.Course = objCourseList;
+            List<Country> countryList = db.Country.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            //List<State> statesList = db.States.Where(x => x.CountryId == Address.CountryId).ToList();
+          //  ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
 
-
+          //  List<City> citiesList = db.Cities.Where(x => x.StateId == objUserRegistration.Address.StateId).ToList();
+          //  ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
 
             try
             {
@@ -282,57 +304,74 @@ namespace University.Controllers
                 throw ex;
             }
         }
-
-        // GET: SuperAdmin/Delete/5
-        public ActionResult Delete(int id)
+        /// <summary>
+        ///  GET: SuperAdmin/Delete/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        
+        public ActionResult Delete(int? id)
         {
-            {
+            
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                UserRegistration userRegistration = db.UserRegistrations.Find(id);
-                var data = from p in db.UserRegistrations
+                User objUser = db.Users.Find(id);
+                var data = from p in db.Users
                            where p.UserId == id
                            select p;
-                var TempList = db.UserRegistrations.ToList();
+                var TempList = db.Users.ToList();
 
 
-                UserRegistrationModel objUserRegistrationModel = new UserRegistrationModel
-                {
-                    UserId = userRegistration.UserId,
-                    FirstName = userRegistration.FirstName,
-                    LastName = userRegistration.LastName,
-                    Gender = userRegistration.Gender,
-                    EmailId = userRegistration.EmailId,
-                    Password = userRegistration.Password,
-                    Hobby = userRegistration.Hobby,
-                    DOB = userRegistration.DOB,
-                    IsActive = userRegistration.IsActive,
-                    DateCreated = userRegistration.DateCreated,
-                    DateModified = userRegistration.DateModified
-                };
+                UserViewModel objUserViewModel = new UserViewModel();
 
-                if (userRegistration == null)
+                objUserViewModel.UserId = objUser.UserId;
+                objUserViewModel.FirstName = objUser.FirstName;
+                objUserViewModel.LastName = objUser.LastName;
+                objUserViewModel.Gender = objUser.Gender;
+                objUserViewModel.Hobbies = objUser.Hobbies;
+                objUserViewModel.Email = objUser.Email;
+                objUserViewModel.Password = objUser.Password;
+                objUserViewModel.DateOfBirth = objUser.DateOfBirth;
+                objUserViewModel.RoleId = objUser.RoleId;
+                objUserViewModel.CourseId = objUser.CourseId;
+                objUserViewModel.AddressId = objUser.AddressId;
+                objUserViewModel.IsActive = objUser.IsActive;
+                objUserViewModel.DateCreated = objUser.DateCreated;
+                objUserViewModel.DateModified = objUser.DateModified;
+                objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;
+                objUserViewModel.AddressLine2 = objUser.Address.AddressLine2;
+                objUserViewModel.CountryId = objUser.Address.CountryId;
+                objUserViewModel.StateId = objUser.Address.StateId;
+                objUserViewModel.CityId = objUser.Address.CityId;
+                objUserViewModel.ZipCode = objUser.Address.ZipCode;
+
+                if (objUser == null)
                 {
                     return HttpNotFound();
                 }
-                return View(objUserRegistrationModel);
-            }
+                return View(objUserViewModel);
+            
         }
-
-        // POST: SuperAdmin/Delete/5
+        /// <summary>
+        ///  POST: SuperAdmin/Delete/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+       
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
 
                 if (ModelState.IsValid)
                 {
-                    UserRegistration objUserRegistration = db.UserRegistrations.Find(id);
-                    db.UserRegistrations.Remove(objUserRegistration);
+                    User objUser = db.Users.Find(id);
+                    db.Users.Remove(objUser);
                     db.SaveChanges();
                 }
 
@@ -344,13 +383,22 @@ namespace University.Controllers
                 throw ex;
             }
         }
-    }
+        public ActionResult CreateCourse ()
+        {
 
+            return View();
+        }
+    
+        /// <summary>
+        /// Function to get list of Roles
+        /// </summary>
+        /// <returns></returns>
 
         public static List<Role> GetRoles()
         {
             using (var db = new UserContext())
             {
+                // condition not to Display SuperAdmin
                 var k = db.Roles.Where(x => x.RoleId != 1 );
                 return k.ToList();
             }
@@ -435,5 +483,6 @@ namespace University.Controllers
 
             return Json(cityList, JsonRequestBehavior.AllowGet);
         }
+        
     }
 }

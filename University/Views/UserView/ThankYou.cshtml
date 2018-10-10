@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "ThankYou";
+}
+
+
+<h2>ThankYou for Registration</h2>
+
+@if (Session["UserId"] != null)
+{
+    <h4> @Session["UserName"].ToString()</h4>
+}
+@Html.ActionLink("Login here", "Login")

@@ -14,11 +14,14 @@ namespace University.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         [Required(ErrorMessage = "FirstName is required")]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "LastName is required")]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "Please Select Gender")]
         public string Gender { get; set; }
+        [DisplayName("DOB")]
         public DateTime DateOfBirth { get; set; }
         public string Email { get; set; }
         public bool IsVerified { get; set; }
@@ -46,10 +49,7 @@ namespace University.Entities
         public DateTime DateModified { get; set; }
         public virtual ICollection<TeacherInSubject> TeacherInSubjects { get; set; }
         public virtual ICollection<UserInRole> UserInRoles{ get; set; }
-        //custom attributes
-       // public string RoleName { get; set; }
-       // public string CourseName { get; set; }
-
+        
 
     }
 }

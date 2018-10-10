@@ -23,10 +23,9 @@ namespace University.Controllers
             return View();
         }
         // GET: UserView
-        public ActionResult UserReg()
+        public ActionResult UserRegistration()
         {
             List<Role> roleList = GetRoles();
-
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
             List<Course> courseList = db.Courses.ToList();
             ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
@@ -36,7 +35,7 @@ namespace University.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserReg(UserViewModel objUserModel)
+        public ActionResult UserRegistration(UserViewModel objUserModel)
         {
             List<Role> roleList = GetRoles();
 
@@ -50,68 +49,68 @@ namespace University.Controllers
             objUserModel.UserId = 1;
             objUserModel.AddressId = 1;
 
-            try
+
+            // Create the TransactionScope to execute the commands, guaranteeing
+            // that both commands can commit or roll back as a single unit of work.
+            using (var transaction = db.Database.BeginTransaction())
             {
-                // Create the TransactionScope to execute the commands, guaranteeing
-                // that both commands can commit or roll back as a single unit of work.
-                // using (IDbTransaction tran = conn.BeginTransaction())
-                //{
-                Address address = new Address();
 
-                address.AddressId = objUserModel.AddressId;
-                address.AddressLine1 = objUserModel.AddressLine1;
-                address.AddressLine2 = objUserModel.AddressLine2;
-                address.CountryId = objUserModel.CountryId;
-                address.StateId = objUserModel.StateId;
-                address.CityId = objUserModel.CityId;
+                try
+                { 
+                    Address address = new Address();
 
-                db.Addresses.Add(address); //Address of the user is stored in the DataBase.
-                db.SaveChanges();
+                    address.AddressId = objUserModel.AddressId;
+                    address.AddressLine1 = objUserModel.AddressLine1;
+                    address.AddressLine2 = objUserModel.AddressLine2;
+                    address.CountryId = objUserModel.CountryId;
+                    address.StateId = objUserModel.StateId;
+                    address.CityId = objUserModel.CityId;
 
-                int latestAddressId = address.AddressId;
-                User obj = new User();
-                obj.UserId = objUserModel.UserId;
-                obj.FirstName = objUserModel.FirstName;
-                obj.LastName = objUserModel.LastName;
-                obj.Gender = objUserModel.Gender;
-                obj.Hobbies = objUserModel.Hobbies;
-                obj.Password = objUserModel.Password;
-                obj.ConfirmPassword = objUserModel.ConfirmPassword;
-                obj.IsVerified = objUserModel.IsVerified;
-                obj.Email = objUserModel.Email;
-                obj.DateOfBirth = objUserModel.DateOfBirth;
-                obj.IsActive = objUserModel.IsActive;
-                obj.DateCreated = DateTime.Now;
-                obj.DateModified = DateTime.Now;
-                obj.RoleId = objUserModel.RoleId;
-                obj.CourseId = objUserModel.CourseId;
-                obj.AddressId =latestAddressId;
-                db.Users.Add(obj);//Data is saved in the User Table.
-                db.SaveChanges();
+                    db.Addresses.Add(address); //Address of the user is stored in the DataBase.
+                    db.SaveChanges();
+
+                    int latestAddressId = address.AddressId;
+                    User obj = new User();
+                    obj.UserId = objUserModel.UserId;
+                    obj.FirstName = objUserModel.FirstName;
+                    obj.LastName = objUserModel.LastName;
+                    obj.Gender = objUserModel.Gender;
+                    obj.Hobbies = objUserModel.Hobbies;
+                    obj.Password = objUserModel.Password.GetHashCode().ToString();
+                    obj.ConfirmPassword = objUserModel.ConfirmPassword;
+                    obj.IsVerified = objUserModel.IsVerified;
+                    obj.Email = objUserModel.Email;
+                    obj.DateOfBirth = objUserModel.DateOfBirth;
+                    obj.IsActive = objUserModel.IsActive;
+                    obj.DateCreated = DateTime.Now;
+                    obj.DateModified = DateTime.Now;
+                    obj.RoleId = objUserModel.RoleId;
+                    obj.CourseId = objUserModel.CourseId;
+                    obj.AddressId = latestAddressId;
+                    db.Users.Add(obj);//Data is saved in the User Table.
+                    db.SaveChanges();
 
 
-                int latestUserId = obj.UserId;
-                UserInRole userInRole = new UserInRole();
-                userInRole.RoleId = objUserModel.RoleId;
-                userInRole.UserId = latestUserId;
-                db.UserInRoles.Add(userInRole);// User and their Roles are saved in the UserInRole Table.
-                db.SaveChanges();
+                    int latestUserId = obj.UserId;
+                    UserInRole userInRole = new UserInRole();
+                    userInRole.RoleId = objUserModel.RoleId;
+                    userInRole.UserId = latestUserId;
+                    db.UserInRoles.Add(userInRole);// User and their Roles are saved in the UserInRole Table.
+                    db.SaveChanges();
 
-                // tran.Commit();
+                    transaction.Commit();
+                    return RedirectToAction("ThankYou");
+                }
 
-            
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    ViewBag.ResultMessage = "Error occurred in the registration process.Please register again.";
+                    return View(ex);
+                }
             }
-           
-            catch (Exception ex)
-            {
-               // tran.Rollback();
-                //throw;
-                return View(ex);
-    }
-           
-            return View();
-
-}
+          
+        }
         public ActionResult Login()
         {
             return View();
@@ -129,7 +128,7 @@ namespace University.Controllers
                 {
                     Session["UserId"] = userDetails.UserId.ToString();
                     Session["UserName"] = userDetails.Email.ToString();
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "SuperAdmin");
 
                 }
                 else if (userDetails.RoleId == 2)
@@ -160,7 +159,15 @@ namespace University.Controllers
 
             return View();
         }
-
+        public ActionResult ThankYou()
+        {
+            return View();
+        }
+           
+        /// <summary>
+        /// Action method for LogOut
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LogOut()
         {
             if (Session["UserId"] != null)

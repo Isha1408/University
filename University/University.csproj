@@ -161,6 +161,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CountriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -198,11 +202,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\AdminMenu.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Countries\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Countries\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Countries\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Countries\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Countries\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.min %281%29.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -235,16 +252,24 @@
     <Content Include="Views\Shared\BackTolistButtonPartial.cshtml" />
     <Content Include="Views\Shared\CreateButtonPartial.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />
-    <Content Include="Views\UserView\UserReg.cshtml" />
+    <Content Include="Views\UserView\UserRegistration.cshtml" />
     <Content Include="Views\UserView\Login.cshtml" />
     <Content Include="Views\SuperAdmin\Index.cshtml" />
-    <Content Include="Views\SuperAdmin\CreateUser.cshtml" />
+    <Content Include="Views\SuperAdmin\Create.cshtml" />
     <Content Include="Views\SuperAdmin\Edit.cshtml" />
     <Content Include="Views\SuperAdmin\Details.cshtml" />
+    <Content Include="Views\SuperAdmin\Delete.cshtml" />
+    <Content Include="Views\UserView\ThankYou.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Subject\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Account\" />
+    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Views\View\" />
   </ItemGroup>
   <ItemGroup>
