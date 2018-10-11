@@ -4,13 +4,10 @@
     ViewBag.Title = "UserReg";
 }
 
-<h2>UserReg</h2>
+<h2>Registration</h2>
 <script src="~/Scripts/jquery-1.7.1.min.js"></script>
 
 <script>
-
-   
-
 
     $(document).ready(function () {
        
@@ -56,7 +53,7 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>UserModel</h4>
+   
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">

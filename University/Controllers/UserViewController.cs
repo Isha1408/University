@@ -14,15 +14,18 @@ namespace University.Controllers
 {
     public class UserViewController : Controller
     {
-        UserContext db = new UserContext();
+        // Object of Context class is made.
 
-        public object tran { get; private set; }
+        UserContext db = new UserContext();
 
         public ActionResult Index()
         {
             return View();
         }
-        // GET: UserView
+        /// <summary>
+        /// GET Method: For Creating User
+        /// </summary>
+        /// <returns></returns>
         public ActionResult UserRegistration()
         {
             List<Role> roleList = GetRoles();
@@ -33,30 +36,35 @@ namespace University.Controllers
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
             return View();
         }
-
+        /// <summary>
+        /// Post Method: To Post the data of User in User table.
+        /// </summary>
+        /// <param name="objUserModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult UserRegistration(UserViewModel objUserModel)
         {
+            //Code to show DropDown of Role
             List<Role> roleList = GetRoles();
-
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
+            //Code to show Dropdown of Cousre
             List<Course> courseList = db.Courses.ToList();
             ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
-            //CountryBind();
+            // Code to show DropDown of Country
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
 
             objUserModel.UserId = 1;
             objUserModel.AddressId = 1;
 
-
             // Create the TransactionScope to execute the commands, guaranteeing
             // that both commands can commit or roll back as a single unit of work.
+
             using (var transaction = db.Database.BeginTransaction())
             {
 
                 try
-                { 
+                {
                     Address address = new Address();
 
                     address.AddressId = objUserModel.AddressId;
@@ -77,7 +85,7 @@ namespace University.Controllers
                     obj.Gender = objUserModel.Gender;
                     obj.Hobbies = objUserModel.Hobbies;
                     obj.Password = objUserModel.Password.GetHashCode().ToString();
-                    obj.ConfirmPassword = objUserModel.ConfirmPassword;
+                    obj.ConfirmPassword = objUserModel.ConfirmPassword.GetHashCode().ToString();
                     obj.IsVerified = objUserModel.IsVerified;
                     obj.Email = objUserModel.Email;
                     obj.DateOfBirth = objUserModel.DateOfBirth;
@@ -97,7 +105,6 @@ namespace University.Controllers
                     userInRole.UserId = latestUserId;
                     db.UserInRoles.Add(userInRole);// User and their Roles are saved in the UserInRole Table.
                     db.SaveChanges();
-
                     transaction.Commit();
                     return RedirectToAction("ThankYou");
                 }
@@ -108,46 +115,60 @@ namespace University.Controllers
                     ViewBag.ResultMessage = "Error occurred in the registration process.Please register again.";
                     return View(ex);
                 }
+
             }
-          
         }
+
+        /// <summary>
+        /// GET Method: For User Login
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Login()
         {
             return View();
         }
+        /// <summary>
+        /// Post Method: To Authenticate User Identity
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(User user)
         {
             var userDetails = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
+
             //Code to Authenticate Identity Of user.
             if (userDetails != null)
             {
+                Session["UserId"] = userDetails.UserId.ToString();
+                Session["UserName"] = userDetails.Email.ToString();
 
                 if (userDetails.RoleId == 1)
                 {
-                    Session["UserId"] = userDetails.UserId.ToString();
-                    Session["UserName"] = userDetails.Email.ToString();
+
                     return RedirectToAction("Index", "SuperAdmin");
 
                 }
                 else if (userDetails.RoleId == 2)
                 {
-                    Session["User"] = userDetails;
+                    Session["UserId"] = userDetails.UserId.ToString();
+                    Session["UserName"] = userDetails.Email.ToString();
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Admin");
                 }
                 else if (userDetails.RoleId == 3)
                 {
                     Session["UserId"] = userDetails.UserId.ToString();
                     Session["UserName"] = userDetails.Email.ToString();
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Teacher");
                 }
                 else if (userDetails.RoleId == 4)
                 {
                     Session["UserId"] = userDetails.UserId.ToString();
                     Session["UserName"] = userDetails.Email.ToString();
-                    return RedirectToAction("Index", "Home");
+
+                    return RedirectToAction("Index", "student");
                 }
             }
             else
@@ -163,7 +184,7 @@ namespace University.Controllers
         {
             return View();
         }
-           
+
         /// <summary>
         /// Action method for LogOut
         /// </summary>
@@ -190,7 +211,7 @@ namespace University.Controllers
                 return k.ToList();
             }
         }
-      
+
         /// <summary>
         /// Get all states
         /// </summary>

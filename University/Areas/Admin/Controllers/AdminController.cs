@@ -10,29 +10,30 @@ using System.Web.Mvc;
 using University.Entities;
 using University.Models;
 
-namespace University.Controllers
+namespace University.Areas.Admin.Controllers
 {
-    public class SuperAdminController : Controller
+    public class AdminController : Controller
     {
-        // Object of Context class is made.
+        // Object of Context class is made. 
         private UserContext db = new UserContext();
 
+
         /// <summary>
-        /// To show List of all Users and Admin
+        /// To Show List of Teacher and Student
         /// </summary>
         /// <returns></returns>
         public ActionResult GetAllUsers()
         {
-            var returnedResult = db.Users.Where(x => x.RoleId != 1).ToList();
-            return View(returnedResult);
-        }
 
+            var returnedResult = db.Users.Where(x => x.RoleId != 1 && x.RoleId != 2).ToList();
+            return View(returnedResult);
+
+        }
         /// <summary>
-        ///  GET: To Show the details of the user
+        /// To show UserDetails
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         public ActionResult UserDetails(int? id)
         {
             {
@@ -79,26 +80,28 @@ namespace University.Controllers
             }
         }
         /// <summary>
-        /// GET To Create new User Record
+        /// GET: To create Teacher and Student
         /// </summary>
         /// <returns></returns>
 
         public ActionResult CreateUser()
         {
+            // Code to show Roles in DropDown
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
+            // Code to show Courses in DropDown
             List<Course> courseList = db.Courses.ToList();
             ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
+            // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
             return View();
         }
         /// <summary>
-        /// Post method : To Create new user Record
+        /// Post:To create Teacher and Student 
         /// </summary>
         /// <param name="objUserModel"></param>
         /// <returns></returns>
-
         [HttpPost]
         public ActionResult CreateUser(UserViewModel objUserModel)
         {
@@ -144,7 +147,7 @@ namespace University.Controllers
                     obj.Gender = objUserModel.Gender;
                     obj.Hobbies = objUserModel.Hobbies;
                     obj.Password = objUserModel.Password.GetHashCode().ToString(); ;
-                    obj.ConfirmPassword = objUserModel.ConfirmPassword.GetHashCode().ToString();
+                    obj.ConfirmPassword = objUserModel.ConfirmPassword.GetHashCode().ToString(); ;
                     obj.IsVerified = objUserModel.IsVerified;
                     obj.Email = objUserModel.Email;
                     obj.DateOfBirth = objUserModel.DateOfBirth;
@@ -154,7 +157,7 @@ namespace University.Controllers
                     obj.RoleId = objUserModel.RoleId;
                     obj.CourseId = objUserModel.CourseId;
                     obj.AddressId = latestAddressId;
-                    db.Users.Add(obj);      //Data is saved in the User Table.
+                    db.Users.Add(obj);//Data is saved in the User Table.
                     db.SaveChanges();
 
 
@@ -170,19 +173,20 @@ namespace University.Controllers
 
                 catch (Exception ex)
                 {
+
                     transaction.Rollback();
                     ViewBag.ResultMessage = "Error occurred in the registration process.Please register again.";
                     return View(ex);
                 }
-
             }
-
         }
         /// <summary>
         ///  GET: To Edit User Record
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+
+
         public ActionResult EditUser(int id)
         {
             List<Role> objRoleList = GetRoles();
@@ -200,10 +204,7 @@ namespace University.Controllers
             User objUser = db.Users.Find(id);
 
             var data = from p in db.Users where p.UserId == id select p;
-            //var addressdata = from v in db.Addresses where v.AddressId == addressId select v;
-
             var tempList = db.Users.ToList();
-
 
             UserViewModel objUserViewModel = new UserViewModel();
 
@@ -237,7 +238,7 @@ namespace University.Controllers
         }
 
         /// <summary>
-        ///  To Edit User Record
+        ///  POST:  To Edit User Record
         /// </summary>
         /// <param name="id"></param>
         /// <param name="collection"></param>
@@ -245,6 +246,7 @@ namespace University.Controllers
         [HttpPost]
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
+
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = new SelectList(db.Users.ToList(), "RoleId", "RoleName");
             List<Course> objCourseList = db.Courses.ToList();
@@ -302,7 +304,7 @@ namespace University.Controllers
             }
         }
         /// <summary>
-        ///  GET: To Delete User from User table
+        ///  GET: To Delete User Record from User table
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -320,6 +322,7 @@ namespace University.Controllers
                        where p.UserId == id
                        select p;
             var TempList = db.Users.ToList();
+
 
             UserViewModel objUserViewModel = new UserViewModel();
 
@@ -352,7 +355,7 @@ namespace University.Controllers
 
         }
         /// <summary>
-        ///  POST Method: To Delete User from User table
+        ///  POST: To Delete User Record from User table
         /// </summary>
         /// <param name="id"></param>
         /// <param name="collection"></param>
@@ -389,7 +392,7 @@ namespace University.Controllers
         {
             using (var db = new UserContext())
             {
-                // condition not to Display SuperAdmin
+                // condition not to Display SuperAdmin and Admin
                 var k = db.Roles.Where(x => x.RoleId != 1);
                 return k.ToList();
             }
@@ -397,7 +400,7 @@ namespace University.Controllers
 
 
         /// <summary>
-        /// Get all states from state table 
+        /// Get all states
         /// </summary>
         /// <param name="countryId"></param>
         /// <returns></returns>
@@ -438,7 +441,7 @@ namespace University.Controllers
             return Json(stateList, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
-        /// Get all Cities from City table
+        /// Get all Cities
         /// </summary>
         /// <param name="stateId"></param>
         /// <returns></returns>
@@ -474,6 +477,5 @@ namespace University.Controllers
 
             return Json(cityList, JsonRequestBehavior.AllowGet);
         }
-
     }
 }
