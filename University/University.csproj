@@ -223,7 +223,7 @@
     <Content Include="Areas\Admin\Views\Course\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\GetAllUsers.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\EditUser.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\DetailsUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\UserDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\DeleteUser.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\CreateUser.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
@@ -259,7 +259,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\BackTolistButtonPartial.cshtml" />
     <Content Include="Views\Shared\CreateButtonPartial.cshtml" />
-    <Content Include="Views\UserView\UserRegistration.cshtml" />
     <Content Include="Views\UserView\Login.cshtml" />
     <Content Include="Views\SuperAdmin\GetAllUsers.cshtml" />
     <Content Include="Views\SuperAdmin\CreateUser.cshtml" />
@@ -273,6 +272,7 @@
     <Content Include="Areas\Admin\Views\Subject\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\Index.cshtml" />
     <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
+    <Content Include="Views\UserView\UserRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

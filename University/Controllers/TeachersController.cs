@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using University.Models;
 
-namespace University.Areas.Admin.Controllers
+namespace University.Controllers
 {
     public class TeachersController : Controller
     {

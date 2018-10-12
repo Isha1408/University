@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using University.Entities;
 using University.Models;
 
-namespace University.Controllers
+namespace University.Areas.Admin.Controllers
 {
     public class CountriesController : Controller
     {

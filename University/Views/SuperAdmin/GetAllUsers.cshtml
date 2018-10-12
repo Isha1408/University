@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<University.Entities.User>
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
 }
 
 <h2>Index</h2>
@@ -9,14 +11,13 @@
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
-    <style>
-        th, td {
-            border: 1px solid #333;
-            padding: 5px;
-            vertical-align: middle;
-            
-        }
-    </style>
+<style>
+    th, td {
+        border: 1px solid #333;
+        padding: 5px;
+        vertical-align: middle;
+    }
+</style>
 
 <p>
     @Html.Partial("CreateButtonPartial")
@@ -160,9 +161,9 @@
                 @Html.DisplayFor(modelItem => item.DateModified)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.UserId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.UserId })
+                @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
+                @Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |
+                @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })
             </td>
         </tr>
     }

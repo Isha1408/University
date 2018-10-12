@@ -43,14 +43,14 @@ namespace University.Areas.Admin.Controllers
                 }
 
                 User user = db.Users.Find(id);
-                var data = from p in db.Users
-                           where p.UserId == id
-                           select p;
-                var TempList = db.Users.ToList();
+               // var userData = from p in db.Users
+                         //  where p.UserId == id
+                          // select p;
+              //  var tempUserList = db.Users.ToList();
 
                 UserViewModel objUserViewModel = new UserViewModel();
 
-                objUserViewModel.UserId = user.UserId;
+                //objUserViewModel.UserId = user.UserId;
                 objUserViewModel.FirstName = user.FirstName;
                 objUserViewModel.LastName = user.LastName;
                 objUserViewModel.Gender = user.Gender;
@@ -60,7 +60,7 @@ namespace University.Areas.Admin.Controllers
                 objUserViewModel.DateOfBirth = user.DateOfBirth;
                 objUserViewModel.RoleId = user.RoleId;
                 objUserViewModel.CourseId = user.CourseId;
-                objUserViewModel.AddressId = user.AddressId;
+                //objUserViewModel.AddressId = user.AddressId;
                 objUserViewModel.IsActive = user.IsActive;
                 objUserViewModel.DateCreated = user.DateCreated;
                 objUserViewModel.DateModified = user.DateModified;
@@ -115,8 +115,8 @@ namespace University.Areas.Admin.Controllers
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
 
-            objUserModel.UserId = 1;
-            objUserModel.AddressId = 1;
+          //  objUserModel.UserId = 1;
+            //objUserModel.AddressId = 1;
 
             // Create the TransactionScope to execute the commands, guaranteeing
             // that both commands can commit or roll back as a single unit of work.
@@ -126,49 +126,52 @@ namespace University.Areas.Admin.Controllers
 
                 try
                 {
+                    if (ModelState.IsValid)
+                    {
 
-                    Address address = new Address();
+                        Address address = new Address();
+                        
+                        address.AddressLine1 = objUserModel.AddressLine1;
+                        address.AddressLine2 = objUserModel.AddressLine2;
+                        address.CountryId = objUserModel.CountryId;
+                        address.StateId = objUserModel.StateId;
+                        address.CityId = objUserModel.CityId;
+                        db.Addresses.Add(address); //Address of the user is stored in the DataBase.
+                        db.SaveChanges();
 
-                    address.AddressId = objUserModel.AddressId;
-                    address.AddressLine1 = objUserModel.AddressLine1;
-                    address.AddressLine2 = objUserModel.AddressLine2;
-                    address.CountryId = objUserModel.CountryId;
-                    address.StateId = objUserModel.StateId;
-                    address.CityId = objUserModel.CityId;
-
-                    db.Addresses.Add(address); //Address of the user is stored in the DataBase.
-                    db.SaveChanges();
-
-                    int latestAddressId = address.AddressId;
-                    User obj = new User();
-                    obj.UserId = objUserModel.UserId;
-                    obj.FirstName = objUserModel.FirstName;
-                    obj.LastName = objUserModel.LastName;
-                    obj.Gender = objUserModel.Gender;
-                    obj.Hobbies = objUserModel.Hobbies;
-                    obj.Password = objUserModel.Password.GetHashCode().ToString(); ;
-                    obj.ConfirmPassword = objUserModel.ConfirmPassword.GetHashCode().ToString(); ;
-                    obj.IsVerified = objUserModel.IsVerified;
-                    obj.Email = objUserModel.Email;
-                    obj.DateOfBirth = objUserModel.DateOfBirth;
-                    obj.IsActive = objUserModel.IsActive;
-                    obj.DateCreated = DateTime.Now;
-                    obj.DateModified = DateTime.Now;
-                    obj.RoleId = objUserModel.RoleId;
-                    obj.CourseId = objUserModel.CourseId;
-                    obj.AddressId = latestAddressId;
-                    db.Users.Add(obj);//Data is saved in the User Table.
-                    db.SaveChanges();
+                        int latestAddressId = address.AddressId;
+                        User obj = new User();
+                        
+                        obj.FirstName = objUserModel.FirstName;
+                        obj.LastName = objUserModel.LastName;
+                        obj.Gender = objUserModel.Gender;
+                        obj.Hobbies = objUserModel.Hobbies;
+                        obj.Password = objUserModel.Password.GetHashCode().ToString(); ;
+                        obj.ConfirmPassword = objUserModel.ConfirmPassword.GetHashCode().ToString(); ;
+                        obj.IsVerified = objUserModel.IsVerified;
+                        obj.Email = objUserModel.Email;
+                        obj.DateOfBirth = objUserModel.DateOfBirth;
+                        obj.IsActive = objUserModel.IsActive;
+                        obj.DateCreated = DateTime.Now;
+                        obj.DateModified = DateTime.Now;
+                        obj.RoleId = objUserModel.RoleId;
+                        obj.CourseId = objUserModel.CourseId;
+                        obj.AddressId = latestAddressId;
+                        db.Users.Add(obj);//Data is saved in the User Table.
+                        db.SaveChanges();
 
 
-                    int latestUserId = obj.UserId;
-                    UserInRole userInRole = new UserInRole();
-                    userInRole.RoleId = objUserModel.RoleId;
-                    userInRole.UserId = latestUserId;
-                    db.UserInRoles.Add(userInRole);// User and their Roles are saved in the UserInRole Table.
-                    db.SaveChanges();
-                    transaction.Commit();
-                    return RedirectToAction("Index");
+                        int latestUserId = obj.UserId;
+
+                        UserInRole userInRole = new UserInRole();
+                        userInRole.RoleId = objUserModel.RoleId;
+                        userInRole.UserId = latestUserId;
+                        db.UserInRoles.Add(userInRole);// User and their Roles are saved in the UserInRole Table.
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return RedirectToAction("GetAllUsers");
+                    }
+                    return View(objUserModel);
                 }
 
                 catch (Exception ex)
@@ -202,13 +205,10 @@ namespace University.Areas.Admin.Controllers
             }
 
             User objUser = db.Users.Find(id);
+           // var userData = from p in db.Users where p.UserId == id select p;
+          //  var tempUserList = db.Users.ToList();
 
-            var data = from p in db.Users where p.UserId == id select p;
-            var tempList = db.Users.ToList();
-
-            UserViewModel objUserViewModel = new UserViewModel();
-
-            objUserViewModel.UserId = objUser.UserId;
+            UserViewModel objUserViewModel = new UserViewModel();       
             objUserViewModel.FirstName = objUser.FirstName;
             objUserViewModel.LastName = objUser.LastName;
             objUserViewModel.Gender = objUser.Gender;
@@ -217,8 +217,7 @@ namespace University.Areas.Admin.Controllers
             objUserViewModel.Password = objUser.Password;
             objUserViewModel.DateOfBirth = objUser.DateOfBirth;
             objUserViewModel.RoleId = objUser.RoleId;
-            objUserViewModel.CourseId = objUser.CourseId;
-            objUserViewModel.AddressId = objUser.AddressId;
+            objUserViewModel.CourseId = objUser.CourseId;          
             objUserViewModel.IsActive = objUser.IsActive;
             objUserViewModel.DateCreated = objUser.DateCreated;
             objUserViewModel.DateModified = objUser.DateModified;
@@ -253,22 +252,15 @@ namespace University.Areas.Admin.Controllers
             ViewBag.Course = objCourseList;
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-
-
             try
             {
-                User userData = db.Users.Find(objUserViewModel.UserId);
-                Address addressData = db.Addresses.Find(objUserViewModel.AddressId);
-                var data = from p in db.Users where p.UserId == objUserViewModel.UserId select p;
-                var tempData = from v in db.Addresses where v.AddressId == objUserViewModel.AddressId select v;
-
-
-                var TempList = db.Users.FirstOrDefault();
+                User userData = db.Users.Find(id);
+              
+               // var data = from p in db.Users where p.UserId == id select p;
+              //  var TempList = db.Users.FirstOrDefault();
 
                 if (ModelState.IsValid)
                 {
-
-                    userData.UserId = objUserViewModel.UserId;
                     userData.FirstName = objUserViewModel.FirstName;
                     userData.LastName = objUserViewModel.LastName;
                     userData.Gender = objUserViewModel.Gender;
@@ -279,20 +271,18 @@ namespace University.Areas.Admin.Controllers
                     userData.ConfirmPassword = objUserViewModel.ConfirmPassword;
                     userData.DateOfBirth = objUserViewModel.DateOfBirth;
                     userData.CourseId = objUserViewModel.CourseId;
-                    userData.RoleId = objUserViewModel.RoleId;
-                    userData.AddressId = objUserViewModel.AddressId;
+                    userData.RoleId = objUserViewModel.RoleId;                   
                     userData.Address.AddressLine1 = objUserViewModel.AddressLine1;
                     userData.Address.AddressLine2 = objUserViewModel.AddressLine2;
                     userData.Address.CountryId = objUserViewModel.CountryId;
                     userData.Address.StateId = objUserViewModel.StateId;
                     userData.Address.CityId = objUserViewModel.CityId;
                     userData.Address.ZipCode = objUserViewModel.ZipCode;
-
                     userData.IsActive = objUserViewModel.IsActive;
                     userData.DateModified = DateTime.Now;
 
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("GetAllUsers");
 
                 }
                 return View(objUserViewModel);
@@ -318,15 +308,14 @@ namespace University.Areas.Admin.Controllers
             }
 
             User objUser = db.Users.Find(id);
-            var data = from p in db.Users
-                       where p.UserId == id
-                       select p;
-            var TempList = db.Users.ToList();
+           // var userData = from p in db.Users
+                       //where p.UserId == id
+                       //select p;
+          //  var tempUserList = db.Users.ToList();
 
 
             UserViewModel objUserViewModel = new UserViewModel();
 
-            objUserViewModel.UserId = objUser.UserId;
             objUserViewModel.FirstName = objUser.FirstName;
             objUserViewModel.LastName = objUser.LastName;
             objUserViewModel.Gender = objUser.Gender;
@@ -335,8 +324,7 @@ namespace University.Areas.Admin.Controllers
             objUserViewModel.Password = objUser.Password;
             objUserViewModel.DateOfBirth = objUser.DateOfBirth;
             objUserViewModel.RoleId = objUser.RoleId;
-            objUserViewModel.CourseId = objUser.CourseId;
-            objUserViewModel.AddressId = objUser.AddressId;
+            objUserViewModel.CourseId = objUser.CourseId;          
             objUserViewModel.IsActive = objUser.IsActive;
             objUserViewModel.DateCreated = objUser.DateCreated;
             objUserViewModel.DateModified = objUser.DateModified;
@@ -366,7 +354,6 @@ namespace University.Areas.Admin.Controllers
         {
             try
             {
-
                 if (ModelState.IsValid)
                 {
                     User objUser = db.Users.Find(id);
@@ -374,7 +361,7 @@ namespace University.Areas.Admin.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("GetAllUsers");
             }
             catch (Exception ex)
             {
@@ -393,11 +380,10 @@ namespace University.Areas.Admin.Controllers
             using (var db = new UserContext())
             {
                 // condition not to Display SuperAdmin and Admin
-                var k = db.Roles.Where(x => x.RoleId != 1);
-                return k.ToList();
+                var roleList = db.Roles.Where(x => x.RoleId != 1);
+                return roleList.ToList();
             }
         }
-
 
         /// <summary>
         /// Get all states
@@ -427,10 +413,8 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public JsonResult StateBind(string countryId)
         {
-
             DataSet ds = GetStates(countryId);
             List<SelectListItem> stateList = new List<SelectListItem>();
-
 
             foreach (DataRow dr in ds.Tables[0].Rows)
             {

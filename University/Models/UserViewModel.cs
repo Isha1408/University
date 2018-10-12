@@ -13,18 +13,19 @@ namespace University.Models
     // This model contains all the properties required for User Registration form.
     public class UserViewModel
     {
-        [Key]
-        public int UserId { get; set; }
+      // [Key]
+      //  public int UserId { get; set; }
         [Required(ErrorMessage = "FirstName is required")]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
         [DisplayName("Last Name")]
         [Required(ErrorMessage = "LastName is required")]
         public string LastName { get; set; }
-       [Required(ErrorMessage = "Please Select Gender")]
+        [Required(ErrorMessage = "Please Select Gender")]
         public string Gender { get; set; }
         [DisplayName("DOB")]
         public DateTime DateOfBirth { get; set; }
+   
         public string Email { get; set; }
         public bool IsVerified { get; set; }
        //[RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}",
@@ -35,7 +36,7 @@ namespace University.Models
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Confirm your Password")]
         public string ConfirmPassword { get; set; }
         public string Hobbies { get; set; }
-        public int AddressId { get; set; }
+        //public int AddressId { get; set; }
         [DisplayName("Temporary Address")]
         public string AddressLine1 { get; set; }
         [DisplayName("Permanant Address")]
@@ -56,7 +57,7 @@ namespace University.Models
         public DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
 
-
+        public List<Role> RoleList { get; set; }
 
 
 
