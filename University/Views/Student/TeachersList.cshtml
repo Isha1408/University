@@ -1,0 +1,41 @@
+﻿@model IEnumerable<University.Entities.TeacherInSubject>
+@{
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject.Name)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </th>*@
+        <th>
+            @Html.Label("Teachers")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                </td>*@
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Back to Index", "Index");

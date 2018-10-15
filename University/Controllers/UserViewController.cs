@@ -167,17 +167,18 @@ namespace University.Controllers
                 //For Admin
                 else if (userDetails.RoleId == 2)
                 {
-                    return RedirectToAction("GetAllUsers", "Admin");
+                   // return RedirectToAction("GetAllUsers", "Admin");
+                    return RedirectToAction("GetAllUsers", "Admin", new { area = "Admin" });
                 }
                 //For Teacher
                 else if (userDetails.RoleId == 3)
                 {  
-                    return RedirectToAction("GetAllStudents", "Teacher");
+                    return RedirectToAction("GetAllStudents", "Teachers");
                 }
                 //For Student
                 else if (userDetails.RoleId == 4)
                 {
-                    return RedirectToAction("Index", "student");
+                    return RedirectToAction("Index", "Student");
                 }
             }
             else

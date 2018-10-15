@@ -166,6 +166,7 @@
     <Compile Include="Areas\Admin\Controllers\CountriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
@@ -228,6 +229,7 @@
     <Content Include="Areas\Admin\Views\Admin\CreateUser.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Views\Teachers\GetAllStudents.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ThankYou.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.min %281%29.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -273,6 +275,11 @@
     <Content Include="Areas\Admin\Views\Subject\Index.cshtml" />
     <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
     <Content Include="Views\UserView\UserRegistration.cshtml" />
+    <Content Include="Views\Student\TeachersList.cshtml" />
+    <Content Include="Views\Student\SubjectList.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\MyProfile.cshtml" />
+    <Content Include="Views\Shared\_MyLayoutPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

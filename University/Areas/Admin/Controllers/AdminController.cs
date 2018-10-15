@@ -369,6 +369,29 @@ namespace University.Areas.Admin.Controllers
                 throw ex;
             }
         }
+        /// <summary>
+        /// For logging out the session
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LogOut()
+        {
+            if (Session["UserId"] != null)
+            {
+                return RedirectToAction("ThankYou");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        /// <summary>
+        /// Admin will be redirected to this page after Logout
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ThankYou()
+        {
+            return View();
+        }
 
         /// <summary>
         /// Function to get list of Roles
