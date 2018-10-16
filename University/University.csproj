@@ -16,7 +16,7 @@
     <AssemblyName>University</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -166,6 +166,7 @@
     <Compile Include="Areas\Admin\Controllers\CountriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -280,6 +281,7 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\MyProfile.cshtml" />
     <Content Include="Views\Shared\_MyLayoutPage.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -322,7 +324,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54065</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:54065/</IISUrl>
+          <IISUrl>http://localhost/University/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

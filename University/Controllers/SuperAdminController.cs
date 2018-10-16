@@ -278,9 +278,9 @@ namespace University.Controllers
                     objUser.Address.ZipCode = objUserViewModel.ZipCode;
                     objUser.IsActive = objUserViewModel.IsActive;
                     objUser.DateModified = DateTime.Now;
+                    //User Data is saved in the user table
 
-                    db.SaveChanges();  //User Data is saved in the user table
-
+                    db.SaveChanges();  
                     return RedirectToAction("GetAllUsers");
 
                 }
