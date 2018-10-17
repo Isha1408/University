@@ -15,13 +15,13 @@ namespace University.Areas.Admin.Controllers
     {
         private UserContext db = new UserContext();
 
-        // GET: Course
+        // GET: Admin/Course
         public ActionResult Index()
         {
             return View(db.Courses.ToList());
         }
 
-        // GET: Course/Details/5
+        // GET: Admin/Course/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,13 +36,13 @@ namespace University.Areas.Admin.Controllers
             return View(course);
         }
 
-        // GET: Course/Create
+        // GET: Admin/Course/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Course/Create
+        // POST: Admin/Course/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -59,7 +59,7 @@ namespace University.Areas.Admin.Controllers
             return View(course);
         }
 
-        // GET: Course/Edit/5
+        // GET: Admin/Course/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,7 +74,7 @@ namespace University.Areas.Admin.Controllers
             return View(course);
         }
 
-        // POST: Course/Edit/5
+        // POST: Admin/Course/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -90,7 +90,7 @@ namespace University.Areas.Admin.Controllers
             return View(course);
         }
 
-        // GET: Course/Delete/5
+        // GET: Admin/Course/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,7 +105,7 @@ namespace University.Areas.Admin.Controllers
             return View(course);
         }
 
-        // POST: Course/Delete/5
+        // POST: Admin/Course/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

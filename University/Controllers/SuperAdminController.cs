@@ -120,7 +120,7 @@ namespace University.Controllers
             //objUserModel.AddressId = 1;
 
             /* Create the TransactionScope to execute the commands, guaranteeing
-             * 
+              
              that both commands can commit or roll back as a single unit of work.*/
             
             using (var transaction = db.Database.BeginTransaction())
@@ -136,6 +136,7 @@ namespace University.Controllers
                     address.CountryId = objUserModel.CountryId;
                     address.StateId = objUserModel.StateId;
                     address.CityId = objUserModel.CityId;
+                    address.ZipCode= objUserModel.ZipCode;
 
                     db.Addresses.Add(address); //Address of the user is stored in the DataBase.
                     db.SaveChanges();
