@@ -205,8 +205,14 @@ namespace University.Areas.Admin.Controllers
             }
 
             User objUser = db.Users.Find(id);
-           // var userData = from p in db.Users where p.UserId == id select p;
-          //  var tempUserList = db.Users.ToList();
+            // var userData = from p in db.Users where p.UserId == id select p;
+            //  var tempUserList = db.Users.ToList();
+
+            //List<State> statesList = db.States.Where(x => x.CountryId == objUserRegistration.Address.CountryId).ToList();
+            //ViewBag.StateList = new SelectList(statesList, "StateId", "StateName");
+            //List<City> citiesList = db.Cities.Where(x => x.StateId == objUserRegistration.Address.StateId).ToList();
+            //ViewBag.CityList = new SelectList(citiesList, "CityId", "CityName");
+
 
             UserViewModel objUserViewModel = new UserViewModel();       
             objUserViewModel.FirstName = objUser.FirstName;
