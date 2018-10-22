@@ -51,7 +51,7 @@ namespace University.Models
     }
     public class FilterViewModel
     {
-        public List<SearchViewModel> List { get; set; }
+        public List<SearchViewModel> SearchList { get; set; }
         [Display(Name = "First Name")]
 
         public string FirstName { get; set; }
@@ -70,8 +70,8 @@ namespace University.Models
         //[DisplayFormat(DataFormatString =
         //        "{0:yyyy-MM-dd}",
         //  ApplyFormatInEditMode = true)]
-
-        public System.DateTime DOB { get; set; }
+        public DateTime DateOfBirth { get; set; }
+     
 
         [Display(Name = "Email")]
         public string Email { get; set; }

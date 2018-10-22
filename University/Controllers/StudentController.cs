@@ -12,7 +12,11 @@ namespace University.Controllers
     {
         UserContext db = new UserContext();
 
-        // GET: Student
+       /// <summary>
+       /// Method To get details of Logged in User
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns></returns>
         public ActionResult MyProfile(int? id)
         {
 
@@ -27,7 +31,10 @@ namespace University.Controllers
             return View(usr);
         }
 
-
+        /// <summary>
+        /// Method To display List of Subjects with their Courses
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             var subjectList = db.SubjectInCourses.ToList();
@@ -35,17 +42,21 @@ namespace University.Controllers
             return View(subjectList.ToList());
            
         }
+        /// <summary>
+        /// Method To show List of teachers Along with subjects
+        /// </summary>
+        /// <returns></returns>
         public ActionResult TeachersList()
         {
             var teachersList = db.TeacherInSubjects.ToList();
             return View(teachersList);
         }
-        public ActionResult SubjectList(User user )
-        {
+        //public ActionResult SubjectList(User user )
+        //{
            
-            var subjectList = db.SubjectInCourses.Where(x => user.CourseId == 1 || user.CourseId == 2||user.CourseId==3||user.CourseId==4).ToList();
+        //    var subjectList = db.SubjectInCourses.Where(x => user.CourseId == 1 || user.CourseId == 2||user.CourseId==3||user.CourseId==4).ToList();
             
-            return View(subjectList.ToList());
-        }
+        //    return View(subjectList.ToList());
+        //}
     }
 }

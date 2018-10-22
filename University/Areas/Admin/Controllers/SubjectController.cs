@@ -15,13 +15,20 @@ namespace University.Areas.Admin.Controllers
     {
         private UserContext db = new UserContext();
 
-        // GET: Subject
+       /// <summary>
+       /// To get List of Subjects.
+       /// </summary>
+       /// <returns></returns>
         public ActionResult Index()
         {
             return View(db.Subjects.ToList());
         }
 
-        // GET: Subject/Details/5
+      /// <summary>
+      /// To get details of each subject.
+      /// </summary>
+      /// <param name="id"></param>
+      /// <returns></returns>
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,15 +43,20 @@ namespace University.Areas.Admin.Controllers
             return View(subject);
         }
 
-        // GET: Subject/Create
+       /// <summary>
+       /// GET Method to create new Subject.
+       /// </summary>
+       /// <returns></returns>
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Subject/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       /// <summary>
+       /// POST Method To create new subject.
+       /// </summary>
+       /// <param name="subject"></param>
+       /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,IsActive")] Subject subject)
@@ -59,7 +71,11 @@ namespace University.Areas.Admin.Controllers
             return View(subject);
         }
 
-        // GET: Subject/Edit/5
+      /// <summary>
+      /// GET Method: To edit available Subjects..
+      /// </summary>
+      /// <param name="id"></param>
+      /// <returns></returns>
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,9 +90,11 @@ namespace University.Areas.Admin.Controllers
             return View(subject);
         }
 
-        // POST: Subject/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       /// <summary>
+       /// Post Method To edit Subject in the database.
+       /// </summary>
+       /// <param name="subject"></param>
+       /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,IsActive")] Subject subject)
@@ -90,7 +108,11 @@ namespace University.Areas.Admin.Controllers
             return View(subject);
         }
 
-        // GET: Subject/Delete/5
+      /// <summary>
+      /// GET method to delete Subjects.
+      /// </summary>
+      /// <param name="id"></param>
+      /// <returns></returns>
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,8 +126,11 @@ namespace University.Areas.Admin.Controllers
             }
             return View(subject);
         }
-
-        // POST: Subject/Delete/5
+          /// <summary>
+          /// POST method to edit Subjects.
+          /// </summary>
+          /// <param name="id"></param>
+          /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -17,14 +17,32 @@ namespace University.Controllers
         // Object of Context class is made.
         private UserContext db = new UserContext();
 
+        public ActionResult Index(string searching)
+        {
+            var users = from s in db.Users select s;
+            if (!String.IsNullOrEmpty(searching))
+            {
+                users = users.Where(s => s.FirstName.Contains(searching));
+
+            }
+            return View(users.ToList());
+        }
+
         /// <summary>
         /// To show List of all Users and Admin
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetAllUsers()
+        public ActionResult GetAllUsers(string searching)
         {
-            var returnedUserList = db.Users.Where(x => x.RoleId != 1).ToList();
-            return View(returnedUserList);
+            var users = from s in db.Users where s.RoleId !=1 select s;
+            if (!String.IsNullOrEmpty(searching))
+            {
+                users = users.Where(s => s.Role.RoleName.Contains(searching) && s.RoleId != 1);
+
+            }
+            //  var returnedUserList = db.Users.Where(x => x.RoleId != 1).ToList();
+            // return View(returnedUserList);
+            return View(users.ToList());
         }
 
         /// <summary>
@@ -192,10 +210,13 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult EditUser(int id)
         {
+            // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
+            // Code to show Courses in DropDown
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = objCourseList;
+            // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
 
@@ -205,10 +226,6 @@ namespace University.Controllers
             }
 
             User objUser = db.Users.Find(id);
-
-           // var userData = from p in db.Users where p.UserId == id select p;       
-            //var tempUserList = db.Users.ToList();
-
 
             UserViewModel objUserViewModel = new UserViewModel();    
             objUserViewModel.FirstName = objUser.FirstName;
@@ -246,18 +263,19 @@ namespace University.Controllers
         [HttpPost]
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
+            // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = new SelectList(db.Users.ToList(), "RoleId", "RoleName");
+            // Code to show Courses in DropDown
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = objCourseList;
+            // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
             try
             {
                 User objUser = db.Users.Find(id);           
-              //  var userData = from p in db.Users where p.UserId == id select p;
-               // var tempUserList = db.Users.FirstOrDefault();
-
+            
                 if (ModelState.IsValid)
                 { 
                     objUser.FirstName = objUserViewModel.FirstName;
@@ -306,11 +324,7 @@ namespace University.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            User objUser = db.Users.Find(id);
-           // var userData = (from p in db.Users
-                      // where p.UserId == id
-                      // select p).ToList();
-           //var tempUserList = db.Users.ToList();
+            User objUser = db.Users.Find(id); 
 
             UserViewModel objUserViewModel = new UserViewModel();
             objUserViewModel.FirstName = objUser.FirstName;
@@ -353,8 +367,19 @@ namespace University.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                  
+                    UserInRole objUserInRole = db.UserInRoles.Find(id);
                     User objUser = db.Users.Find(id);
+                  
+                    Address objAddress = db.Addresses.Find(objUser.AddressId);
+                    // To remove User from UserInRole table.
+                    db.UserInRoles.Remove(objUserInRole);
+                    //To remove address of user from address table
+                   
+                    //To Remove User from User Table                  
                     db.Users.Remove(objUser);
+                    db.Addresses.Remove(objAddress);
+
                     db.SaveChanges();
                 }
 

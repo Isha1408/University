@@ -22,6 +22,11 @@
 <p>
     @Html.Partial("CreateButtonPartial")
 </p>
+@using (Html.BeginForm("GetAllUsers", "SuperAdmin", FormMethod.Get))
+{
+    @Html.TextBox("searching")
+    <input type="submit" value="submit" />
+}
 <table class="table table-striped">
     <tr class="success">
 

@@ -288,7 +288,7 @@
     <Content Include="Views\Search\SearchUserRecord.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
-    <Content Include="Views\Search\SearchResultGrid.cshtml" />
+    <Content Include="Views\Search\_SearchResultGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
