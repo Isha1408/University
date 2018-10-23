@@ -60,33 +60,35 @@ namespace University.Controllers
                 }
 
                 User user = db.Users.Find(id);
-               // var userData = from p in db.Users
-                         //  where p.UserId == id
-                         //  select p;
-               // var tempUserList = db.Users.ToList();
+                // var userData = from p in db.Users
+                //  where p.UserId == id
+                //  select p;
+                // var tempUserList = db.Users.ToList();
 
-                UserViewModel objUserViewModel = new UserViewModel();
+                UserViewModel objUserViewModel = new UserViewModel
+                {
 
-                //objUserViewModel.UserId = user.UserId;
-                objUserViewModel.FirstName = user.FirstName;
-                objUserViewModel.LastName = user.LastName;
-                objUserViewModel.Gender = user.Gender;
-                objUserViewModel.Hobbies = user.Hobbies;
-                objUserViewModel.Email = user.Email;
-                objUserViewModel.Password = user.Password;
-                objUserViewModel.DateOfBirth = user.DateOfBirth;
-                objUserViewModel.RoleId = user.RoleId;
-                objUserViewModel.CourseId = user.CourseId;
-                //objUserViewModel.AddressId = user.AddressId;
-                objUserViewModel.IsActive = user.IsActive;
-                objUserViewModel.DateCreated = user.DateCreated;
-                objUserViewModel.DateModified = user.DateModified;
-                objUserViewModel.AddressLine1 = user.Address.AddressLine1;
-                objUserViewModel.AddressLine2 = user.Address.AddressLine2;
-                objUserViewModel.CountryId = user.Address.CountryId;
-                objUserViewModel.StateId = user.Address.StateId;
-                objUserViewModel.CityId = user.Address.CityId;
-                objUserViewModel.ZipCode = user.Address.ZipCode;
+                    //objUserViewModel.UserId = user.UserId;
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Gender = user.Gender,
+                    Hobbies = user.Hobbies,
+                    Email = user.Email,
+                    Password = user.Password,
+                    DateOfBirth = user.DateOfBirth,
+                    RoleId = user.RoleId,
+                    CourseId = user.CourseId,
+                    //objUserViewModel.AddressId = user.AddressId;
+                    IsActive = user.IsActive,
+                    DateCreated = user.DateCreated,
+                    DateModified = user.DateModified,
+                    AddressLine1 = user.Address.AddressLine1,
+                    AddressLine2 = user.Address.AddressLine2,
+                    CountryId = user.Address.CountryId,
+                    StateId = user.Address.StateId,
+                    CityId = user.Address.CityId,
+                    ZipCode = user.Address.ZipCode
+                };
 
 
                 if (user == null)
@@ -146,15 +148,17 @@ namespace University.Controllers
 
                 try
                 {
-                    Address address = new Address();
+                    Address address = new Address
+                    {
 
-                    //address.AddressId = objUserModel.AddressId;
-                    address.AddressLine1 = objUserModel.AddressLine1;
-                    address.AddressLine2 = objUserModel.AddressLine2;
-                    address.CountryId = objUserModel.CountryId;
-                    address.StateId = objUserModel.StateId;
-                    address.CityId = objUserModel.CityId;
-                    address.ZipCode= objUserModel.ZipCode;
+                        //address.AddressId = objUserModel.AddressId;
+                        AddressLine1 = objUserModel.AddressLine1,
+                        AddressLine2 = objUserModel.AddressLine2,
+                        CountryId = objUserModel.CountryId,
+                        StateId = objUserModel.StateId,
+                        CityId = objUserModel.CityId,
+                        ZipCode = objUserModel.ZipCode
+                    };
 
                     db.Addresses.Add(address); //Address of the user is stored in the DataBase.
                     db.SaveChanges();
@@ -162,31 +166,34 @@ namespace University.Controllers
                     //Data is saved in the User Table.
                     int latestAddressId = address.AddressId;
 
-                    User obj = new User();
-                 
-                    obj.FirstName = objUserModel.FirstName;
-                    obj.LastName = objUserModel.LastName;
-                    obj.Gender = objUserModel.Gender;
-                    obj.Hobbies = objUserModel.Hobbies;
-                    obj.Password = objUserModel.Password; 
-                    obj.ConfirmPassword = objUserModel.ConfirmPassword;
-                    obj.IsVerified = objUserModel.IsVerified;
-                    obj.Email = objUserModel.Email;
-                    obj.DateOfBirth = objUserModel.DateOfBirth;
-                    obj.IsActive = objUserModel.IsActive;
-                    obj.DateCreated = DateTime.Now;
-                    obj.DateModified = DateTime.Now;
-                    obj.RoleId = objUserModel.RoleId;
-                    obj.CourseId = objUserModel.CourseId;
-                    obj.AddressId = latestAddressId;
+                    User obj = new User
+                    {
+                        FirstName = objUserModel.FirstName,
+                        LastName = objUserModel.LastName,
+                        Gender = objUserModel.Gender,
+                        Hobbies = objUserModel.Hobbies,
+                        Password = objUserModel.Password,
+                        ConfirmPassword = objUserModel.ConfirmPassword,
+                        IsVerified = objUserModel.IsVerified,
+                        Email = objUserModel.Email,
+                        DateOfBirth = objUserModel.DateOfBirth,
+                        IsActive = objUserModel.IsActive,
+                        DateCreated = DateTime.Now,
+                        DateModified = DateTime.Now,
+                        RoleId = objUserModel.RoleId,
+                        CourseId = objUserModel.CourseId,
+                        AddressId = latestAddressId
+                    };
                     db.Users.Add(obj);      
                     db.SaveChanges();
 
                     // User and their Roles are saved in the UserInRole Table.
                     int latestUserId = obj.UserId;
-                    UserInRole userInRole = new UserInRole();
-                    userInRole.RoleId = objUserModel.RoleId;
-                    userInRole.UserId = latestUserId;
+                    UserInRole userInRole = new UserInRole
+                    {
+                        RoleId = objUserModel.RoleId,
+                        UserId = latestUserId
+                    };
                     db.UserInRoles.Add(userInRole);
 
                     db.SaveChanges();
@@ -367,19 +374,18 @@ namespace University.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                  
-                    UserInRole objUserInRole = db.UserInRoles.Find(id);
-                    User objUser = db.Users.Find(id);
-                  
-                    Address objAddress = db.Addresses.Find(objUser.AddressId);
+
+                    UserInRole objUserInRole = db.UserInRoles.Where(m => m.UserId == id).FirstOrDefault();
+                    User objUser = db.Users.Where(m => m.UserId == id).FirstOrDefault();
+                    Address objAddress = db.Addresses.Where(m => m.AddressId == objUser.AddressId).FirstOrDefault();
+                   
+                    //To remove address of user from address table
+                    db.Addresses.Remove(objAddress);
+                    //To Remove User from User Table
+                    db.Users.Remove(objUser);
+
                     // To remove User from UserInRole table.
                     db.UserInRoles.Remove(objUserInRole);
-                    //To remove address of user from address table
-                   
-                    //To Remove User from User Table                  
-                    db.Users.Remove(objUser);
-                    db.Addresses.Remove(objAddress);
-
                     db.SaveChanges();
                 }
 

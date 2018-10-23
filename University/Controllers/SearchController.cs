@@ -70,19 +70,29 @@ namespace University.Controllers
         public ActionResult SearchUserRecord(FilterViewModel objFilterViewModel)
         {
                //query to fetch record from multiple tables on the basis of filters.
-
+               
             var resultedRecord = (from ux in db.Users
-                                  join ad in db.Addresses on ux.AddressId equals ad.AddressId
-                                  where (ux.FirstName.Contains(objFilterViewModel.FirstName) || ux.FirstName == null) &&
-                                   (ux.LastName.Contains(objFilterViewModel.LastName) || ux.LastName == null) &&
-                                    (ux.Gender.Contains(objFilterViewModel.Gender) || ux.Gender == null) &&
-                                   (ux.Email.Contains(objFilterViewModel.Email) || ux.Email == null) &&
-                                      (ux.CourseId.Equals(objFilterViewModel.CourseId) || ux.CourseId == 0) &&
-                                         (ux.RoleId.Equals(objFilterViewModel.RoleId) || ux.RoleId == 0) &&
-                                    (ad.AddressLine1.Contains(objFilterViewModel.AddressLine1) || ad.AddressLine1 == null) &&
-                                    (ad.AddressLine2.Contains(objFilterViewModel.AddressLine2) || ad.AddressLine2 == null) &&
-                                      (ad.CountryId.Equals(objFilterViewModel.CountryId) || ad.CountryId == 0) 
-                                      
+                               join ad in db.Addresses on ux.AddressId equals ad.AddressId
+                                  //                      where (ux.FirstName.Contains(objFilterViewModel.FirstName) || ux.FirstName == null) &&
+                                  //                       (ux.LastName.Contains(objFilterViewModel.LastName) || ux.LastName == null) &&
+                                  //                        (ux.Gender.Contains(objFilterViewModel.Gender) || ux.Gender == null) &&
+                                  //                       (ux.Email.Contains(objFilterViewModel.Email) || ux.Email == null) &&
+                                  //                          (ux.CourseId.Equals(objFilterViewModel.CourseId) || ux.CourseId == 0) &&
+                                  //                             (ux.RoleId.Equals(objFilterViewModel.RoleId) || ux.RoleId == 0) &&
+                                  //                        (ad.AddressLine1.Contains(objFilterViewModel.AddressLine1) || ad.AddressLine1 == null) &&
+                                  //                        (ad.AddressLine2.Contains(objFilterViewModel.AddressLine2) || ad.AddressLine2 == null) &&
+                                  //                          (ad.CountryId.Equals(objFilterViewModel.CountryId) || ad.CountryId == 0) 
+                                  
+                                  where (ux.FirstName.Contains(objFilterViewModel.FirstName) ) ||
+                                   (ux.LastName.Contains(objFilterViewModel.LastName) ) ||
+                                    (ux.Gender.Contains(objFilterViewModel.Gender) ) ||
+                                   (ux.Email.Contains(objFilterViewModel.Email) ) ||
+                                      (ux.CourseId.Equals(objFilterViewModel.CourseId) ) ||
+                                         (ux.RoleId.Equals(objFilterViewModel.RoleId) ) ||
+                                    (ad.AddressLine1.Contains(objFilterViewModel.AddressLine1)) ||
+                                    (ad.AddressLine2.Contains(objFilterViewModel.AddressLine2) ) ||
+                                      (ad.CountryId.Equals(objFilterViewModel.CountryId) )
+
 
                                   select new SearchViewModel
                                   {

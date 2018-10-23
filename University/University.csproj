@@ -168,6 +168,8 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubjectInCourseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TeacherInSubjectController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
@@ -194,6 +196,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
+    <Compile Include="Models\TeacherSubjectModel.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -233,6 +236,17 @@
     <Content Include="Views\Teachers\GetAllStudents.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\ThankYou.cshtml" />
     <Content Include="Grid.mvc.readme" />
+    <Content Include="Areas\Admin\Views\Admin\AddSubject.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInSubject\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInSubject\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInSubject\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInSubject\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TeacherInSubject\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SubjectInCourse\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SubjectInCourse\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\SubjectInCourse\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\SubjectInCourse\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\SubjectInCourse\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.min %281%29.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -280,7 +294,6 @@
     <Content Include="Views\UserView\UserRegistration.cshtml" />
     <Content Include="Views\Student\TeachersList.cshtml" />
     <Content Include="Views\Student\SubjectList.cshtml" />
-    <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\MyProfile.cshtml" />
     <Content Include="Views\Shared\_MyLayoutPage.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
@@ -289,6 +302,8 @@
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Search\_SearchResultGrid.cshtml" />
+    <Content Include="Views\Teachers\MyProfile.cshtml" />
+    <Content Include="Views\Student\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

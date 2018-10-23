@@ -366,9 +366,9 @@ namespace University.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    UserInRole objUserInRole = db.UserInRoles.Find(id);
-                    User objUser = db.Users.Find(id);
-                    Address objAddress = db.Addresses.Find(objUser.AddressId);
+                    UserInRole objUserInRole = db.UserInRoles.Where(m => m.UserId == id).FirstOrDefault();
+                    User objUser = db.Users.Where(m => m.UserId == id).FirstOrDefault();
+                    Address objAddress = db.Addresses.Where(m => m.AddressId == objUser.AddressId).FirstOrDefault(); 
                   
                         //To remove address of user from address table
                         db.Addresses.Remove(objAddress);
@@ -411,6 +411,16 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult ThankYou()
         {
+            return View();
+        }
+
+
+        public ActionResult AddSubject()
+        {
+          
+            List<Subject> Lists = db.Subjects.ToList();
+            ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
+
             return View();
         }
 

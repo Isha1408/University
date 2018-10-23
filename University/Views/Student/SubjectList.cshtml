@@ -1,17 +1,28 @@
 ﻿@model IEnumerable<University.Entities.SubjectInCourse>
- 
+
 @{
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
 }
 
+<h2>Index</h2>
 
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
+}
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Course.CourseName)
         </th>
         <th>
-            @Html.DisplayName("Subjects")
+            @Html.DisplayNameFor(model => model.Subject.Name)
         </th>
         <th></th>
     </tr>
@@ -34,5 +45,10 @@
     }
 
 </table>
-@Html.ActionLink("Back to Index", "Index")
+<p>
+    @Html.ActionLink("View Teachers", "TeachersList")
+</p>
 
+<p>
+    @Html.ActionLink("View Profile", "My Profile")
+</p>

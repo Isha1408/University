@@ -13,6 +13,28 @@ namespace University.Controllers
     {
         private UserContext db = new UserContext();
 
+        public ActionResult MyProfile()
+        {
+
+            //if (Session["UserId"] != null)
+            //{
+            //    var usr = db.Users.Where(m => m.UserId.Equals(Session["UserId"].ToString())).ToList();
+            //    if (usr != null)
+            //        return View(usr);
+            //}
+            //return View();
+
+            User user = (User)Session["User"];
+            var usr = db.Users.Find(user.UserId);
+            if (Session["User"] != null)
+            {
+                var userDetails = db.Users.Where(u => u.UserId == user.UserId);
+                if (usr != null)
+                    return View(userDetails);
+            }
+            return View(usr);
+        }
+
         /// <summary>
         /// To Show List of Students
         /// </summary>

@@ -172,13 +172,17 @@ namespace University.Controllers
                 }
                 //For Teacher
                 else if (userDetails.RoleId == 3)
-                {  
-                    return RedirectToAction("GetAllStudents", "Teachers");
+                {
+                    Session["User"] = userDetails;
+
+                    return RedirectToAction("MyProfile", "Teachers");
                 }
                 //For Student
                 else if (userDetails.RoleId == 4)
                 {
-                    return RedirectToAction("Index", "Student");
+                    Session["User"] = userDetails;
+
+                    return RedirectToAction("MyProfile", "Student");
                 }
             }
             else
