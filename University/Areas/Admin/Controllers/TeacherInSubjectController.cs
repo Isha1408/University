@@ -15,14 +15,20 @@ namespace University.Areas.Admin.Controllers
     {
         private UserContext db = new UserContext();
 
-        // GET: Admin/TeacherInSubject
+      /// <summary>
+      /// To Show Teachewr List with their Subjects
+      /// </summary>
+      /// <returns></returns>
         public ActionResult Index()
         {
             var teacherInSubjects = db.TeacherInSubjects.Include(t => t.Subject).Include(t => t.User);
             return View(teacherInSubjects.ToList());
         }
-
-        // GET: Admin/TeacherInSubject/Details/5
+       /// <summary>
+       /// To show Details of Each teacher with their Subject
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns></returns>
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,7 +43,10 @@ namespace University.Areas.Admin.Controllers
             return View(teacherInSubject);
         }
 
-        // GET: Admin/TeacherInSubject/Create
+       /// <summary>
+       /// GET Method: To assign Subject To teachers
+       /// </summary>
+       /// <returns></returns>
         public ActionResult Create()
         {
             ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name");
@@ -45,9 +54,11 @@ namespace University.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/TeacherInSubject/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST Method: To assign Subject To teachers
+        /// </summary>
+        /// <param name="teacherInSubject"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,UserId,SubjectId")] TeacherInSubject teacherInSubject)
@@ -64,7 +75,11 @@ namespace University.Areas.Admin.Controllers
             return View(teacherInSubject);
         }
 
-        // GET: Admin/TeacherInSubject/Edit/5
+        /// <summary>
+        /// GET Method: To edit Subjectand Teachers
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,10 +95,11 @@ namespace University.Areas.Admin.Controllers
             ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", teacherInSubject.UserId);
             return View(teacherInSubject);
         }
-
-        // POST: Admin/TeacherInSubject/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST Method: To edit Subjectand Teachers,.
+        /// </summary>
+        /// <param name="teacherInSubject"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,UserId,SubjectId")] TeacherInSubject teacherInSubject)
@@ -99,7 +115,11 @@ namespace University.Areas.Admin.Controllers
             return View(teacherInSubject);
         }
 
-        // GET: Admin/TeacherInSubject/Delete/5
+       /// <summary>
+       /// GET Method: To delete subject and teacher.
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns></returns>
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -114,7 +134,11 @@ namespace University.Areas.Admin.Controllers
             return View(teacherInSubject);
         }
 
-        // POST: Admin/TeacherInSubject/Delete/5
+        /// <summary>
+        /// POST  Method: To delete subject and teacher.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

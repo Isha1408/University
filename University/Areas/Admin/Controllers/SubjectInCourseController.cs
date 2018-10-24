@@ -15,14 +15,18 @@ namespace University.Areas.Admin.Controllers
     {
         private UserContext db = new UserContext();
 
-        // GET: Admin/SubjectInCourse
+       // To get List of Course with their Subjects.
         public ActionResult Index()
         {
             var subjectInCourses = db.SubjectInCourses.Include(s => s.Course).Include(s => s.Subject);
             return View(subjectInCourses.ToList());
         }
 
-        // GET: Admin/SubjectInCourse/Details/5
+       /// <summary>
+       /// To show details of each Course and Subjects
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns></returns>
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,7 +41,10 @@ namespace University.Areas.Admin.Controllers
             return View(subjectInCourse);
         }
 
-        // GET: Admin/SubjectInCourse/Create
+      /// <summary>
+      /// GET Method :-To Create new Subject and new Course
+      /// </summary>
+      /// <returns></returns>
         public ActionResult Create()
         {
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
@@ -45,9 +52,11 @@ namespace University.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/SubjectInCourse/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST  Method :-To Create new Subject and new Course
+        /// </summary>
+        /// <param name="subjectInCourse"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
@@ -63,8 +72,12 @@ namespace University.Areas.Admin.Controllers
             ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name", subjectInCourse.SubjectId);
             return View(subjectInCourse);
         }
-
-        // GET: Admin/SubjectInCourse/Edit/5
+        /// <summary>
+        /// GET :-To Edit Subject In Course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+    
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -81,9 +94,11 @@ namespace University.Areas.Admin.Controllers
             return View(subjectInCourse);
         }
 
-        // POST: Admin/SubjectInCourse/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST Method:- To edit  Subject In Course
+        /// </summary>
+        /// <param name="subjectInCourse"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
@@ -99,7 +114,11 @@ namespace University.Areas.Admin.Controllers
             return View(subjectInCourse);
         }
 
-        // GET: Admin/SubjectInCourse/Delete/5
+     /// <summary>
+     /// GET Method:To delete subject from any Course
+     /// </summary>
+     /// <param name="id"></param>
+     /// <returns></returns>
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,8 +132,11 @@ namespace University.Areas.Admin.Controllers
             }
             return View(subjectInCourse);
         }
-
-        // POST: Admin/SubjectInCourse/Delete/5
+        /// <summary>
+        /// POST Method:To delete subject from any Course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

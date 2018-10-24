@@ -115,6 +115,7 @@ namespace University.Controllers
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
 
+
             return View();
         }
         /// <summary>
@@ -226,6 +227,12 @@ namespace University.Controllers
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            //Code to Show State Dropdown
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            //Code to show City dropDown
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
 
             if (id == 0)
             {
@@ -241,6 +248,7 @@ namespace University.Controllers
             objUserViewModel.Hobbies = objUser.Hobbies;
             objUserViewModel.Email = objUser.Email;
             objUserViewModel.Password = objUser.Password;
+            objUserViewModel.Password = objUser.ConfirmPassword;
             objUserViewModel.DateOfBirth = objUser.DateOfBirth;
             objUserViewModel.RoleId = objUser.RoleId;
             objUserViewModel.CourseId = objUser.CourseId;
@@ -279,6 +287,12 @@ namespace University.Controllers
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            //Code to Show State Dropdown
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            //Code to show City dropDown
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
             try
             {
                 User objUser = db.Users.Find(id);           

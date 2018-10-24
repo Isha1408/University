@@ -46,7 +46,7 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult SubjectList()
         {
-            var subjectList = db.SubjectInCourses.ToList();
+            var subjectList = db.SubjectInCourses.Where (m=>m.CourseId==1).ToList();
 
             return View(subjectList.ToList());
 
@@ -60,13 +60,13 @@ namespace University.Controllers
             var teachersList = db.TeacherInSubjects.ToList();
             return View(teachersList);
         }
+      
+
         /// <summary>
-        /// To show SubjectList
+        /// To Edit Profile
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-
-
 
         public ActionResult EditUser(int id)
         {
@@ -79,6 +79,12 @@ namespace University.Controllers
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            //Code to Show State Dropdown
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            //Code to show City dropDown
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
 
             if (id == 0)
             {
@@ -94,6 +100,7 @@ namespace University.Controllers
             objUserViewModel.Hobbies = objUser.Hobbies;
             objUserViewModel.Email = objUser.Email;
             objUserViewModel.Password = objUser.Password;
+            objUserViewModel.ConfirmPassword = objUser.ConfirmPassword;
             objUserViewModel.DateOfBirth = objUser.DateOfBirth;
             objUserViewModel.RoleId = objUser.RoleId;
             objUserViewModel.CourseId = objUser.CourseId;
@@ -132,6 +139,12 @@ namespace University.Controllers
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            //Code to Show State Dropdown
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            //Code to show City dropDown
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
             try
             {
                 User objUser = db.Users.Find(id);
@@ -155,7 +168,7 @@ namespace University.Controllers
                     objUser.Address.StateId = objUserViewModel.StateId;
                     objUser.Address.CityId = objUserViewModel.CityId;
                     objUser.Address.ZipCode = objUserViewModel.ZipCode;
-                    objUser.IsActive = objUserViewModel.IsActive;
+                   objUser.IsActive = objUserViewModel.IsActive;
                     objUser.DateModified = DateTime.Now;
                     //User Data is saved in the user table
 
@@ -174,8 +187,8 @@ namespace University.Controllers
         {
             using (var db = new UserContext())
             {
-                // condition not to Display SuperAdmin
-                var roleList = db.Roles.Where(x => x.RoleId != 1);
+                //condition to display only teachers
+                var roleList = db.Roles.Where(x => x.RoleId != 1 && x.RoleId !=2 && x.RoleId!=3);
                 return roleList.ToList();
             }
         }

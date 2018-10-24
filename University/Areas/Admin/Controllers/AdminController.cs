@@ -155,20 +155,19 @@ namespace University.Areas.Admin.Controllers
                             LastName = objUserModel.LastName,
                             Gender = objUserModel.Gender,
                             Hobbies = objUserModel.Hobbies,
-                            Password = objUserModel.Password.GetHashCode().ToString()
+                            Password = objUserModel.Password,
+                            ConfirmPassword = objUserModel.ConfirmPassword,
+                            IsVerified = objUserModel.IsVerified,
+                            Email = objUserModel.Email,
+                            DateOfBirth = objUserModel.DateOfBirth,
+                            IsActive = objUserModel.IsActive,
+                            DateCreated = DateTime.Now,
+                            DateModified = DateTime.Now,
+                            RoleId = objUserModel.RoleId,
+                            CourseId = objUserModel.CourseId,
+                            AddressId = latestAddressId
                         };
-                        ;
-                        obj.ConfirmPassword = objUserModel.ConfirmPassword.GetHashCode().ToString(); ;
-                        obj.IsVerified = objUserModel.IsVerified;
-                        obj.Email = objUserModel.Email;
-                        obj.DateOfBirth = objUserModel.DateOfBirth;
-                        obj.IsActive = objUserModel.IsActive;
-                        obj.DateCreated = DateTime.Now;
-                        obj.DateModified = DateTime.Now;
-                        obj.RoleId = objUserModel.RoleId;
-                        obj.CourseId = objUserModel.CourseId;
-                        obj.AddressId = latestAddressId;
-                        db.Users.Add(obj);//Data is saved in the User Table.
+                      db.Users.Add(obj);//Data is saved in the User Table.
                         db.SaveChanges();
 
 
@@ -212,6 +211,10 @@ namespace University.Areas.Admin.Controllers
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
 
             if (id == 0)
             {
@@ -228,6 +231,7 @@ namespace University.Areas.Admin.Controllers
                 Hobbies = objUser.Hobbies,
                 Email = objUser.Email,
                 Password = objUser.Password,
+                ConfirmPassword = objUser.ConfirmPassword,
                 DateOfBirth = objUser.DateOfBirth,
                 RoleId = objUser.RoleId,
                 CourseId = objUser.CourseId,
@@ -268,6 +272,10 @@ namespace University.Areas.Admin.Controllers
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
             try
             {
                 User userData = db.Users.Find(id);
@@ -434,7 +442,7 @@ namespace University.Areas.Admin.Controllers
             using (var db = new UserContext())
             {
                 // condition not to Display SuperAdmin and Admin
-                var roleList = db.Roles.Where(x => x.RoleId != 1);
+                var roleList = db.Roles.Where(x => x.RoleId != 1 && x.RoleId!=2);
                 return roleList.ToList();
             }
         }

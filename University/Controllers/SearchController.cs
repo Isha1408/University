@@ -58,7 +58,7 @@ namespace University.Controllers
             objSearchViewModel.CourseList = tempCourseList;
             objSearchViewModel.RoleList = tempRoleList;
 
-          
+         
             return View(objSearchViewModel);
         }
         /// <summary>
@@ -73,25 +73,17 @@ namespace University.Controllers
                
             var resultedRecord = (from ux in db.Users
                                join ad in db.Addresses on ux.AddressId equals ad.AddressId
-                                  //                      where (ux.FirstName.Contains(objFilterViewModel.FirstName) || ux.FirstName == null) &&
-                                  //                       (ux.LastName.Contains(objFilterViewModel.LastName) || ux.LastName == null) &&
-                                  //                        (ux.Gender.Contains(objFilterViewModel.Gender) || ux.Gender == null) &&
-                                  //                       (ux.Email.Contains(objFilterViewModel.Email) || ux.Email == null) &&
-                                  //                          (ux.CourseId.Equals(objFilterViewModel.CourseId) || ux.CourseId == 0) &&
-                                  //                             (ux.RoleId.Equals(objFilterViewModel.RoleId) || ux.RoleId == 0) &&
-                                  //                        (ad.AddressLine1.Contains(objFilterViewModel.AddressLine1) || ad.AddressLine1 == null) &&
-                                  //                        (ad.AddressLine2.Contains(objFilterViewModel.AddressLine2) || ad.AddressLine2 == null) &&
-                                  //                          (ad.CountryId.Equals(objFilterViewModel.CountryId) || ad.CountryId == 0) 
+                                 
                                   
-                                  where (ux.FirstName.Contains(objFilterViewModel.FirstName) ) ||
-                                   (ux.LastName.Contains(objFilterViewModel.LastName) ) ||
-                                    (ux.Gender.Contains(objFilterViewModel.Gender) ) ||
-                                   (ux.Email.Contains(objFilterViewModel.Email) ) ||
-                                      (ux.CourseId.Equals(objFilterViewModel.CourseId) ) ||
-                                         (ux.RoleId.Equals(objFilterViewModel.RoleId) ) ||
-                                    (ad.AddressLine1.Contains(objFilterViewModel.AddressLine1)) ||
-                                    (ad.AddressLine2.Contains(objFilterViewModel.AddressLine2) ) ||
-                                      (ad.CountryId.Equals(objFilterViewModel.CountryId) )
+                                  where (ux.FirstName==(objFilterViewModel.FirstName) || objFilterViewModel.FirstName==null) ||
+                                   (ux.LastName==(objFilterViewModel.LastName)|| objFilterViewModel.LastName==null) ||
+                                    (ux.Gender==(objFilterViewModel.Gender)|| objFilterViewModel.Gender==null) ||
+                                   (ux.Email==(objFilterViewModel.Email) || objFilterViewModel.Email == null) ||
+                                      (ux.CourseId==(objFilterViewModel.CourseId) || objFilterViewModel.CourseId == 0 ) ||
+                                         (ux.RoleId.Equals(objFilterViewModel.RoleId) || objFilterViewModel.RoleId == null) ||
+                                    (ad.AddressLine1==(objFilterViewModel.AddressLine1) || objFilterViewModel.AddressLine1 == null) ||
+                                    (ad.AddressLine2==(objFilterViewModel.AddressLine2) || objFilterViewModel.AddressLine2 == null) ||
+                                      (ad.CountryId==(objFilterViewModel.CountryId) || objFilterViewModel.CountryId == 0) 
 
 
                                   select new SearchViewModel
@@ -113,58 +105,59 @@ namespace University.Controllers
 
           
             objFilterViewModel.SearchList = resultedRecord;
-            return PartialView(objFilterViewModel);
+            return View(objFilterViewModel);
         }
 
         public ActionResult _SearchResultGrid()
 
         {
-            FilterViewModel objFilterViewModel = new FilterViewModel();
+            //FilterViewModel objFilterViewModel = new FilterViewModel();
 
-            // Get user roles from DB
-            SearchViewModel objViewModel = new SearchViewModel();
+            //// Get user roles from DB
+            //SearchViewModel objViewModel = new SearchViewModel();
 
-            List<Country> countriesList = new List<Country>();
-            List<Course> courseList = new List<Course>();
-            List<Role> roleList = new List<Role>();
+            //List<Country> countriesList = new List<Country>();
+            //List<Course> courseList = new List<Course>();
+            //List<Role> roleList = new List<Role>();
 
-            var countryList = db.Country.ToList();
-            var tempCourseList = db.Courses.ToList();
-            var tempRoleList = db.Roles.ToList();
+            //var countryList = db.Country.ToList();
+            //var tempCourseList = db.Courses.ToList();
+            //var tempRoleList = db.Roles.ToList();
 
-            objViewModel.CountryList = countryList;
-            objViewModel.CourseList = tempCourseList;
-            objViewModel.RoleList = tempRoleList;
+            //objViewModel.CountryList = countryList;
+            //objViewModel.CourseList = tempCourseList;
+            //objViewModel.RoleList = tempRoleList;
 
-            List<SearchViewModel> searchViewModelList = new List<SearchViewModel>();
+            //List<SearchViewModel> searchViewModelList = new List<SearchViewModel>();
 
-            //Get List of users from DB
-            var userData = (from p in db.Users select p).ToList();
-            //  to get address
-            var Useraddress = (from a in db.Addresses select a);
-            foreach (var item in userData)
-            {
+            ////Get List of users from DB
+            //var userData = (from p in db.Users select p).ToList();
+            ////  to get address
+            //var Useraddress = (from a in db.Addresses select a);
+            //foreach (var item in userData)
+            //{
 
-                var userAddress = (from a in db.Addresses where a.AddressId == item.AddressId select a).FirstOrDefault();
-                SearchViewModel objModel = new SearchViewModel
-                {
+            //    var userAddress = (from a in db.Addresses where a.AddressId == item.AddressId select a).FirstOrDefault();
+            //    SearchViewModel objModel = new SearchViewModel
+            //    {
 
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    Gender = item.Gender,
-                    Email = item.Email,
-                    DateOfBirth = item.DateOfBirth,
-                    IsActive = item.IsActive,
-                    AddressLine1 = userAddress.AddressLine1,
-                    AddressLine2 = userAddress.AddressLine1,
-                    CountryId = userAddress.CountryId,
-                    ZipCode = userAddress.ZipCode
-                };
-                searchViewModelList.Add(objModel);
-            }
+            //        FirstName = item.FirstName,
+            //        LastName = item.LastName,
+            //        Gender = item.Gender,
+            //        Email = item.Email,
+            //        DateOfBirth = item.DateOfBirth,
+            //        IsActive = item.IsActive,
+            //        AddressLine1 = userAddress.AddressLine1,
+            //        AddressLine2 = userAddress.AddressLine1,
+            //        CountryId = userAddress.CountryId,
+            //        ZipCode = userAddress.ZipCode
+            //    };
+            //    searchViewModelList.Add(objModel);
+            //}
 
-            objFilterViewModel.SearchList = searchViewModelList;
-            return PartialView(objFilterViewModel);
+            //objFilterViewModel.SearchList = searchViewModelList;
+            //return PartialView(objFilterViewModel);
+            return View();
         }
 
     }
