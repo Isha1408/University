@@ -29,7 +29,7 @@ namespace University.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Details(int? id)
+        public ActionResult CourseDetails(int? id)
         {
             if (id == null)
             {
@@ -47,7 +47,7 @@ namespace University.Areas.Admin.Controllers
       /// GET Method to create new Course
       /// </summary>
       /// <returns></returns>
-        public ActionResult Create()
+        public ActionResult CreateCourse()
         {
             return View();
         }
@@ -59,7 +59,7 @@ namespace University.Areas.Admin.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseId,CourseName,IsActive")] Course course)
+        public ActionResult CreateCourse([Bind(Include = "CourseId,CourseName,IsActive")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace University.Areas.Admin.Controllers
       /// </summary>
       /// <param name="id"></param>
       /// <returns></returns>
-        public ActionResult Edit(int? id)
+        public ActionResult EditCourse(int? id)
         {
             if (id == null)
             {
@@ -97,7 +97,7 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CourseId,CourseName,IsActive")] Course course)
+        public ActionResult EditCourse([Bind(Include = "CourseId,CourseName,IsActive")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +113,7 @@ namespace University.Areas.Admin.Controllers
        /// </summary>
        /// <param name="id"></param>
        /// <returns></returns>
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteCourse(int? id)
         {
             if (id == null)
             {
@@ -132,9 +132,9 @@ namespace University.Areas.Admin.Controllers
        /// </summary>
        /// <param name="id"></param>
        /// <returns></returns>
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteCourse")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteCourse(int id)
         {
             Course course = db.Courses.Find(id);
             db.Courses.Remove(course);

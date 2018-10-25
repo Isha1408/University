@@ -22,7 +22,8 @@ namespace University.Controllers
             var users = from s in db.Users select s;
             if (!String.IsNullOrEmpty(searching))
             {
-                users = users.Where(s => s.FirstName.Contains(searching));
+                users = users.Where(s => s.Role.RoleName.Contains(searching) && s.RoleId != 1 && s.RoleId != 2 || s.FirstName.Contains(searching) ||
+                 s.LastName.Contains(searching) || s.course.CourseName.Contains(searching));
 
             }
             return View(users.ToList());
@@ -79,6 +80,7 @@ namespace University.Controllers
                     RoleId = user.RoleId,
                     CourseId = user.CourseId,
                     //objUserViewModel.AddressId = user.AddressId;
+                    IsVerified = user.IsVerified,
                     IsActive = user.IsActive,
                     DateCreated = user.DateCreated,
                     DateModified = user.DateModified,
@@ -248,11 +250,12 @@ namespace University.Controllers
             objUserViewModel.Hobbies = objUser.Hobbies;
             objUserViewModel.Email = objUser.Email;
             objUserViewModel.Password = objUser.Password;
-            objUserViewModel.Password = objUser.ConfirmPassword;
+            objUserViewModel.ConfirmPassword = objUser.ConfirmPassword;
             objUserViewModel.DateOfBirth = objUser.DateOfBirth;
             objUserViewModel.RoleId = objUser.RoleId;
             objUserViewModel.CourseId = objUser.CourseId;
             objUserViewModel.IsActive = objUser.IsActive;
+            objUserViewModel.IsVerified = objUser.IsVerified;
             objUserViewModel.DateCreated = objUser.DateCreated;
             objUserViewModel.DateModified = objUser.DateModified;
             objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;

@@ -50,7 +50,7 @@ namespace University.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name");
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName");
+            ViewBag.UserId = new SelectList(db.Users.Where(x=>x.RoleId==3), "UserId", "FirstName");
             return View();
         }
 
@@ -71,7 +71,8 @@ namespace University.Areas.Admin.Controllers
             }
 
             ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name", teacherInSubject.SubjectId);
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", teacherInSubject.UserId);
+           // List<User> List = db.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
+            ViewBag.UserId = new SelectList(db.Users.Where(x=>x.RoleId == 3 ), "UserId", "FirstName", teacherInSubject.UserId);
             return View(teacherInSubject);
         }
 
@@ -92,11 +93,11 @@ namespace University.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name", teacherInSubject.SubjectId);
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", teacherInSubject.UserId);
+            ViewBag.UserId = new SelectList(db.Users.Where(x => x.RoleId == 3), "UserId", "FirstName", teacherInSubject.UserId);
             return View(teacherInSubject);
         }
         /// <summary>
-        /// POST Method: To edit Subjectand Teachers,.
+        /// POST Method: To edit Subject and Teachers,.
         /// </summary>
         /// <param name="teacherInSubject"></param>
         /// <returns></returns>
@@ -111,7 +112,7 @@ namespace University.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name", teacherInSubject.SubjectId);
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", teacherInSubject.UserId);
+            ViewBag.UserId = new SelectList(db.Users.Where(x => x.RoleId == 3), "UserId", "FirstName", teacherInSubject.UserId);
             return View(teacherInSubject);
         }
 

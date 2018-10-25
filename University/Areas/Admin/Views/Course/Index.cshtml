@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Course List</h2>
@@ -41,11 +42,14 @@
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+                @Html.ActionLink("Edit", "EditCourse", new { id = item.CourseId }) |
+                @Html.ActionLink("Details", "CourseDetails", new { id = item.CourseId }) |
+                @Html.ActionLink("Delete", "DeleteCourse", new { id = item.CourseId })
             </td>
         </tr>
     }
 
 </table>
+<p>
+    
+</p>

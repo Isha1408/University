@@ -16,15 +16,27 @@
     @Html.Partial("CreateButtonPartial")
 </p>
 <style>
+    .table {
+        margin-top: 15px;
+    }
+
     th, td {
         border: 1px solid #333;
         padding: 5px;
         vertical-align: middle;
+      
     }
+    label {
+        margin-right: 10px;
+    }
+    
 </style>
+
 @using (Html.BeginForm("GetAllUsers", "Admin", FormMethod.Get))
 {
+    @Html.Label("Search")
     @Html.TextBox("searching")
+
     <input type="submit" value="submit" />
 }
 <table class="table table-striped" cellpadding="0" cellspacing="0">
@@ -47,11 +59,14 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
+            @Html.DisplayNameFor(model => model.IsVerified)
         </th>
         @*<th>
-                @Html.DisplayNameFor(model => model.AddressId)
-            </th>*@
+            @Html.DisplayNameFor(model => model.Password)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.AddressId)
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Address.AddressLine1)
         </th>
@@ -70,9 +85,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Address.ZipCode)
         </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.IsVerified)
-            </th>*@
+       
         <th>
             @Html.DisplayNameFor(model => model.Hobbies)
         </th>
@@ -84,8 +97,8 @@
             @Html.DisplayNameFor(model => model.Role.RoleName)
         </th>
         @*<th>
-                @Html.DisplayNameFor(model => model.ConfirmPassword)
-            </th>*@
+            @Html.DisplayNameFor(model => model.ConfirmPassword)
+        </th>*@
 
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
@@ -118,12 +131,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.IsVerified)
-                </td>*@
             <td>
+                    @Html.DisplayFor(modelItem => item.IsVerified)
+                </td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Password)
-            </td>
+            </td>*@
+
             @*<td>
                     @Html.DisplayFor(modelItem => item.AddressId)
                 </td>*@
@@ -168,12 +182,10 @@
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |
-                @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })|
-               
+                @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })
+
             </td>
-            <td>
-                @Html.ActionLink("Add subject", "AddSubject", new { id = item.UserId })
-            </td>
+           
         </tr>
     }
 

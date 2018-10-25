@@ -1,7 +1,7 @@
 ﻿@model University.Entities.SubjectInCourse
 
 @{
-    Layout = null;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -18,11 +18,11 @@
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Course.CourseName)
+                @Html.DisplayName("Course")
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.Course.CourseName)
+                @Html.DisplayName("Subject")
             </dd>
     
             <dt>

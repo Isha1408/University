@@ -29,7 +29,7 @@ namespace University.Areas.Admin.Controllers
       /// </summary>
       /// <param name="id"></param>
       /// <returns></returns>
-        public ActionResult Details(int? id)
+        public ActionResult SubjectDetails(int? id)
         {
             if (id == null)
             {
@@ -47,7 +47,7 @@ namespace University.Areas.Admin.Controllers
        /// GET Method to create new Subject.
        /// </summary>
        /// <returns></returns>
-        public ActionResult Create()
+        public ActionResult CreateSubject()
         {
             return View();
         }
@@ -59,7 +59,7 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,IsActive")] Subject subject)
+        public ActionResult CreateSubject([Bind(Include = "Id,Name,IsActive")] Subject subject)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace University.Areas.Admin.Controllers
       /// </summary>
       /// <param name="id"></param>
       /// <returns></returns>
-        public ActionResult Edit(int? id)
+        public ActionResult EditSubject(int? id)
         {
             if (id == null)
             {
@@ -97,7 +97,7 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,IsActive")] Subject subject)
+        public ActionResult EditSubject([Bind(Include = "Id,Name,IsActive")] Subject subject)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +113,7 @@ namespace University.Areas.Admin.Controllers
       /// </summary>
       /// <param name="id"></param>
       /// <returns></returns>
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteSubject(int? id)
         {
             if (id == null)
             {
@@ -131,9 +131,9 @@ namespace University.Areas.Admin.Controllers
           /// </summary>
           /// <param name="id"></param>
           /// <returns></returns>
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteSubject")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteSubject(int id)
         {
             Subject subject = db.Subjects.Find(id);
             db.Subjects.Remove(subject);

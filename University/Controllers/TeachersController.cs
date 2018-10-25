@@ -12,7 +12,7 @@ namespace University.Controllers
     public class TeachersController : Controller
     {
         private UserContext db = new UserContext();
-
+     
         public ActionResult MyProfile()
         {
 
@@ -160,7 +160,7 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult GetAllStudents()
         {
-            var studentList = db.Users.Where(x => x.RoleId == 4).ToList();
+            var studentList = db.Users.Where(x => x.RoleId == 4 && x.IsActive==true).ToList();
             return View(studentList);
         }
 
@@ -199,6 +199,7 @@ namespace University.Controllers
                 objUserViewModel.CourseId = user.CourseId;
                 //objUserViewModel.AddressId = user.AddressId;
                 objUserViewModel.IsActive = user.IsActive;
+                objUserViewModel.IsVerified = user.IsVerified;
                 objUserViewModel.DateCreated = user.DateCreated;
                 objUserViewModel.DateModified = user.DateModified;
                 objUserViewModel.AddressLine1 = user.Address.AddressLine1;

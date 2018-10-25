@@ -34,6 +34,7 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult SearchUserRecord()
         {
+
             var model = new FilterViewModel();
            SearchViewModel objSearchViewModel = new SearchViewModel();
 
@@ -75,14 +76,14 @@ namespace University.Controllers
                                join ad in db.Addresses on ux.AddressId equals ad.AddressId
                                  
                                   
-                                  where (ux.FirstName==(objFilterViewModel.FirstName) || objFilterViewModel.FirstName==null) ||
-                                   (ux.LastName==(objFilterViewModel.LastName)|| objFilterViewModel.LastName==null) ||
-                                    (ux.Gender==(objFilterViewModel.Gender)|| objFilterViewModel.Gender==null) ||
-                                   (ux.Email==(objFilterViewModel.Email) || objFilterViewModel.Email == null) ||
-                                      (ux.CourseId==(objFilterViewModel.CourseId) || objFilterViewModel.CourseId == 0 ) ||
-                                         (ux.RoleId.Equals(objFilterViewModel.RoleId) || objFilterViewModel.RoleId == null) ||
-                                    (ad.AddressLine1==(objFilterViewModel.AddressLine1) || objFilterViewModel.AddressLine1 == null) ||
-                                    (ad.AddressLine2==(objFilterViewModel.AddressLine2) || objFilterViewModel.AddressLine2 == null) ||
+                                  where (ux.FirstName==(objFilterViewModel.FirstName) || objFilterViewModel.FirstName=="") &&
+                                   (ux.LastName==(objFilterViewModel.LastName)|| objFilterViewModel.LastName=="") &&
+                                    (ux.Gender==(objFilterViewModel.Gender)|| objFilterViewModel.Gender=="") &&
+                                   (ux.Email==(objFilterViewModel.Email) || objFilterViewModel.Email == "") &&
+                                      (ux.CourseId==(objFilterViewModel.CourseId) || objFilterViewModel.CourseId == 0 ) &&
+                                         (ux.RoleId.Equals(objFilterViewModel.RoleId) || objFilterViewModel.RoleId == 0) &&
+                                    (ad.AddressLine1==(objFilterViewModel.AddressLine1) || objFilterViewModel.AddressLine1 == "") &&
+                                    (ad.AddressLine2==(objFilterViewModel.AddressLine2) || objFilterViewModel.AddressLine2 == "") ||
                                       (ad.CountryId==(objFilterViewModel.CountryId) || objFilterViewModel.CountryId == 0) 
 
 
@@ -103,7 +104,7 @@ namespace University.Controllers
 
                                   }).ToList();
 
-          
+
             objFilterViewModel.SearchList = resultedRecord;
             return View(objFilterViewModel);
         }
@@ -111,6 +112,8 @@ namespace University.Controllers
         public ActionResult _SearchResultGrid()
 
         {
+            var userList = db.Users.ToList();
+            return View(userList);
             //FilterViewModel objFilterViewModel = new FilterViewModel();
 
             //// Get user roles from DB
@@ -157,7 +160,7 @@ namespace University.Controllers
 
             //objFilterViewModel.SearchList = searchViewModelList;
             //return PartialView(objFilterViewModel);
-            return View();
+            
         }
 
     }

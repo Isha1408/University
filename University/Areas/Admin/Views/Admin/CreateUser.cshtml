@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "CreateUser";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-}
+
 
 
 <script src="~/Scripts/jquery-1.7.1.min.js"></script>
@@ -55,7 +55,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>UserViewModel</h4>
+       
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

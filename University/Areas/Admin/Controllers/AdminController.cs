@@ -26,7 +26,8 @@ namespace University.Areas.Admin.Controllers
             var users = from s in db.Users where s.RoleId != 1 && s.RoleId !=2 select s;
             if (!String.IsNullOrEmpty(searching))
             {
-                users = users.Where(s => s.Role.RoleName.Contains(searching) && s.RoleId != 1 && s.RoleId != 2);
+                users = users.Where(s => s.Role.RoleName.Contains(searching) && s.RoleId != 1 && s.RoleId != 2 ||s.FirstName.Contains(searching)||
+                s.LastName.Contains(searching)|| s.course.CourseName.Contains(searching));
 
             }
             
@@ -68,6 +69,7 @@ namespace University.Areas.Admin.Controllers
                     RoleId = user.RoleId,
                     CourseId = user.CourseId,
                     //objUserViewModel.AddressId = user.AddressId;
+                    IsVerified = user.IsVerified,
                     IsActive = user.IsActive,
                     DateCreated = user.DateCreated,
                     DateModified = user.DateModified,
@@ -272,8 +274,10 @@ namespace University.Areas.Admin.Controllers
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            // Code to show States in DropDown
             List<State> statesList = db.States.ToList();
             ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            // Code to show Cities in DropDown
             List<City> citiesList = db.City.ToList();
             ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
             try

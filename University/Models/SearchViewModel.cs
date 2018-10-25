@@ -59,7 +59,7 @@ namespace University.Models
 
 
         public string LastName { get; set; }
-        public string RoleId { get; set; }
+        public int RoleId { get; set; }
         public List<Role> RoleList { get; set; }
         public int CourseId { get; set; }
         public List<Course> CourseList { get; set; }

@@ -151,12 +151,15 @@ namespace University.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(User user)
         {
-            var userDetails = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
-
+            var userDetails = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password ).FirstOrDefault();
+        
+           
             //Code to Authenticate Identity Of user.
-          
-            if (userDetails != null)
+
+            if (userDetails != null && userDetails.IsActive == true)
             {
+                
+
                 Session["UserId"] = userDetails.UserId.ToString();
                 Session["UserName"] = userDetails.Email.ToString();
                 //For SuperAdmin
@@ -185,7 +188,12 @@ namespace University.Controllers
                     return RedirectToAction("MyProfile", "Student");
                 }
             }
-            else
+            else if (userDetails.IsActive == false)
+            {
+
+                ModelState.AddModelError("", "Sorry Your Account Has Been Deactivated");
+
+            } else
             {
                 ModelState.AddModelError("", "UserName or Password is wrong");
 
