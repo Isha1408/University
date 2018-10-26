@@ -40,9 +40,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Password)
-        </th>
+        </th>*@
         @*<th>
                 @Html.DisplayNameFor(model => model.AddressId)
             </th>*@
@@ -81,7 +81,7 @@
                 @Html.DisplayNameFor(model => model.ConfirmPassword)
             </th>*@
 
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.IsActive)
         </th>
         <th>
@@ -89,7 +89,7 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateModified)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -115,9 +115,9 @@
             @*<td>
                     @Html.DisplayFor(modelItem => item.IsVerified)
                 </td>*@
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Password)
-            </td>
+            </td>*@
             @*<td>
                     @Html.DisplayFor(modelItem => item.AddressId)
                 </td>*@
@@ -150,7 +150,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Role.RoleName)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
@@ -158,17 +158,18 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateModified)
-            </td>
+            </td>*@
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
+                @Html.ActionLink("View Students", "GetAllStudents", new { id = item.CourseId })
                 @*@Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |
-                    @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })*@
+        @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })*@
             </td>
         </tr>
     }
 
 </table>
 
-@Html.ActionLink("View Students", "GetAllStudents")
+
 
 

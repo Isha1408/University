@@ -28,17 +28,21 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult UserRegistration()
         {
-            UserViewModel objUserViewModel = new UserViewModel();
-            var queryRole = (from role in db.Roles select role).ToList();
-                        
-            objUserViewModel.RoleList = queryRole;
+            //UserViewModel objUserViewModel = new UserViewModel();
+            //var queryRole = (from role in db.Roles select role).ToList();
 
+            //objUserViewModel.RoleList = queryRole;
+
+            //Code to show DropDown of Role
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
+            //Code to show Dropdown of Cousre
             List<Course> courseList = db.Courses.ToList();
             ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
+            // Code to show DropDown of Country
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+
             return View();
         }
         /// <summary>
@@ -95,10 +99,10 @@ namespace University.Controllers
                         objUser.Hobbies = objUserModel.Hobbies;
                         objUser.Password = objUserModel.Password;
                         objUser.ConfirmPassword = objUserModel.ConfirmPassword;
-                        objUser.IsVerified = objUserModel.IsVerified;
+                        objUser.IsVerified = true;
                         objUser.Email = objUserModel.Email;
                         objUser.DateOfBirth = objUserModel.DateOfBirth;
-                        objUser.IsActive = objUserModel.IsActive;
+                        objUser.IsActive = true;
                         objUser.DateCreated = DateTime.Now;
                         objUser.DateModified = DateTime.Now;
                         objUser.RoleId = objUserModel.RoleId;

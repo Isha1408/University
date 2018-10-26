@@ -11,6 +11,7 @@ using University.Models;
 
 namespace University.Areas.Admin.Controllers
 {
+    
     public class CourseController : Controller
     {
         private UserContext db = new UserContext();

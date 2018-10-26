@@ -24,15 +24,17 @@ namespace University.Models
         public string Gender { get; set; }
         [DisplayName("DOB")]
         public DateTime DateOfBirth { get; set; }
-   
+        [Required]
         public string Email { get; set; }
         public bool IsVerified { get; set; }
-       //[RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}",
-      //ErrorMessage = "Password should be of minimum 6 characters with at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character")]
+        [Required]
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}",
+        ErrorMessage = "Password should be of minimum 6 characters with at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [DataType(DataType.Password)]
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Confirm your Password")]
+        [Required]
         public string ConfirmPassword { get; set; }
         public string Hobbies { get; set; }
         //public int AddressId { get; set; }
@@ -55,11 +57,11 @@ namespace University.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public bool IsActive { get; set; }
+        public List<Course> Course { get; set; }
 
         public List<Role> RoleList { get; set; }
 
-
-
+      
 
 
     }

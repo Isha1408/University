@@ -76,15 +76,15 @@ namespace University.Controllers
                                join ad in db.Addresses on ux.AddressId equals ad.AddressId
                                  
                                   
-                                  where (ux.FirstName==(objFilterViewModel.FirstName) || objFilterViewModel.FirstName=="") &&
-                                   (ux.LastName==(objFilterViewModel.LastName)|| objFilterViewModel.LastName=="") &&
-                                    (ux.Gender==(objFilterViewModel.Gender)|| objFilterViewModel.Gender=="") &&
-                                   (ux.Email==(objFilterViewModel.Email) || objFilterViewModel.Email == "") &&
-                                      (ux.CourseId==(objFilterViewModel.CourseId) || objFilterViewModel.CourseId == 0 ) &&
-                                         (ux.RoleId.Equals(objFilterViewModel.RoleId) || objFilterViewModel.RoleId == 0) &&
-                                    (ad.AddressLine1==(objFilterViewModel.AddressLine1) || objFilterViewModel.AddressLine1 == "") &&
-                                    (ad.AddressLine2==(objFilterViewModel.AddressLine2) || objFilterViewModel.AddressLine2 == "") ||
-                                      (ad.CountryId==(objFilterViewModel.CountryId) || objFilterViewModel.CountryId == 0) 
+                                  where (ux.FirstName==(objFilterViewModel.FirstName) || objFilterViewModel.FirstName=="")
+                                  where (ux.LastName==(objFilterViewModel.LastName)|| objFilterViewModel.LastName=="")
+                                  where (ux.Gender==(objFilterViewModel.Gender)|| objFilterViewModel.Gender=="")
+                                  where (ux.Email==(objFilterViewModel.Email) || objFilterViewModel.Email == "")
+                                  where (ux.CourseId==(objFilterViewModel.CourseId) || objFilterViewModel.CourseId == 0 )
+                                  where (ux.RoleId.Equals(objFilterViewModel.RoleId) || objFilterViewModel.RoleId == 0)
+                                  where (ad.AddressLine1==(objFilterViewModel.AddressLine1) || objFilterViewModel.AddressLine1 == "")
+                                  where (ad.AddressLine2==(objFilterViewModel.AddressLine2) || objFilterViewModel.AddressLine2 == "") 
+                                   where (ad.CountryId==(objFilterViewModel.CountryId) || objFilterViewModel.CountryId == 0) 
 
 
                                   select new SearchViewModel

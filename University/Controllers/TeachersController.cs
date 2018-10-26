@@ -12,7 +12,10 @@ namespace University.Controllers
     public class TeachersController : Controller
     {
         private UserContext db = new UserContext();
-     
+     /// <summary>
+     /// To Show Profile Of Logged in User
+     /// </summary>
+     /// <returns></returns>
         public ActionResult MyProfile()
         {
 
@@ -158,9 +161,9 @@ namespace University.Controllers
         /// To Show List of Students
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetAllStudents()
+        public ActionResult GetAllStudents(int id)
         {
-            var studentList = db.Users.Where(x => x.RoleId == 4 && x.IsActive==true).ToList();
+            var studentList = db.Users.Where(x => x.RoleId == 4 && x.IsActive==true && x.CourseId==id).ToList();
             return View(studentList);
         }
 
@@ -170,53 +173,61 @@ namespace University.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
-        public ActionResult UserDetails(int? id)
+        public ActionResult StudentDetails(int id)
         {
+            // Code to show Roles in DropDown
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = objRoleList;
+            // Code to show Courses in DropDown
+            List<Course> objCourseList = db.Courses.ToList();
+            ViewBag.Course = objCourseList;
+            // Code to show Countries in DropDown
+            List<Country> countryList = db.Country.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            //Code to Show State Dropdown
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            //Code to show City dropDown
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+
+            if (id == 0)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                User user = db.Users.Find(id);
-                // var userData = from p in db.Users
-                //  where p.UserId == id
-                //  select p;
-                // var tempUserList = db.Users.ToList();
-
-                UserViewModel objUserViewModel = new UserViewModel();
-
-                //objUserViewModel.UserId = user.UserId;
-                objUserViewModel.FirstName = user.FirstName;
-                objUserViewModel.LastName = user.LastName;
-                objUserViewModel.Gender = user.Gender;
-                objUserViewModel.Hobbies = user.Hobbies;
-                objUserViewModel.Email = user.Email;
-                objUserViewModel.Password = user.Password;
-                objUserViewModel.DateOfBirth = user.DateOfBirth;
-                objUserViewModel.RoleId = user.RoleId;
-                objUserViewModel.CourseId = user.CourseId;
-                //objUserViewModel.AddressId = user.AddressId;
-                objUserViewModel.IsActive = user.IsActive;
-                objUserViewModel.IsVerified = user.IsVerified;
-                objUserViewModel.DateCreated = user.DateCreated;
-                objUserViewModel.DateModified = user.DateModified;
-                objUserViewModel.AddressLine1 = user.Address.AddressLine1;
-                objUserViewModel.AddressLine2 = user.Address.AddressLine2;
-                objUserViewModel.CountryId = user.Address.CountryId;
-                objUserViewModel.StateId = user.Address.StateId;
-                objUserViewModel.CityId = user.Address.CityId;
-                objUserViewModel.ZipCode = user.Address.ZipCode;
-
-
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(objUserViewModel);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            User objUser = db.Users.Find(id);
+
+            UserViewModel objUserViewModel = new UserViewModel();
+            objUserViewModel.FirstName = objUser.FirstName;
+            objUserViewModel.LastName = objUser.LastName;
+            objUserViewModel.Gender = objUser.Gender;
+            objUserViewModel.Hobbies = objUser.Hobbies;
+            objUserViewModel.Email = objUser.Email;
+            objUserViewModel.Password = objUser.Password;
+            objUserViewModel.ConfirmPassword = objUser.ConfirmPassword;
+            objUserViewModel.DateOfBirth = objUser.DateOfBirth;
+            objUserViewModel.RoleId = objUser.RoleId;
+            objUserViewModel.CourseId = objUser.CourseId;
+            objUserViewModel.IsActive = objUser.IsActive;
+            objUserViewModel.DateCreated = objUser.DateCreated;
+            objUserViewModel.DateModified = objUser.DateModified;
+            objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;
+            objUserViewModel.AddressLine2 = objUser.Address.AddressLine2;
+            objUserViewModel.CountryId = objUser.Address.CountryId;
+            objUserViewModel.StateId = objUser.Address.StateId;
+            objUserViewModel.CityId = objUser.Address.CityId;
+            objUserViewModel.ZipCode = objUser.Address.ZipCode;
+
+            if (objUser == null)
+            {
+                return HttpNotFound();
+            }
+            return View(objUserViewModel);
         }
+
+
+     
 
         public static List<Role> GetRoles()
         {

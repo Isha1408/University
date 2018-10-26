@@ -196,7 +196,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
-    <Compile Include="Models\TeacherSubjectModel.cs" />
+    <Compile Include="Models\TeacherSubjectViewModel.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -226,7 +226,6 @@
     <Content Include="Areas\Admin\Views\Course\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\GetAllUsers.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\EditUser.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\UserDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\DeleteUser.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\CreateUser.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
@@ -246,6 +245,7 @@
     <Content Include="Areas\Admin\Views\SubjectInCourse\SubjectDetails.cshtml" />
     <Content Include="Areas\Admin\Views\SubjectInCourse\EditSubject.cshtml" />
     <Content Include="Areas\Admin\Views\SubjectInCourse\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\UserDetails.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.min %281%29.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -281,7 +281,6 @@
     <Content Include="Views\SuperAdmin\GetAllUsers.cshtml" />
     <Content Include="Views\SuperAdmin\CreateUser.cshtml" />
     <Content Include="Views\SuperAdmin\EditUser.cshtml" />
-    <Content Include="Views\SuperAdmin\UserDetails.cshtml" />
     <Content Include="Views\SuperAdmin\DeleteUser.cshtml" />
     <Content Include="Views\UserView\ThankYou.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\CreateSubject.cshtml" />
@@ -304,6 +303,8 @@
     <Content Include="Views\Teachers\MyProfile.cshtml" />
     <Content Include="Views\Student\EditUser.cshtml" />
     <Content Include="Views\Teachers\EditUser.cshtml" />
+    <Content Include="Views\Teachers\StudentDetails.cshtml" />
+    <Content Include="Views\SuperAdmin\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -41,12 +41,12 @@ namespace University.Controllers
         }
 
         /// <summary>
-        /// Method To display List of Subjects with their Courses
+        /// Method To display List of Subjects with Course of Student
         /// </summary>
         /// <returns></returns>
-        public ActionResult SubjectList()
+        public ActionResult SubjectList(int id)
         {
-            var subjectList = db.SubjectInCourses.Where (m=>m.CourseId==1).ToList();
+            var subjectList = db.SubjectInCourses.Where (m=>m.CourseId==id).ToList();
 
             return View(subjectList.ToList());
 
@@ -57,7 +57,9 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult TeachersList()
         {
+       
             var teachersList = db.TeacherInSubjects.ToList();
+         
             return View(teachersList);
         }
       

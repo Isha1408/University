@@ -37,57 +37,61 @@ namespace University.Areas.Admin.Controllers
 
         }
         /// <summary>
-        /// To show UserDetails
+        ///  GET: To Show the details of the Students
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult UserDetails(int? id)
+        public ActionResult UserDetails(int id)
         {
+            // Code to show Roles in DropDown
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = objRoleList;
+            // Code to show Courses in DropDown
+            List<Course> objCourseList = db.Courses.ToList();
+            ViewBag.Course = objCourseList;
+            // Code to show Countries in DropDown
+            List<Country> countryList = db.Country.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            //Code to Show State Dropdown
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            //Code to show City dropDown
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+
+            if (id == 0)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                User user = db.Users.Find(id);
-                // var userData = from p in db.Users
-                //  where p.UserId == id
-                // select p;
-                //  var tempUserList = db.Users.ToList();
-
-                UserViewModel objUserViewModel = new UserViewModel
-                {
-
-                    //objUserViewModel.UserId = user.UserId;
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Gender = user.Gender,
-                    Hobbies = user.Hobbies,
-                    Email = user.Email,
-                    Password = user.Password,
-                    DateOfBirth = user.DateOfBirth,
-                    RoleId = user.RoleId,
-                    CourseId = user.CourseId,
-                    //objUserViewModel.AddressId = user.AddressId;
-                    IsVerified = user.IsVerified,
-                    IsActive = user.IsActive,
-                    DateCreated = user.DateCreated,
-                    DateModified = user.DateModified,
-                    AddressLine1 = user.Address.AddressLine1,
-                    AddressLine2 = user.Address.AddressLine2,
-                    CountryId = user.Address.CountryId,
-                    StateId = user.Address.StateId,
-                    CityId = user.Address.CityId,
-                    ZipCode = user.Address.ZipCode
-                };
-
-
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(objUserViewModel);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            User objUser = db.Users.Find(id);
+
+            UserViewModel objUserViewModel = new UserViewModel();
+            objUserViewModel.FirstName = objUser.FirstName;
+            objUserViewModel.LastName = objUser.LastName;
+            objUserViewModel.Gender = objUser.Gender;
+            objUserViewModel.Hobbies = objUser.Hobbies;
+            objUserViewModel.Email = objUser.Email;
+            objUserViewModel.Password = objUser.Password;
+            objUserViewModel.ConfirmPassword = objUser.ConfirmPassword;
+            objUserViewModel.DateOfBirth = objUser.DateOfBirth;
+            objUserViewModel.RoleId = objUser.RoleId;
+            objUserViewModel.CourseId = objUser.CourseId;
+            objUserViewModel.IsActive = objUser.IsActive;
+            objUserViewModel.DateCreated = objUser.DateCreated;
+            objUserViewModel.DateModified = objUser.DateModified;
+            objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;
+            objUserViewModel.AddressLine2 = objUser.Address.AddressLine2;
+            objUserViewModel.CountryId = objUser.Address.CountryId;
+            objUserViewModel.StateId = objUser.Address.StateId;
+            objUserViewModel.CityId = objUser.Address.CityId;
+            objUserViewModel.ZipCode = objUser.Address.ZipCode;
+
+            if (objUser == null)
+            {
+                return HttpNotFound();
+            }
+            return View(objUserViewModel);
         }
         /// <summary>
         /// GET: To create Teacher and Student
