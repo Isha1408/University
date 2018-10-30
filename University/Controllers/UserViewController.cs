@@ -62,6 +62,7 @@ namespace University.Controllers
             // Code to show DropDown of Country
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+            objUserModel.IsActive = true;
 
             // objUserModel.UserId = 1;
             //objUserModel.AddressId = 1;
@@ -85,8 +86,8 @@ namespace University.Controllers
                         address.CountryId = objUserModel.CountryId;
                         address.StateId = objUserModel.StateId;
                         address.CityId = objUserModel.CityId;
-
-                        db.Addresses.Add(address); 
+                        address.ZipCode = objUserModel.ZipCode;
+                        db.Addresses.Add(address);
                         db.SaveChanges();
 
                         //Data is saved in the User Table.
@@ -197,7 +198,7 @@ namespace University.Controllers
 
                 ModelState.AddModelError("", "Sorry Your Account Has Been Deactivated");
 
-            } else
+            } else 
             {
                 ModelState.AddModelError("", "UserName or Password is wrong");
 

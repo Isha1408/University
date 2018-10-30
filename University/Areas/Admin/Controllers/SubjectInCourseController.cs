@@ -45,7 +45,7 @@ namespace University.Areas.Admin.Controllers
       /// GET Method :-To Create new Subject and new Course
       /// </summary>
       /// <returns></returns>
-        public ActionResult Create()
+        public ActionResult CreateSubject()
         {
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
             ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name");
@@ -59,7 +59,7 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
+        public ActionResult CreateSubject([Bind(Include = "Id,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace University.Areas.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
     
-        public ActionResult Edit(int? id)
+        public ActionResult EditSubject(int? id)
         {
             if (id == null)
             {
@@ -101,7 +101,7 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
+        public ActionResult EditSubject([Bind(Include = "Id,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
         {
             if (ModelState.IsValid)
             {
@@ -119,7 +119,7 @@ namespace University.Areas.Admin.Controllers
      /// </summary>
      /// <param name="id"></param>
      /// <returns></returns>
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteSubject(int? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace University.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteSubject")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

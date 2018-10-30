@@ -55,14 +55,21 @@ namespace University.Controllers
         /// Method To show List of teachers Along with subjects
         /// </summary>
         /// <returns></returns>
-        public ActionResult TeachersList()
+        public ActionResult TeachersList(int id)
         {
-       
-            var teachersList = db.TeacherInSubjects.ToList();
+           
+            var teachersList = db.TeacherInSubjects.Where(x=>x.UserId==id ).ToList();
          
             return View(teachersList);
         }
-      
+        public ActionResult TeachersCourseList(int id)
+        {
+
+            var teachersList = db.Users.Where(x=>x.CourseId==id && x.RoleId==3 && x.IsActive == true).ToList();
+
+            return View(teachersList);
+        }
+
 
         /// <summary>
         /// To Edit Profile

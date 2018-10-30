@@ -162,10 +162,9 @@
             </td>*@
             <td>
                 @Html.ActionLink("EditProfile", "EditUser", new { id = item.UserId }) |
-                @Html.ActionLink("ViewTeachers", "TeachersList")|
-                @Html.ActionLink("ViewSubjects", "SubjectList", new { id = item.CourseId })
-                @*@Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |
-        @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })*@
+                @Html.ActionLink("MySubjects", "SubjectList", new { id = item.CourseId })
+                @Html.ActionLink("ViewTeachers", "TeachersCourseList", new { id = item.CourseId })
+
             </td>
         </tr>
     }

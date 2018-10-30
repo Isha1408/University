@@ -37,6 +37,11 @@ namespace University.Controllers
             }
             return View(usr);
         }
+        /// <summary>
+        /// To edit Profile
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult EditUser(int id)
         {
             // Code to show Roles in DropDown
@@ -61,35 +66,43 @@ namespace University.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            User objUser = db.Users.Find(id);
-
-            UserViewModel objUserViewModel = new UserViewModel();
-            objUserViewModel.FirstName = objUser.FirstName;
-            objUserViewModel.LastName = objUser.LastName;
-            objUserViewModel.Gender = objUser.Gender;
-            objUserViewModel.Hobbies = objUser.Hobbies;
-            objUserViewModel.Email = objUser.Email;
-            objUserViewModel.Password = objUser.Password;
-            objUserViewModel.ConfirmPassword = objUser.ConfirmPassword;
-            objUserViewModel.DateOfBirth = objUser.DateOfBirth;
-            objUserViewModel.RoleId = objUser.RoleId;
-            objUserViewModel.CourseId = objUser.CourseId;
-            objUserViewModel.IsActive = objUser.IsActive;
-            objUserViewModel.DateCreated = objUser.DateCreated;
-            objUserViewModel.DateModified = objUser.DateModified;
-            objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;
-            objUserViewModel.AddressLine2 = objUser.Address.AddressLine2;
-            objUserViewModel.CountryId = objUser.Address.CountryId;
-            objUserViewModel.StateId = objUser.Address.StateId;
-            objUserViewModel.CityId = objUser.Address.CityId;
-            objUserViewModel.ZipCode = objUser.Address.ZipCode;
-
-            if (objUser == null)
+            try
             {
-                return HttpNotFound();
+                User objUser = db.Users.Find(id);
+                UserViewModel objUserViewModel = new UserViewModel();
+                if (ModelState.IsValid)
+                {
+                    
+                    objUserViewModel.FirstName = objUser.FirstName;
+                    objUserViewModel.LastName = objUser.LastName;
+                    objUserViewModel.Gender = objUser.Gender;
+                    objUserViewModel.Hobbies = objUser.Hobbies;
+                    objUserViewModel.Email = objUser.Email;
+                    objUserViewModel.Password = objUser.Password;
+                    objUserViewModel.ConfirmPassword = objUser.ConfirmPassword;
+                    objUserViewModel.DateOfBirth = objUser.DateOfBirth;
+                    objUserViewModel.RoleId = objUser.RoleId;
+                    objUserViewModel.CourseId = objUser.CourseId;
+                    objUserViewModel.IsActive = objUser.IsActive;
+                    objUserViewModel.DateCreated = objUser.DateCreated;
+                    objUserViewModel.DateModified = objUser.DateModified;
+                    objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;
+                    objUserViewModel.AddressLine2 = objUser.Address.AddressLine2;
+                    objUserViewModel.CountryId = objUser.Address.CountryId;
+                    objUserViewModel.StateId = objUser.Address.StateId;
+                    objUserViewModel.CityId = objUser.Address.CityId;
+                    objUserViewModel.ZipCode = objUser.Address.ZipCode;
+                  
+                   
+                }
+                return View(objUserViewModel);
+
             }
-            return View(objUserViewModel);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        
         }
 
         /// <summary>
