@@ -193,12 +193,8 @@ namespace University.Controllers
                     return RedirectToAction("MyProfile", "Student");
                 }
             }
-            else if (userDetails.IsActive == false)
-            {
-
-                ModelState.AddModelError("", "Sorry Your Account Has Been Deactivated");
-
-            } else 
+            
+             else 
             {
                 ModelState.AddModelError("", "UserName or Password is wrong");
 

@@ -12,10 +12,35 @@ namespace University.Controllers
     public class TeachersController : Controller
     {
         private UserContext db = new UserContext();
-     /// <summary>
-     /// To Show Profile Of Logged in User
-     /// </summary>
-     /// <returns></returns>
+        ///trial
+        public ActionResult Display()
+        {
+
+            //if (Session["UserId"] != null)
+            //{
+            //    var usr = db.Users.Where(m => m.UserId.Equals(Session["UserId"].ToString())).ToList();
+            //    if (usr != null)
+            //        return View(usr);
+            //}
+            //return View();
+
+            User user = (User)Session["User"];
+            var usr = db.Users.Find(user.UserId);
+            if (Session["User"] != null)
+            {
+                var userDetails = db.Users.Where(u => u.UserId == user.UserId).First();
+                if (usr != null)
+                    return View(userDetails);
+            }
+            return View(usr);
+        }
+
+
+
+        /// <summary>
+        /// To Show Profile Of Logged in User
+        /// </summary>
+        /// <returns></returns>
         public ActionResult MyProfile()
         {
 
