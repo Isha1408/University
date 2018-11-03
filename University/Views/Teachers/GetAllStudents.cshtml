@@ -6,9 +6,13 @@
 }
 
 
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
+}
 
 <p>
-    <h4>Student Details</h4>
+    <h4>Student List</h4>
     <style>
         th, td {
             border: 1px solid #333;
@@ -47,27 +51,27 @@
             <th>
                 @Html.DisplayNameFor(model => model.Hobbies)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address.AddressLine1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address.AddressLine2)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Address.AddressLine1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address.AddressLine2)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.course.CourseName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role.RoleName)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.IsActive)
+            @* <th>
+                    @Html.DisplayNameFor(model => model.Role.RoleName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DateCreated)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateModified)
-                </th>*@
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateCreated)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateModified)
+                    </th>*@
             <th></th>
         </tr>
 
@@ -102,18 +106,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Hobbies)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address.AddressLine1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address.AddressLine2)
-                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Address.AddressLine1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address.AddressLine2)
+                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.course.CourseName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Role.RoleName)
-                </td>
+
                 @*<td>
                         @Html.DisplayFor(modelItem => item.IsActive)
                     </td>
@@ -125,7 +127,7 @@
                     </td>*@
                 <td>
 
-                   
+
                     @Html.ActionLink("View Details", "StudentDetails", new { id = item.UserId })
 
                 </td>
@@ -136,4 +138,4 @@
 <p>
     @Html.ActionLink("ViewMyProfile", "MyProfile")
 </p>
-   
+

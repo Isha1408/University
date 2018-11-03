@@ -418,7 +418,7 @@ namespace University.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "UserView");
             }
         }
         /// <summary>

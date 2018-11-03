@@ -12,46 +12,14 @@ namespace University.Controllers
     public class TeachersController : Controller
     {
         private UserContext db = new UserContext();
-        ///trial
-        public ActionResult Display()
-        {
-
-            //if (Session["UserId"] != null)
-            //{
-            //    var usr = db.Users.Where(m => m.UserId.Equals(Session["UserId"].ToString())).ToList();
-            //    if (usr != null)
-            //        return View(usr);
-            //}
-            //return View();
-
-            User user = (User)Session["User"];
-            var usr = db.Users.Find(user.UserId);
-            if (Session["User"] != null)
-            {
-                var userDetails = db.Users.Where(u => u.UserId == user.UserId).First();
-                if (usr != null)
-                    return View(userDetails);
-            }
-            return View(usr);
-        }
-
-
-
+       
         /// <summary>
         /// To Show Profile Of Logged in User
         /// </summary>
         /// <returns></returns>
         public ActionResult MyProfile()
-        {
-
-            //if (Session["UserId"] != null)
-            //{
-            //    var usr = db.Users.Where(m => m.UserId.Equals(Session["UserId"].ToString())).ToList();
-            //    if (usr != null)
-            //        return View(usr);
-            //}
-            //return View();
-
+        { 
+            //Code to get Details of Logged In Teacher.
             User user = (User)Session["User"];
             var usr = db.Users.Find(user.UserId);
             if (Session["User"] != null)
@@ -108,7 +76,7 @@ namespace University.Controllers
                     objUserViewModel.DateOfBirth = objUser.DateOfBirth;
                     objUserViewModel.RoleId = objUser.RoleId;
                     objUserViewModel.CourseId = objUser.CourseId;
-                    objUserViewModel.IsActive = objUser.IsActive;
+                    objUserViewModel.IsActive = true;
                     objUserViewModel.DateCreated = objUser.DateCreated;
                     objUserViewModel.DateModified = objUser.DateModified;
                     objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;
@@ -140,20 +108,20 @@ namespace University.Controllers
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
             // Code to show Roles in DropDown
-           List<Role> objRoleList = GetRoles();
-           ViewBag.Role = new SelectList(db.Users.ToList(), "RoleId", "RoleName");
-            // Code to show Courses in DropDown
-            List<Course> objCourseList = db.Courses.ToList();
-            ViewBag.Course = objCourseList;
-            // Code to show Countries in DropDown
-            List<Country> countryList = db.Country.ToList();
-            ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-            //Code to Show State Dropdown
-            List<State> statesList = db.States.ToList();
-            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
-            //Code to show City dropDown
-            List<City> citiesList = db.City.ToList();
-            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+           //List<Role> objRoleList = GetRoles();
+           //ViewBag.Role = new SelectList(db.Users.ToList(), "RoleId", "RoleName");
+           // // Code to show Courses in DropDown
+           // List<Course> objCourseList = db.Courses.ToList();
+           // ViewBag.Course = objCourseList;
+           // // Code to show Countries in DropDown
+           // List<Country> countryList = db.Country.ToList();
+           // ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+           // //Code to Show State Dropdown
+           // List<State> statesList = db.States.ToList();
+           // ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+           // //Code to show City dropDown
+           // List<City> citiesList = db.City.ToList();
+           // ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
             try
             {
                 User objUser = db.Users.Find(id);
@@ -177,7 +145,7 @@ namespace University.Controllers
                     objUser.Address.StateId = objUserViewModel.StateId;
                     objUser.Address.CityId = objUserViewModel.CityId;
                     objUser.Address.ZipCode = objUserViewModel.ZipCode;
-                    objUser.IsActive = objUserViewModel.IsActive;
+                    objUser.IsActive = true;
                     objUser.DateModified = DateTime.Now;
                     //User Data is saved in the user table
 

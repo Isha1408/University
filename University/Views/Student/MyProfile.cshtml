@@ -11,164 +11,150 @@
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
 
-@*<p>
-        @Html.Partial("CreateButtonPartial")
-    </p>*@
 <style>
+    .table {
+        width: 400px;
+    }
+
+    th {
+        width: 30%;
+    }
+
     th, td {
         border: 1px solid #333;
         padding: 5px;
         vertical-align: middle;
     }
 </style>
-<table class="table table-striped" cellpadding="0" cellspacing="0">
-    <tr class="success">
-
-
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.AddressId)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.Address.AddressLine1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address.AddressLine2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address.Country.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address.State.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address.City.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address.ZipCode)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.IsVerified)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.Hobbies)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.course.CourseName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role.RoleName)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.ConfirmPassword)
-        </th>*@
-
-        @*<th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateModified)
-        </th>
-        <th></th>*@
-        <th></th>
-    </tr>
+<table class="table">
+    
 
     @foreach (var item in Model)
     {
         <tr>
+            <th>
+                FirstName:
+            </th>
 
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
+        </tr>
+
+        <tr>
+            <th>
+                Last Name:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
+        </tr>
+
+        <tr>
+            <th>
+                Gender:
+            </th>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Gender)
             </td>
+        </tr>
+        <tr>
+            <th>
+                DOB:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOfBirth)
             </td>
+        </tr>
+        <tr>
+            <th>
+                Email:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.IsVerified)
-                </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.AddressId)
-                </td>*@
+        </tr>
 
 
+        <tr>
+            <th>
+                Temporary Address:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.AddressLine1)
             </td>
+        </tr>
+
+
+        <tr>
+            <th>
+                Permanant Address:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.AddressLine2)
             </td>
+        </tr>
+        <tr>
+            <th>
+                Country:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.Country.Name)
             </td>
+        </tr>
+        <tr>
+            <th>
+                State:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.State.Name)
             </td>
+        </tr>
+        <tr>
+            <th>
+                City:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.City.Name)
             </td>
+        </tr>
+        <tr>
+            <th>
+                ZipCode:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.ZipCode)
             </td>
+        </tr>
+        <tr>
+            <th>
+                Hobbies:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Hobbies)
             </td>
+        </tr>
+        <tr>
+            <th>
+                Course:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.course.CourseName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role.RoleName)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>*@
-            <td>
-                @Html.ActionLink("EditProfile", "EditUser", new { id = item.UserId }) |
-                @Html.ActionLink("MySubjects", "SubjectList", new { id = item.CourseId })
-                @Html.ActionLink("ViewTeachers", "TeachersCourseList", new { id = item.CourseId })
+        </tr>
 
+        <tr>
+            <td colspan="2">
+                @Html.ActionLink("EditProfile", "EditUser", new { id = item.UserId }) |
+                @Html.ActionLink("MySubjects", "SubjectList", new { id = item.CourseId })|
+                @Html.ActionLink("ViewTeachers", "TeachersCourseList", new { id = item.CourseId })
             </td>
         </tr>
+
     }
 
 </table>
+
 
 

@@ -196,7 +196,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
-    <Compile Include="Models\TeacherSubjectViewModel.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -294,19 +293,17 @@
     <Content Include="Views\Student\SubjectList.cshtml" />
     <Content Include="Views\Student\MyProfile.cshtml" />
     <Content Include="Views\Shared\_MyLayoutPage.cshtml" />
-    <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Teachers\UserDetails.cshtml" />
-    <Content Include="Views\Search\SearchUserRecord.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
-    <Content Include="Views\Search\_SearchResultGrid.cshtml" />
     <Content Include="Views\Teachers\MyProfile.cshtml" />
     <Content Include="Views\Student\EditUser.cshtml" />
     <Content Include="Views\Teachers\EditUser.cshtml" />
     <Content Include="Views\Teachers\StudentDetails.cshtml" />
     <Content Include="Views\SuperAdmin\UserDetails.cshtml" />
     <Content Include="Views\Student\TeachersCourseList.cshtml" />
-    <Content Include="Views\Teachers\Display.cshtml" />
+    <Content Include="Views\Search\_SearchGridPartial.cshtml" />
+    <Content Include="Views\Search\SearchView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

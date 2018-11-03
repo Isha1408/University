@@ -38,7 +38,7 @@ namespace University.Entities
        public virtual City City { get; set; }
 
         [DisplayName("Zip Code")]
-
+        
         public int ZipCode { get; set; }
 
 

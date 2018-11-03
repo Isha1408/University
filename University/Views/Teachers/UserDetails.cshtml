@@ -5,6 +5,11 @@
     ViewBag.Title = "Details";
 }
 
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
+}
+
 <h2>Details</h2>
 
 <div>
@@ -52,12 +57,12 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.Password)
+            </dd>*@
 
         @*<dt>
                 @Html.DisplayNameFor(model => model.ConfirmPassword)
@@ -68,12 +73,12 @@
             </dd>*@
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.IsVerified)
-        </dt>
+                @Html.DisplayNameFor(model => model.IsVerified)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsVerified)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.IsVerified)
+            </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Hobbies)
@@ -108,36 +113,36 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.CountryId)
-        </dt>
+                @Html.DisplayNameFor(model => model.CountryId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CountryId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CountryId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StateId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.StateId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StateId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.StateId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CityId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CityId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CityId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CityId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RoleId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.RoleId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.RoleId)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.RoleId)
+            </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Course)
@@ -154,7 +159,7 @@
         <dd>
             @Html.DisplayFor(model => model.ZipCode)
         </dd>
- 
+
         <dt>
             @Html.DisplayNameFor(model => model.IsActive)
         </dt>
@@ -168,5 +173,5 @@
 <p>
     @*@Html.ActionLink("Edit", "EditUser", new { id = Model.UserId }) |*@
     @*@Html.ActionLink("Edit", "EditUser") |*@
-    @Html.ActionLink("Back To list", "GetAllStudents", new { id = Model.CourseId }) 
+    @Html.ActionLink("Back To list", "GetAllStudents", new { id = Model.CourseId })
 </p>
