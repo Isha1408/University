@@ -20,7 +20,7 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult MyProfile()
         {
-          //Code to show details opf Logged in Student
+            //Code to show details opf Logged in Student
             User user = (User)Session["User"];
             var usr = db.Users.Find(user.UserId);
             if (Session["User"] != null)
@@ -38,7 +38,7 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult SubjectList(int id)
         {
-            var subjectList = db.SubjectInCourses.Where (m=>m.CourseId==id).ToList();
+            var subjectList = db.SubjectInCourses.Where(m => m.CourseId == id).ToList();
 
             return View(subjectList.ToList());
 
@@ -49,26 +49,23 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult TeachersList(int id)
         {
-           
-            var teachersList = db.TeacherInSubjects.Where(x=>x.UserId==id ).ToList();
-         
+
+            var teachersList = db.TeacherInSubjects.Where(x => x.UserId == id).ToList();
+
             return View(teachersList);
         }
         public ActionResult TeachersCourseList(int id)
         {
 
-            var teachersList = db.Users.Where(x=>x.CourseId==id && x.RoleId==3 && x.IsActive == true).ToList();
+            var teachersList = db.Users.Where(x => x.CourseId == id && x.RoleId == 3 && x.IsActive == true).ToList();
 
             return View(teachersList);
         }
-
-
         /// <summary>
-        /// To Edit Profile
+        /// To Edit Teacher Profile
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         public ActionResult EditUser(int id)
         {
             // Code to show Roles in DropDown
@@ -80,6 +77,7 @@ namespace University.Controllers
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+
             //Code to Show State Dropdown
             List<State> statesList = db.States.ToList();
             ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
@@ -87,39 +85,50 @@ namespace University.Controllers
             List<City> citiesList = db.City.ToList();
             ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
 
+
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            User objUser = db.Users.Find(id);
-
-            UserViewModel objUserViewModel = new UserViewModel();
-            objUserViewModel.FirstName = objUser.FirstName;
-            objUserViewModel.LastName = objUser.LastName;
-            objUserViewModel.Gender = objUser.Gender;
-            objUserViewModel.Hobbies = objUser.Hobbies;
-            objUserViewModel.Email = objUser.Email;
-            objUserViewModel.Password = objUser.Password;
-            objUserViewModel.ConfirmPassword = objUser.ConfirmPassword;
-            objUserViewModel.DateOfBirth = objUser.DateOfBirth;
-            objUserViewModel.RoleId = objUser.RoleId;
-            objUserViewModel.CourseId = objUser.CourseId;
-            objUserViewModel.IsActive =true;
-            objUserViewModel.DateCreated = objUser.DateCreated;
-            objUserViewModel.DateModified = objUser.DateModified;
-            objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;
-            objUserViewModel.AddressLine2 = objUser.Address.AddressLine2;
-            objUserViewModel.CountryId = objUser.Address.CountryId;
-            objUserViewModel.StateId = objUser.Address.StateId;
-            objUserViewModel.CityId = objUser.Address.CityId;
-            objUserViewModel.ZipCode = objUser.Address.ZipCode;
-
-            if (objUser == null)
+            try
             {
-                return HttpNotFound();
+                User objUser = db.Users.Find(id);
+                UserViewModel objUserViewModel = new UserViewModel();
+                if (ModelState.IsValid)
+                {
+
+                    objUserViewModel.FirstName = objUser.FirstName;
+                    objUserViewModel.LastName = objUser.LastName;
+                    objUserViewModel.Gender = objUser.Gender;
+                    objUserViewModel.Hobbies = objUser.Hobbies;
+                    objUserViewModel.Email = objUser.Email;
+                    objUserViewModel.Password = objUser.Password;
+                    objUserViewModel.ConfirmPassword = objUser.ConfirmPassword;
+                    objUserViewModel.DateOfBirth = objUser.DateOfBirth;
+                    objUserViewModel.RoleId = objUser.RoleId;
+                    objUserViewModel.CourseId = objUser.CourseId;
+                    objUserViewModel.IsActive = true;
+                    objUserViewModel.IsVerified = true;
+                    objUserViewModel.DateCreated = objUser.DateCreated;
+                    objUserViewModel.DateModified = objUser.DateModified;
+                    objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;
+                    objUserViewModel.AddressLine2 = objUser.Address.AddressLine2;
+                    objUserViewModel.CountryId = objUser.Address.CountryId;
+                    objUserViewModel.StateId = objUser.Address.StateId;
+                    objUserViewModel.CityId = objUser.Address.CityId;
+                    objUserViewModel.ZipCode = objUser.Address.ZipCode;
+
+
+                }
+                return View(objUserViewModel);
+
             }
-            return View(objUserViewModel);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                throw ex;
+            }
+
         }
 
         /// <summary>
@@ -131,21 +140,23 @@ namespace University.Controllers
         [HttpPost]
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
-            //// Code to show Roles in DropDown
-            //List<Role> objRoleList = GetRoles();
-            //ViewBag.Role = new SelectList(db.Users.ToList(), "RoleId", "RoleName");
-            //// Code to show Courses in DropDown
-            //List<Course> objCourseList = db.Courses.ToList();
-            //ViewBag.Course = objCourseList;
-            //// Code to show Countries in DropDown
-            //List<Country> countryList = db.Country.ToList();
-            //ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-            ////Code to Show State Dropdown
-            //List<State> statesList = db.States.ToList();
-            //ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
-            ////Code to show City dropDown
-            //List<City> citiesList = db.City.ToList();
-            //ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+            /// Code to show Roles in DropDown
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = objRoleList;
+            // Code to show Courses in DropDown
+            List<Course> objCourseList = db.Courses.ToList();
+            ViewBag.Course = objCourseList;
+            // Code to show Countries in DropDown
+            List<Country> countryList = db.Country.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+
+            //Code to Show State Dropdown
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            //Code to show City dropDown
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+
             try
             {
                 User objUser = db.Users.Find(id);
@@ -157,7 +168,7 @@ namespace University.Controllers
                     objUser.Gender = objUserViewModel.Gender;
                     objUser.Hobbies = objUserViewModel.Hobbies;
                     objUser.Email = objUserViewModel.Email;
-                    objUser.IsVerified = objUserViewModel.IsVerified;
+                    objUser.IsVerified = true;
                     objUser.Password = objUserViewModel.Password;
                     objUser.ConfirmPassword = objUserViewModel.ConfirmPassword;
                     objUser.DateOfBirth = objUserViewModel.DateOfBirth;
@@ -169,7 +180,7 @@ namespace University.Controllers
                     objUser.Address.StateId = objUserViewModel.StateId;
                     objUser.Address.CityId = objUserViewModel.CityId;
                     objUser.Address.ZipCode = objUserViewModel.ZipCode;
-                   objUser.IsActive = true;
+                    objUser.IsActive = true;
                     objUser.DateModified = DateTime.Now;
                     //User Data is saved in the user table
 
@@ -181,9 +192,11 @@ namespace University.Controllers
             }
             catch (Exception ex)
             {
+                ModelState.AddModelError(string.Empty, ex.Message);
                 throw ex;
             }
         }
+    
         public static List<Role> GetRoles()
         {
             using (var db = new UserContext())

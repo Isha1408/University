@@ -16,7 +16,7 @@
     }
 </style>
 
-<script>
+@*<script>
 
     $(document).ready(function () {
 
@@ -51,7 +51,7 @@
         });
 
     });
-</script>
+</script>*@
 
 
 
@@ -209,7 +209,7 @@
             @Html.LabelFor(model => model.ZipCode, htmlAttributes: new { @class = "control-label required col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                @Html.ValidationMessageFor(model => model.ZipCode, "(Enter 5 digit zipcode)", new { @class = "text-muted" })
+                @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
             </div>
         </div>
 

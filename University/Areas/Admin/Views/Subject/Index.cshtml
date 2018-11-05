@@ -4,6 +4,11 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
+}
+
 
 <h2>Subject List</h2>
 
@@ -21,20 +26,21 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditSubject", new { id=item.Id }) |
-            @Html.ActionLink("Details", "SubjectDetails", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "DeleteSubject", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditSubject", new { id = item.Id }) |
+                @Html.ActionLink("Details", "SubjectDetails", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteSubject", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

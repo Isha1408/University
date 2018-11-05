@@ -3,6 +3,10 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
+}
 
 <!DOCTYPE html>
 <h2>Subject In Course List</h2>
@@ -50,7 +54,7 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "EditSubject", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "SubjectDetails", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "DeleteSubject", new { id = item.Id })
                 </td>
             </tr>

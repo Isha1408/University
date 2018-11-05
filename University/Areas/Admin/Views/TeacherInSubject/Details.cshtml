@@ -3,6 +3,10 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
+}
 
 <!DOCTYPE html>
 
@@ -19,19 +23,19 @@
             <dt>
                 @Html.DisplayName("Subject")
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Subject.Name)
             </dd>
-    
+
             <dt>
                 @Html.DisplayName("Teacher")
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.User.FirstName)
             </dd>
-    
+
         </dl>
     </div>
     <p>

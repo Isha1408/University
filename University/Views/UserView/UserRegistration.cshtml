@@ -66,16 +66,7 @@
     }
 </script>*@
 <script>
-        //function fillAddress() {
-        //    if ($(this).attr('checked')) {
-        //        $("#AddressLine1").val($("#AddressLine2").val());
-
-        //    }
-        //    else {
-        //        $("#AddressLine2").val('');
-
-        //    }
-        //}
+        
     $(document).ready(function () {
      
             $("#fillAddress").on("click", function(){
@@ -98,7 +89,6 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -123,6 +113,7 @@
             Male  @Html.RadioButton("Gender", "Male")
 
             Female  @Html.RadioButton("Gender", "Female")
+            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
         </div>
     </div>
 

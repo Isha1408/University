@@ -82,8 +82,8 @@
             @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label required col-md-2", required = "Required" })
             <div class="col-md-10">
                 Male  @Html.RadioButton("Gender", "Male")
-
                 Female  @Html.RadioButton("Gender", "Female")
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -203,7 +203,7 @@
             @Html.LabelFor(model => model.ZipCode, htmlAttributes: new { @class = "control-label required col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control", required = "Required" } })
-                @Html.ValidationMessageFor(model => model.ZipCode, "(Enter 5 digit ZipCode)", new { @class = "text-muted" })
+                @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
             </div>
         </div>
 

@@ -194,7 +194,7 @@ namespace University.Areas.Admin.Controllers
                 {
 
                     transaction.Rollback();
-                    ViewBag.ResultMessage = "Error occurred in the registration process.Please register again.";
+                    ModelState.AddModelError(string.Empty, ex.Message);
                     return View(ex);
                 }
             }
@@ -236,6 +236,7 @@ namespace University.Areas.Admin.Controllers
                 Gender = objUser.Gender,
                 Hobbies = objUser.Hobbies,
                 Email = objUser.Email,
+                IsVerified = objUser.IsVerified,
                 Password = objUser.Password,
                 ConfirmPassword = objUser.ConfirmPassword,
                 DateOfBirth = objUser.DateOfBirth,
@@ -271,17 +272,15 @@ namespace University.Areas.Admin.Controllers
         {
             // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
-            ViewBag.Role = new SelectList(db.Users.ToList(), "RoleId", "RoleName");
+            ViewBag.Role = objRoleList;
             // Code to show Courses in DropDown
             List<Course> objCourseList = db.Courses.ToList();
             ViewBag.Course = objCourseList;
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-            // Code to show States in DropDown
             List<State> statesList = db.States.ToList();
             ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
-            // Code to show Cities in DropDown
             List<City> citiesList = db.City.ToList();
             ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
             try
@@ -295,7 +294,7 @@ namespace University.Areas.Admin.Controllers
                     userData.Gender = objUserViewModel.Gender;
                     userData.Hobbies = objUserViewModel.Hobbies;
                     userData.Email = objUserViewModel.Email;
-                    userData.IsVerified = objUserViewModel.IsVerified;
+                    userData.IsVerified = true;
                     userData.Password = objUserViewModel.Password;
                     userData.ConfirmPassword = objUserViewModel.ConfirmPassword;
                     userData.DateOfBirth = objUserViewModel.DateOfBirth;
@@ -314,11 +313,12 @@ namespace University.Areas.Admin.Controllers
                     return RedirectToAction("GetAllUsers");
 
                 }
+               
                 return View(objUserViewModel);
             }
             catch (Exception ex)
             {
-
+                ModelState.AddModelError(string.Empty, ex.Message);
                 throw ex;
             }
         }
@@ -414,11 +414,13 @@ namespace University.Areas.Admin.Controllers
         {
             if (Session["UserId"] != null)
             {
+
                 return RedirectToAction("ThankYou");
             }
             else
             {
                 return RedirectToAction("Login", "UserView");
+                
             }
         }
         /// <summary>

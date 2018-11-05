@@ -3,6 +3,11 @@
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
+}
+
 
 <!DOCTYPE html>
 
@@ -20,24 +25,25 @@
             <dt>
                 @Html.DisplayName("Course")
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Course.CourseName)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Subject.Name)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Subject.Name)
             </dd>
-    
+
         </dl>
-    
-        @using (Html.BeginForm()) {
+
+        @using (Html.BeginForm())
+        {
             @Html.AntiForgeryToken()
-    
+
             <div class="form-actions no-color">
                 <input type="submit" value="Delete" class="btn btn-danger" /> |
                 @Html.ActionLink("Back to List", "Index")

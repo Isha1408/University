@@ -55,7 +55,6 @@
         <th>
             @Html.DisplayNameFor(model => model.DateOfBirth)
         </th>
-        <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
@@ -103,12 +102,12 @@
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.DateCreated)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateModified)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -173,12 +172,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateModified)
-            </td>
+            </td>*@
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |

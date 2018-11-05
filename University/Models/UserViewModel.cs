@@ -23,6 +23,7 @@ namespace University.Models
         [Required(ErrorMessage = "Please Select Gender")]
         public string Gender { get; set; }
         [Required(ErrorMessage = "DOB is required")]
+        [DataType(DataType.Date)]
         [DisplayName("DOB")]
         public DateTime DateOfBirth { get; set; }
         [Required]

@@ -241,7 +241,7 @@
     <Content Include="Areas\Admin\Views\TeacherInSubject\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SubjectInCourse\CreateSubject.cshtml" />
     <Content Include="Areas\Admin\Views\SubjectInCourse\DeleteSubject.cshtml" />
-    <Content Include="Areas\Admin\Views\SubjectInCourse\SubjectDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\SubjectInCourse\Details.cshtml" />
     <Content Include="Areas\Admin\Views\SubjectInCourse\EditSubject.cshtml" />
     <Content Include="Areas\Admin\Views\SubjectInCourse\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\UserDetails.cshtml" />
@@ -297,13 +297,13 @@
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Teachers\MyProfile.cshtml" />
-    <Content Include="Views\Student\EditUser.cshtml" />
     <Content Include="Views\Teachers\EditUser.cshtml" />
     <Content Include="Views\Teachers\StudentDetails.cshtml" />
     <Content Include="Views\SuperAdmin\UserDetails.cshtml" />
     <Content Include="Views\Student\TeachersCourseList.cshtml" />
     <Content Include="Views\Search\_SearchGridPartial.cshtml" />
     <Content Include="Views\Search\SearchView.cshtml" />
+    <Content Include="Views\Student\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

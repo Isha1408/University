@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<University.Entities.TeacherInSubject>
 
-@{ 
+@{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
 }
 
 <!DOCTYPE html>

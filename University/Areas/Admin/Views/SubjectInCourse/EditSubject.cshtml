@@ -2,6 +2,12 @@
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@if (Session["UserId"] != null)
+{
+    <h4>Hello @Session["UserName"].ToString()</h4>
+}
+
 
 <!DOCTYPE html>
 
@@ -14,13 +20,13 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        
+
         <div class="form-horizontal">
             <h4>SubjectInCourse</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
-    
+
             <div class="form-group">
                 @Html.LabelFor(model => model.SubjectId, "Subject", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -28,7 +34,7 @@
                     @Html.ValidationMessageFor(model => model.SubjectId, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 @Html.LabelFor(model => model.CourseId, "Course", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -36,7 +42,7 @@
                     @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Save" class="btn btn-default" />
@@ -45,7 +51,7 @@
             </div>
         </div>
     }
-    
+
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>

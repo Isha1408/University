@@ -77,6 +77,7 @@ namespace University.Controllers
                     objUserViewModel.RoleId = objUser.RoleId;
                     objUserViewModel.CourseId = objUser.CourseId;
                     objUserViewModel.IsActive = true;
+                    objUserViewModel.IsVerified = true;
                     objUserViewModel.DateCreated = objUser.DateCreated;
                     objUserViewModel.DateModified = objUser.DateModified;
                     objUserViewModel.AddressLine1 = objUser.Address.AddressLine1;
@@ -93,6 +94,7 @@ namespace University.Controllers
             }
             catch (Exception ex)
             {
+                ModelState.AddModelError(string.Empty, ex.Message);
                 throw ex;
             }
         
@@ -108,20 +110,22 @@ namespace University.Controllers
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
             // Code to show Roles in DropDown
-           //List<Role> objRoleList = GetRoles();
-           //ViewBag.Role = new SelectList(db.Users.ToList(), "RoleId", "RoleName");
-           // // Code to show Courses in DropDown
-           // List<Course> objCourseList = db.Courses.ToList();
-           // ViewBag.Course = objCourseList;
-           // // Code to show Countries in DropDown
-           // List<Country> countryList = db.Country.ToList();
-           // ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-           // //Code to Show State Dropdown
-           // List<State> statesList = db.States.ToList();
-           // ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
-           // //Code to show City dropDown
-           // List<City> citiesList = db.City.ToList();
-           // ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+            List<Role> objRoleList = GetRoles();
+            ViewBag.Role = objRoleList;
+            // Code to show Courses in DropDown
+            List<Course> objCourseList = db.Courses.ToList();
+            ViewBag.Course = objCourseList;
+            // Code to show Countries in DropDown
+            List<Country> countryList = db.Country.ToList();
+            ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
+
+            //Code to Show State Dropdown
+            List<State> statesList = db.States.ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            //Code to show City dropDown
+            List<City> citiesList = db.City.ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+
             try
             {
                 User objUser = db.Users.Find(id);
@@ -157,6 +161,7 @@ namespace University.Controllers
             }
             catch (Exception ex)
             {
+                ModelState.AddModelError(string.Empty, ex.Message);
                 throw ex;
             }
         }

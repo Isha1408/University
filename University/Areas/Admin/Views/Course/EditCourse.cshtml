@@ -4,12 +4,12 @@
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Edit Course</h2>
 @if (Session["UserId"] != null)
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
+
+<h2>Edit Course</h2>
 
 @using (Html.BeginForm())
 {
