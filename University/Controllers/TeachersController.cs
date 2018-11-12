@@ -41,7 +41,7 @@ namespace University.Controllers
            List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
             // Code to show Courses in DropDown
-            List<Course> objCourseList = db.Courses.ToList();
+            List<Course> objCourseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.Course = objCourseList;
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
@@ -113,7 +113,7 @@ namespace University.Controllers
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
             // Code to show Courses in DropDown
-            List<Course> objCourseList = db.Courses.ToList();
+            List<Course> objCourseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.Course = objCourseList;
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
@@ -190,7 +190,7 @@ namespace University.Controllers
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
             // Code to show Courses in DropDown
-            List<Course> objCourseList = db.Courses.ToList();
+            List<Course> objCourseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.Course = objCourseList;
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();

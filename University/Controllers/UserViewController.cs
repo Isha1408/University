@@ -4,9 +4,11 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using University.Entities;
 using University.Models;
 
@@ -37,7 +39,7 @@ namespace University.Controllers
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
             //Code to show Dropdown of Cousre
-            List<Course> courseList = db.Courses.ToList();
+            List<Course> courseList = db.Courses.Where(x=>x.IsActive==true).ToList();
             ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
             // Code to show DropDown of Country
             List<Country> countryList = db.Country.ToList();
@@ -57,16 +59,12 @@ namespace University.Controllers
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
             //Code to show Dropdown of Cousre
-            List<Course> courseList = db.Courses.ToList();
+            List<Course> courseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
             // Code to show DropDown of Country
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-            objUserModel.IsActive = true;
-
-            // objUserModel.UserId = 1;
-            //objUserModel.AddressId = 1;
-
+         
             // Create the TransactionScope to execute the commands, guaranteeing
             // that both commands can commit or roll back as a single unit of work.
 
@@ -100,10 +98,10 @@ namespace University.Controllers
                         objUser.Hobbies = objUserModel.Hobbies;
                         objUser.Password = objUserModel.Password;
                         objUser.ConfirmPassword = objUserModel.ConfirmPassword;
-                        objUser.IsVerified = true;
+                        objUser.IsVerified = objUserModel.IsVerified;
                         objUser.Email = objUserModel.Email;
                         objUser.DateOfBirth = objUserModel.DateOfBirth;
-                        objUser.IsActive = true;
+                        objUser.IsActive = objUserModel.IsActive;
                         objUser.DateCreated = DateTime.Now;
                         objUser.DateModified = DateTime.Now;
                         objUser.RoleId = objUserModel.RoleId;
@@ -123,7 +121,7 @@ namespace University.Controllers
                         db.SaveChanges();
 
                         transaction.Commit();
-                        return RedirectToAction("ThankYou");
+                        return RedirectToAction("Login");
                     }
 
                     return View(objUserModel);
@@ -156,14 +154,16 @@ namespace University.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(User user)
         {
+
+           
             var userDetails = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password ).FirstOrDefault();
-        
+
            
             //Code to Authenticate Identity Of user.
 
-            if (userDetails != null && userDetails.IsActive == true)
+            if (userDetails != null && userDetails.IsActive == true && userDetails.IsVerified==true)
             {
-                
+
 
                 Session["UserId"] = userDetails.UserId.ToString();
                 Session["UserName"] = userDetails.Email.ToString();
@@ -175,7 +175,7 @@ namespace University.Controllers
                 //For Admin
                 else if (userDetails.RoleId == 2)
                 {
-                   // return RedirectToAction("GetAllUsers", "Admin");
+                    // return RedirectToAction("GetAllUsers", "Admin");
                     return RedirectToAction("GetAllUsers", "Admin", new { area = "Admin" });
                 }
                 //For Teacher
@@ -193,11 +193,20 @@ namespace University.Controllers
                     return RedirectToAction("MyProfile", "Student");
                 }
             }
-            
-             else 
+
+            else if (userDetails == null)
             {
                 ModelState.AddModelError("", "UserName or Password is wrong");
 
+            }
+           
+            else if (userDetails.IsVerified != true)
+            {
+                ModelState.AddModelError("", "Please Verify Your Email");
+            }
+            else if (userDetails.IsActive != true)
+            {
+                ModelState.AddModelError("", "Your Account has not been Activated By Admin");
             }
             return View();
         }
@@ -213,13 +222,29 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult LogOut()
         {
-            if (Session["UserId"] != null)
+            ////use this or next or next all other 
+            ////   Session.Clear();
+            //Session.Abandon();
+            ////   Session.RemoveAll();
+            //Session.Remove("UserId");
+
+            ////this is still not showing error  
+            //FormsAuthentication.SignOut();
+
+            ////back button 
+            //Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            //Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            //Response.Cache.SetNoStore();
+
+            //return RedirectToAction("ThankYou");
+            if (Session["UserId"] != null && Session["UserName"] != null)
             {
                 return RedirectToAction("Login");
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+
+                return RedirectToAction("Login");
             }
         }
 

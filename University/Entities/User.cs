@@ -22,8 +22,10 @@ namespace University.Entities
         [Required(ErrorMessage = "Please Select Gender")]
         public string Gender { get; set; }
         [DisplayName("DOB")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateOfBirth { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         public bool IsVerified { get; set; }
        //[RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}",

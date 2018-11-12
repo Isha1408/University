@@ -5,7 +5,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using University.Entities;
 using University.Models;
 
@@ -21,19 +23,23 @@ namespace University.Areas.Admin.Controllers
         /// To Show List of Teacher and Student
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetAllUsers(string searching )
+        public ActionResult GetAllUsers(string searching)
         {
-            var users = from s in db.Users where s.RoleId != 1 && s.RoleId !=2 select s;
+            var users = from s in db.Users
+                        where s.RoleId != 1 && s.RoleId != 2
+                        select s;
+
+
             if (!String.IsNullOrEmpty(searching))
             {
-                users = users.Where(s => s.Role.RoleName.Contains(searching) && s.RoleId != 1 && s.RoleId != 2 ||s.FirstName.Contains(searching)||
-                s.LastName.Contains(searching)|| s.course.CourseName.Contains(searching));
+                users = users.Where(s => s.Role.RoleName.Contains(searching) && s.RoleId != 1 && s.RoleId != 2 || s.FirstName.Contains(searching) ||
+                s.LastName.Contains(searching) || s.course.CourseName.Contains(searching));
 
             }
-            
-            return View(users.ToList());
-           // var returnedResult = db.Users.Where(x => x.RoleId != 1 && x.RoleId != 2).ToList();
-           // return View(returnedResult);
+
+            return View(users.OrderBy(s => s.FirstName).ToList());
+            // var returnedResult = db.Users.Where(x => x.RoleId != 1 && x.RoleId != 2).ToList();
+            // return View(returnedResult);
 
         }
         /// <summary>
@@ -47,7 +53,7 @@ namespace University.Areas.Admin.Controllers
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
             // Code to show Courses in DropDown
-            List<Course> objCourseList = db.Courses.ToList();
+            List<Course> objCourseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.Course = objCourseList;
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
@@ -104,7 +110,7 @@ namespace University.Areas.Admin.Controllers
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
             // Code to show Courses in DropDown
-            List<Course> courseList = db.Courses.ToList();
+            List<Course> courseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
@@ -123,13 +129,13 @@ namespace University.Areas.Admin.Controllers
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
             // Code to show Courses in DropDown
-            List<Course> courseList = db.Courses.ToList();
+            List<Course> courseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.CourseList = new SelectList(courseList, "CourseId", "CourseName");
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
 
-          //  objUserModel.UserId = 1;
+            //  objUserModel.UserId = 1;
             //objUserModel.AddressId = 1;
 
             // Create the TransactionScope to execute the commands, guaranteeing
@@ -173,7 +179,7 @@ namespace University.Areas.Admin.Controllers
                             CourseId = objUserModel.CourseId,
                             AddressId = latestAddressId
                         };
-                      db.Users.Add(obj);//Data is saved in the User Table.
+                        db.Users.Add(obj);//Data is saved in the User Table.
                         db.SaveChanges();
 
 
@@ -212,7 +218,7 @@ namespace University.Areas.Admin.Controllers
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
             // Code to show Courses in DropDown
-            List<Course> objCourseList = db.Courses.ToList();
+            List<Course> objCourseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.Course = objCourseList;
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
@@ -274,7 +280,7 @@ namespace University.Areas.Admin.Controllers
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
             // Code to show Courses in DropDown
-            List<Course> objCourseList = db.Courses.ToList();
+            List<Course> objCourseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.Course = objCourseList;
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
@@ -286,7 +292,7 @@ namespace University.Areas.Admin.Controllers
             try
             {
                 User userData = db.Users.Find(id);
-                            
+
                 if (ModelState.IsValid)
                 {
                     userData.FirstName = objUserViewModel.FirstName;
@@ -299,7 +305,7 @@ namespace University.Areas.Admin.Controllers
                     userData.ConfirmPassword = objUserViewModel.ConfirmPassword;
                     userData.DateOfBirth = objUserViewModel.DateOfBirth;
                     userData.CourseId = objUserViewModel.CourseId;
-                    userData.RoleId = objUserViewModel.RoleId;                   
+                    userData.RoleId = objUserViewModel.RoleId;
                     userData.Address.AddressLine1 = objUserViewModel.AddressLine1;
                     userData.Address.AddressLine2 = objUserViewModel.AddressLine2;
                     userData.Address.CountryId = objUserViewModel.CountryId;
@@ -313,7 +319,7 @@ namespace University.Areas.Admin.Controllers
                     return RedirectToAction("GetAllUsers");
 
                 }
-               
+
                 return View(objUserViewModel);
             }
             catch (Exception ex)
@@ -384,18 +390,18 @@ namespace University.Areas.Admin.Controllers
 
                     UserInRole objUserInRole = db.UserInRoles.Where(m => m.UserId == id).FirstOrDefault();
                     User objUser = db.Users.Where(m => m.UserId == id).FirstOrDefault();
-                    Address objAddress = db.Addresses.Where(m => m.AddressId == objUser.AddressId).FirstOrDefault(); 
-                  
-                        //To remove address of user from address table
-                        db.Addresses.Remove(objAddress);
-                        //To Remove User from User Table
-                        db.Users.Remove(objUser);
-                       
-                        // To remove User from UserInRole table.
-                        db.UserInRoles.Remove(objUserInRole);
+                    Address objAddress = db.Addresses.Where(m => m.AddressId == objUser.AddressId).FirstOrDefault();
 
-                        db.SaveChanges();
-                    
+                    //To remove address of user from address table
+                    db.Addresses.Remove(objAddress);
+                    //To Remove User from User Table
+                    db.Users.Remove(objUser);
+
+                    // To remove User from UserInRole table.
+                    db.UserInRoles.Remove(objUserInRole);
+
+                    db.SaveChanges();
+
                 }
                 return RedirectToAction("GetAllUsers");
 
@@ -412,6 +418,21 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult LogOut()
         {
+            //    //use this or next or next all other 
+            //    //   Session.Clear();
+            //    Session.Abandon();
+            //    //   Session.RemoveAll();
+            //    Session.Remove("UserId");
+
+            //    //this is still not showing error  
+            //    FormsAuthentication.SignOut();
+
+            //    //back button 
+            //    Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            //    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            //    Response.Cache.SetNoStore();
+
+            //    return RedirectToAction("ThankYou");
             if (Session["UserId"] != null)
             {
 
@@ -420,9 +441,10 @@ namespace University.Areas.Admin.Controllers
             else
             {
                 return RedirectToAction("Login", "UserView");
-                
+
             }
         }
+
         /// <summary>
         /// Admin will be redirected to this page after Logout
         /// </summary>

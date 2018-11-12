@@ -4,13 +4,14 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 
 }
-
-<h2>Users List</h2>
-
 @if (Session["UserId"] != null)
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
+
+
+
+
 <style>
     .table {
         margin-top: 15px;
@@ -26,7 +27,7 @@
         margin-right: 10px;
     }
 </style>
-
+<h3>Users List</h3>
 <p>
     @Html.Partial("CreateButtonPartial")
 </p>
@@ -61,11 +62,11 @@
             @Html.DisplayNameFor(model => model.IsVerified)
         </th>
         @* <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-                @Html.DisplayNameFor(model => model.AddressId)
-            </th>*@
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.AddressId)
+                </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Address.AddressLine1)
         </th>
@@ -96,18 +97,18 @@
             @Html.DisplayNameFor(model => model.Role.RoleName)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.ConfirmPassword)
-        </th>*@
+                @Html.DisplayNameFor(model => model.ConfirmPassword)
+            </th>*@
 
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateModified)
-        </th>*@
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateModified)
+            </th>*@
         <th></th>
     </tr>
 
@@ -131,11 +132,11 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.IsVerified)
-                </td>
+                @Html.DisplayFor(modelItem => item.IsVerified)
+            </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>*@
             @*<td>
                     @Html.DisplayFor(modelItem => item.AddressId)
                 </td>*@
@@ -172,11 +173,11 @@
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateModified)
+                </td>*@
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |

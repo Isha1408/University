@@ -49,8 +49,8 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         public ActionResult Create()
         {
-            ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name");
-            ViewBag.UserId = new SelectList(db.Users.Where(x=>x.RoleId==3), "UserId", "FirstName");
+            ViewBag.SubjectId = new SelectList(db.Subjects.Where(x => x.IsActive == true), "Id", "Name");
+            ViewBag.UserId = new SelectList(db.Users.Where(x=>x.RoleId==3 && x.IsActive == true), "UserId", "FirstName");
             return View();
         }
 
@@ -70,9 +70,9 @@ namespace University.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name", teacherInSubject.SubjectId);
+            ViewBag.SubjectId = new SelectList(db.Subjects.Where(x => x.IsActive == true), "Id", "Name", teacherInSubject.SubjectId);
            // List<User> List = db.Users.Where(u => u.RoleId != 1 && u.RoleId != 2 && u.RoleId != 4).ToList();
-            ViewBag.UserId = new SelectList(db.Users.Where(x=>x.RoleId == 3 ), "UserId", "FirstName", teacherInSubject.UserId);
+            ViewBag.UserId = new SelectList(db.Users.Where(x=>x.RoleId == 3 && x.IsActive == true), "UserId", "FirstName", teacherInSubject.UserId);
             return View(teacherInSubject);
         }
 
@@ -92,8 +92,8 @@ namespace University.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name", teacherInSubject.SubjectId);
-            ViewBag.UserId = new SelectList(db.Users.Where(x => x.RoleId == 3), "UserId", "FirstName", teacherInSubject.UserId);
+            ViewBag.SubjectId = new SelectList(db.Subjects.Where(x => x.IsActive == true), "Id", "Name", teacherInSubject.SubjectId);
+            ViewBag.UserId = new SelectList(db.Users.Where(x => x.RoleId == 3 && x.IsActive == true), "UserId", "FirstName", teacherInSubject.UserId);
             return View(teacherInSubject);
         }
         /// <summary>
@@ -111,8 +111,8 @@ namespace University.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name", teacherInSubject.SubjectId);
-            ViewBag.UserId = new SelectList(db.Users.Where(x => x.RoleId == 3), "UserId", "FirstName", teacherInSubject.UserId);
+            ViewBag.SubjectId = new SelectList(db.Subjects.Where(x => x.IsActive == true), "Id", "Name", teacherInSubject.SubjectId);
+            ViewBag.UserId = new SelectList(db.Users.Where(x => x.RoleId == 3 && x.IsActive == true), "UserId", "FirstName", teacherInSubject.UserId);
             return View(teacherInSubject);
         }
 

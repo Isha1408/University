@@ -22,6 +22,7 @@ namespace University.Models
         public string LastName { get; set; }
         [Required(ErrorMessage = "Please Select Gender")]
         public string Gender { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Required(ErrorMessage = "DOB is required")]
         [DataType(DataType.Date)]
         [DisplayName("DOB")]

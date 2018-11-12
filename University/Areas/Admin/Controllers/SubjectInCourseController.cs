@@ -47,8 +47,8 @@ namespace University.Areas.Admin.Controllers
       /// <returns></returns>
         public ActionResult CreateSubject()
         {
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
-            ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name");
+            ViewBag.CourseId = new SelectList(db.Courses.Where(x=>x.IsActive==true), "CourseId", "CourseName");
+            ViewBag.SubjectId = new SelectList(db.Subjects.Where(x => x.IsActive == true), "Id", "Name");
             return View();
         }
 
@@ -89,8 +89,8 @@ namespace University.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", subjectInCourse.CourseId);
-            ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name", subjectInCourse.SubjectId);
+            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.IsActive == true), "CourseId", "CourseName", subjectInCourse.CourseId);
+            ViewBag.SubjectId = new SelectList(db.Subjects.Where(x => x.IsActive == true), "Id", "Name", subjectInCourse.SubjectId);
             return View(subjectInCourse);
         }
 
@@ -109,8 +109,8 @@ namespace University.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", subjectInCourse.CourseId);
-            ViewBag.SubjectId = new SelectList(db.Subjects, "Id", "Name", subjectInCourse.SubjectId);
+            ViewBag.CourseId = new SelectList(db.Courses.Where(x => x.IsActive == true), "CourseId", "CourseName", subjectInCourse.CourseId);
+            ViewBag.SubjectId = new SelectList(db.Subjects.Where(x => x.IsActive == true), "Id", "Name", subjectInCourse.SubjectId);
             return View(subjectInCourse);
         }
 
