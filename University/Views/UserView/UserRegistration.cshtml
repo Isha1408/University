@@ -50,21 +50,7 @@
 
     });
 </script>
-@*<script>
-    function fillAddress() {
-        if (filladdress.checked == true) {
-            var addr = document.getElementById("AddressLine1").value;
-            var copyaddr = addr;
 
-            document.getElementById("AddressLine2").value = copyaddr;
-
-        }
-        else if (filladdress.checked == false) {
-            document.getElementById("AddressLine2").value = '';
-
-        }
-    }
-</script>*@
 <script>
         
     $(document).ready(function () {
@@ -178,12 +164,7 @@
             @Html.ValidationMessageFor(model => model.AddressLine1, "", new { @class = "text-danger" })
         </div>
     </div>
-    @*@*onclick="fillAddress()"
-    <div class="form-group">
-        <div class="col-md-offset-2">
-            <input type="checkbox" id="#fillAddress" name="fillAddress" onclick="fillAddress()" /> Temporary address same as permanent address.<br />
-        </div>
-    </div>*@
+   
     <div class="form-group">
         <div class="col-md-offset-2">
             <input type="checkbox" id="fillAddress" name="fillAddress" onclick="fillAddress()" /> Temporary address same as permanent address.<br />

@@ -4,6 +4,16 @@
     ViewBag.Title = "TeachersCourseList";
     Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
 }
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<head>
+    <script type="text/javascript">
+
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+
+    </script>
+</head>
 
 <h2>Teachers In Course</h2>
 
@@ -117,7 +127,7 @@
                 </td>*@
             <td>
                 @Html.ActionLink("View Subjects", "TeachersList", new { id = item.UserId }) |
-                @Html.ActionLink("Back ", "MyProfile") 
+                @Html.ActionLink("Back ", "MyProfile")
                 @* @Html.ActionLink("Delete", "Delete", new { id = item.UserId })*@
             </td>
         </tr>

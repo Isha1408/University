@@ -322,11 +322,19 @@ namespace University.Controllers
                     objUser.Address.StateId = objUserViewModel.StateId;
                     objUser.Address.CityId = objUserViewModel.CityId;
                     objUser.Address.ZipCode = objUserViewModel.ZipCode;
-                    objUser.IsActive = true;
+                    objUser.IsActive = objUserViewModel.IsActive;
                     objUser.DateModified = DateTime.Now;
                     //User Data is saved in the user table
 
-                    db.SaveChanges();  
+                    db.SaveChanges();
+                    int latestRoleId = objUser.RoleId;
+
+                    UserInRole objUserInRole = new UserInRole();
+                    objUserInRole.RoleId = latestRoleId;
+                    objUserInRole.UserId = objUser.UserId;
+                    // User and their Roles are saved in the UserInRole Table.
+                    db.SaveChanges();
+
                     return RedirectToAction("GetAllUsers");
 
                 }

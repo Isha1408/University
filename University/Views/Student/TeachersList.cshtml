@@ -2,7 +2,16 @@
 @{
     Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
 }
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<head>
+    <script type="text/javascript">
 
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+
+    </script>
+</head>
 
 
 <style>
@@ -23,26 +32,26 @@
         <th>
             @Html.Label("Teachers")
         </th>
-       
+
     </tr>
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subject.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.FirstName)
-        </td>
-        @*<td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-         @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-        </td>*@
-       
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                </td>*@
+
+        </tr>
     }
 
 </table>

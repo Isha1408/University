@@ -3,7 +3,16 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
 }
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<head>
+    <script type="text/javascript">
 
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+
+    </script>
+</head>
 <h2>My Profile</h2>
 
 @if (Session["UserId"] != null)
@@ -15,20 +24,21 @@
         @Html.Partial("CreateButtonPartial")
     </p>*@
 <style>
-    .table{
-        width:400px;
+    .table {
+        width: 400px;
     }
-    th{
-        width:30%;
+
+    th {
+        width: 30%;
     }
+
     th, td {
         border: 1px solid #333;
         padding: 5px;
         vertical-align: middle;
-       
     }
 </style>
-<table class="table" >
+<table class="table">
     @*<t class="success">
 
 
@@ -132,98 +142,98 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
         </tr>
-        
 
-            <tr>
-             <th>
-                 Temporary Address:
-              </th>
+
+        <tr>
+            <th>
+                Temporary Address:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.AddressLine1)
             </td>
-            </tr>
+        </tr>
 
 
-            <tr>
-             <th>
-                 Permanant Address:
-              </th>
+        <tr>
+            <th>
+                Permanant Address:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.AddressLine2)
             </td>
-            </tr>
-            <tr>
+        </tr>
+        <tr>
             <th>
-                 Country:
-              </th>
+                Country:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.Country.Name)
             </td>
-            </tr>
-            <tr>
+        </tr>
+        <tr>
             <th>
-                 State:
-              </th>
+                State:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.State.Name)
             </td>
-            </tr>
-            <tr>
+        </tr>
+        <tr>
             <th>
-               City:
-              </th>
+                City:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.City.Name)
             </td>
-            </tr>
-            <tr>
+        </tr>
+        <tr>
             <th>
-                 ZipCode:
-              </th>
+                ZipCode:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Address.ZipCode)
             </td>
-            </tr>
-            <tr>
+        </tr>
+        <tr>
             <th>
                 Hobbies:
-              </th>
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Hobbies)
             </td>
-            </tr>
-            <tr>
+        </tr>
+        <tr>
             <th>
-               Course:
-              </th>
+                Course:
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.course.CourseName)
             </td>
-            </tr>
+        </tr>
 
         @*
-        <td>
-            @Html.DisplayFor(modelItem => item.Role.RoleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateModified)
-        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateModified)
+            </td>*@
         <tr>
-<td colspan="2">
-    @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
-    @Html.ActionLink("View Students", "GetAllStudents", new { id = item.CourseId })
-    @*@Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |
-        @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })*@
-</td>
-            </tr>
+            <td colspan="2">
+                @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
+                @Html.ActionLink("View Students", "GetAllStudents", new { id = item.CourseId })
+                @*@Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |
+                    @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })*@
+            </td>
+        </tr>
 
-}
+    }
 
 </table>
 

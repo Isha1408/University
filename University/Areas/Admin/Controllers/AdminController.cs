@@ -220,13 +220,15 @@ namespace University.Areas.Admin.Controllers
             // Code to show Courses in DropDown
             List<Course> objCourseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.Course = objCourseList;
-            // Code to show Countries in DropDown
+            // Code to show Countries,State and city in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
             List<State> statesList = db.States.ToList();
             ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
             List<City> citiesList = db.City.ToList();
             ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+
+
 
             if (id == 0)
             {
@@ -257,6 +259,7 @@ namespace University.Areas.Admin.Controllers
                 StateId = objUser.Address.StateId,
                 CityId = objUser.Address.CityId,
                 ZipCode = objUser.Address.ZipCode
+               
             };
 
 
@@ -282,7 +285,7 @@ namespace University.Areas.Admin.Controllers
             // Code to show Courses in DropDown
             List<Course> objCourseList = db.Courses.Where(x => x.IsActive == true).ToList();
             ViewBag.Course = objCourseList;
-            // Code to show Countries in DropDown
+            // Code to show Countries,State and city in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
             List<State> statesList = db.States.ToList();
@@ -300,7 +303,7 @@ namespace University.Areas.Admin.Controllers
                     userData.Gender = objUserViewModel.Gender;
                     userData.Hobbies = objUserViewModel.Hobbies;
                     userData.Email = objUserViewModel.Email;
-                    userData.IsVerified = true;
+                    userData.IsVerified = objUserViewModel.IsVerified;
                     userData.Password = objUserViewModel.Password;
                     userData.ConfirmPassword = objUserViewModel.ConfirmPassword;
                     userData.DateOfBirth = objUserViewModel.DateOfBirth;
@@ -316,6 +319,15 @@ namespace University.Areas.Admin.Controllers
                     userData.DateModified = DateTime.Now;
                     // Updated Data is saved in User table
                     db.SaveChanges();
+
+                    int latestRoleId = userData.RoleId;
+
+                    UserInRole objUserInRole = new UserInRole();
+                    objUserInRole.RoleId = latestRoleId;
+                    objUserInRole.UserId = userData.UserId;
+                    // User and their Roles are saved in the UserInRole Table.
+                    db.SaveChanges();
+
                     return RedirectToAction("GetAllUsers");
 
                 }
@@ -418,29 +430,15 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult LogOut()
         {
-            //    //use this or next or next all other 
-            //    //   Session.Clear();
-            //    Session.Abandon();
-            //    //   Session.RemoveAll();
-            //    Session.Remove("UserId");
-
-            //    //this is still not showing error  
-            //    FormsAuthentication.SignOut();
-
-            //    //back button 
-            //    Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
-            //    Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            //    Response.Cache.SetNoStore();
-
-            //    return RedirectToAction("ThankYou");
+         
             if (Session["UserId"] != null)
             {
 
-                return RedirectToAction("ThankYou");
+                return RedirectToAction("Login", "UserView", new { area = "" });
             }
             else
             {
-                return RedirectToAction("Login", "UserView");
+                return RedirectToAction("Login", "UserView", new { area = "" });
 
             }
         }

@@ -4,8 +4,18 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 
 }
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<head>
+    <script type="text/javascript">
+
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+
+    </script>
+</head>
 <script src="~/Scripts/jquery-1.7.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css "/>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css " />
 <script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -19,7 +29,7 @@
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
 
-    <h3>Users List</h3>
+<h3>Users List</h3>
 
 <p>
     @Html.Partial("CreateButtonPartial")
@@ -34,12 +44,11 @@
         border: 1px solid #333;
         padding: 5px;
         vertical-align: middle;
-      
     }
+
     label {
         margin-right: 10px;
     }
-    
 </style>
 
 @using (Html.BeginForm("GetAllUsers", "Admin", FormMethod.Get))
@@ -49,7 +58,7 @@
 
     <input type="submit" value="submit" />
 }
-<table  id="datatable" class="table table-striped" cellpadding="0" cellspacing="0">
+<table id="datatable" class="table table-striped" cellpadding="0" cellspacing="0">
     <tr class="success">
 
 
@@ -72,11 +81,11 @@
             @Html.DisplayNameFor(model => model.IsVerified)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Password)
+            </th>*@
         @*<th>
-            @Html.DisplayNameFor(model => model.AddressId)
-        </th>*@
+                @Html.DisplayNameFor(model => model.AddressId)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Address.AddressLine1)
         </th>
@@ -95,7 +104,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Address.ZipCode)
         </th>
-       
+
         <th>
             @Html.DisplayNameFor(model => model.Hobbies)
         </th>
@@ -107,18 +116,18 @@
             @Html.DisplayNameFor(model => model.Role.RoleName)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.ConfirmPassword)
-        </th>*@
+                @Html.DisplayNameFor(model => model.ConfirmPassword)
+            </th>*@
 
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateModified)
-        </th>*@
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateModified)
+            </th>*@
         <th></th>
     </tr>
 
@@ -142,11 +151,11 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.IsVerified)
-                </td>
+                @Html.DisplayFor(modelItem => item.IsVerified)
+            </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>*@
 
             @*<td>
                     @Html.DisplayFor(modelItem => item.AddressId)
@@ -184,18 +193,18 @@
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateModified)
+                </td>*@
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |
                 @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId })
 
             </td>
-           
+
         </tr>
     }
 
