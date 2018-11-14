@@ -430,17 +430,29 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult LogOut()
         {
-         
-            if (Session["UserId"] != null)
-            {
 
-                return RedirectToAction("Login", "UserView", new { area = "" });
-            }
-            else
-            {
-                return RedirectToAction("Login", "UserView", new { area = "" });
+            //if (Session["UserId"] != null)
+            //{
 
-            }
+            //    return RedirectToAction("Login", "UserView", new { area = "" });
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Login", "UserView", new { area = "" });
+
+            //}
+            Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+            Session.Abandon();
+            Session.Clear();
+            Response.Cookies.Clear();
+            Session.RemoveAll();
+            Session["UserId"] = null;
+            Session["UserName"] = null;
+            Session["User"] = null;
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "UserView", new { area = "" });
         }
 
         /// <summary>

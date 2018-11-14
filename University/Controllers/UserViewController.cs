@@ -222,14 +222,6 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult LogOut()
         {
-            ////use this or next or next all other 
-            ////   Session.Clear();
-            //Session.Abandon();
-            ////   Session.RemoveAll();
-            //Session.Remove("UserId");
-
-            ////this is still not showing error  
-            //FormsAuthentication.SignOut();
 
             ////back button 
             //Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
@@ -237,15 +229,31 @@ namespace University.Controllers
             //Response.Cache.SetNoStore();
 
             //return RedirectToAction("ThankYou");
-            if (Session["UserId"] != null && Session["UserName"] != null)
-            {
-                return RedirectToAction("Login");
-            }
-            else
-            {
+            //    if (Session["UserId"] !=null && Session["UserName"] == null)
+            //{
+            //    Session.Abandon();
+            //    Session.RemoveAll();
+            //    Session.Remove("UserId");
+            //    return RedirectToAction("Login");
+            //}
+            //else
+            //{
 
-                return RedirectToAction("Login");
-            }
+            //    return RedirectToAction("Login");
+
+            //}
+            Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+            Session.Abandon();
+            Session.Clear();
+            Response.Cookies.Clear();
+            Session.RemoveAll();
+            Session["UserId"] = null;
+            Session["UserName"] = null;
+            Session["User"] = null;
+          
+            return RedirectToAction("Login");
         }
 
         // Get All Roles
