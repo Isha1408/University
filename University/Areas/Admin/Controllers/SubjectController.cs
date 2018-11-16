@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using University.Controllers;
 using University.Entities;
 using University.Models;
 
 namespace University.Areas.Admin.Controllers
 {
+   
     public class SubjectController : Controller
     {
         private UserContext db = new UserContext();
@@ -21,6 +23,10 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         public ActionResult Index()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             return View(db.Subjects.ToList());
         }
 
@@ -31,6 +37,10 @@ namespace University.Areas.Admin.Controllers
       /// <returns></returns>
         public ActionResult SubjectDetails(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -49,6 +59,10 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         public ActionResult CreateSubject()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             return View();
         }
 
@@ -61,6 +75,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateSubject([Bind(Include = "Id,Name,IsActive")] Subject subject)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (ModelState.IsValid)
             {
                 db.Subjects.Add(subject);
@@ -78,6 +96,10 @@ namespace University.Areas.Admin.Controllers
       /// <returns></returns>
         public ActionResult EditSubject(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -99,6 +121,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditSubject([Bind(Include = "Id,Name,IsActive")] Subject subject)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(subject).State = EntityState.Modified;
@@ -115,6 +141,10 @@ namespace University.Areas.Admin.Controllers
       /// <returns></returns>
         public ActionResult DeleteSubject(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -135,6 +165,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteSubject(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             Subject subject = db.Subjects.Find(id);
             db.Subjects.Remove(subject);
             db.SaveChanges();

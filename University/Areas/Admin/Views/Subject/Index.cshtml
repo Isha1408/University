@@ -8,39 +8,62 @@
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
+    <style>
+        .table {
+            margin-top: 15px;
+        }
 
+        th, td {
+            border: 1px solid #333;
+            padding: 5px;
+            vertical-align: middle;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        .table-responsive {
+            border: 1px solid #333;
+        }
+        a {
+            color: #337ab7;
+           
+        }
+    </style>
 
 <h2>Subject List</h2>
 
 <p>
     @Html.ActionLink("Create New", "CreateSubject")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Subject")
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditSubject", new { id = item.Id }) |
-                @Html.ActionLink("Details", "SubjectDetails", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "DeleteSubject", new { id = item.Id })
-            </td>
+    <table class="table table-striped">
+        <tr class="success">
+            <th>
+                @Html.DisplayName("Subject")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditSubject", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "SubjectDetails", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteSubject", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>

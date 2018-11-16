@@ -1,4 +1,32 @@
-﻿
+﻿@if (Convert.ToInt32(Session["RoleId"]) == 2)
+{
+
+    <li Class="DropDown" data-admin-menu>
+        <a href="#">
+            Admin
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Minor Entities</li>
+            <li class="divider" />
+            <li><a href="/University/Admin/Admin/GetAllUsers">&nbsp;&nbsp;UserList</a></li>
+            <li><a href="/University/Admin/Course">&nbsp;&nbsp;Course</a></li>
+            <li><a href="/University/Admin/Subject">&nbsp;&nbsp;Subject</a></li>
+            <li><a href="/University/Admin/SubjectInCourse">&nbsp;&nbsp;SubjectInCourse</a></li>
+            <li><a href="/University/Admin/TeacherInSubject">&nbsp;&nbsp;TeacherInSubject</a></li>
+
+
+
+
+
+
+
+        </ul>
+
+    </li>
+}
+else if (Convert.ToInt32(Session["RoleId"]) == 1)
+{
 
 <li Class="DropDown" data-admin-menu>
     <a href="#">
@@ -8,7 +36,7 @@
     <ul class="dropdown-menu" role="menu">
         <li class="dropdown-header">Minor Entities</li>
         <li class="divider" />
-        <li><a href="/University/Admin/Admin/GetAllUsers">&nbsp;&nbsp;UserList</a></li>
+        <li><a href="/University/SuperAdmin/GetAllUsers">&nbsp;&nbsp;UserList</a></li>
         <li><a href="/University/Admin/Course">&nbsp;&nbsp;Course</a></li>
         <li><a href="/University/Admin/Subject">&nbsp;&nbsp;Subject</a></li>
         <li><a href="/University/Admin/SubjectInCourse">&nbsp;&nbsp;SubjectInCourse</a></li>
@@ -23,3 +51,6 @@
     </ul>
 
 </li>
+
+}
+

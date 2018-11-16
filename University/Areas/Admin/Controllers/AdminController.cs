@@ -8,11 +8,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using University.Controllers;
 using University.Entities;
 using University.Models;
 
 namespace University.Areas.Admin.Controllers
 {
+   
     public class AdminController : Controller
     {
         // Object of Context class is made. 
@@ -25,6 +27,13 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult GetAllUsers(string searching)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
+
+
+
             var users = from s in db.Users
                         where s.RoleId != 1 && s.RoleId != 2
                         select s;
@@ -32,6 +41,8 @@ namespace University.Areas.Admin.Controllers
 
             if (!String.IsNullOrEmpty(searching))
             {
+              
+
                 users = users.Where(s => s.Role.RoleName.Contains(searching) && s.RoleId != 1 && s.RoleId != 2 || s.FirstName.Contains(searching) ||
                 s.LastName.Contains(searching) || s.course.CourseName.Contains(searching));
 
@@ -49,6 +60,10 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult UserDetails(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
@@ -106,6 +121,10 @@ namespace University.Areas.Admin.Controllers
 
         public ActionResult CreateUser()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             // Code to show Roles in DropDown
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
@@ -125,6 +144,10 @@ namespace University.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CreateUser(UserViewModel objUserModel)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             // Code to show Roles in DropDown
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
@@ -214,6 +237,10 @@ namespace University.Areas.Admin.Controllers
 
         public ActionResult EditUser(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
@@ -223,13 +250,7 @@ namespace University.Areas.Admin.Controllers
             // Code to show Countries,State and city in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-            List<State> statesList = db.States.ToList();
-            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
-            List<City> citiesList = db.City.ToList();
-            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
-
-
-
+          
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -262,6 +283,11 @@ namespace University.Areas.Admin.Controllers
                
             };
 
+            List<State> statesList = db.States.Where(x=>x.CountryId == objUserViewModel.CountryId).ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            List<City> citiesList = db.City.Where(x => x.StateId == objUserViewModel.StateId).ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+
 
             if (objUser == null)
             {
@@ -279,6 +305,10 @@ namespace University.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
@@ -348,7 +378,10 @@ namespace University.Areas.Admin.Controllers
 
         public ActionResult DeleteUser(int? id)
         {
-
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -395,6 +428,10 @@ namespace University.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult DeleteUser(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             try
             {
                 if (ModelState.IsValid)
@@ -430,6 +467,12 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult LogOut()
         {
+            Session.Clear();
+            Session.Abandon();
+            Session.RemoveAll();
+            Session.Remove("UserId");
+            Session.Remove("UserName");
+            Session.Remove("User");
 
             //if (Session["UserId"] != null)
             //{
@@ -461,13 +504,20 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult ThankYou()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             return View();
         }
 
 
         public ActionResult AddSubject()
         {
-          
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             List<Subject> Lists = db.Subjects.ToList();
             ViewBag.SubjectList = new SelectList(Lists, "SubjectId", "SubjectName");
 

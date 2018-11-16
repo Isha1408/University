@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using University.Controllers;
 using University.Entities;
 using University.Models;
 
 namespace University.Areas.Admin.Controllers
 {
+   
     public class TeacherInSubjectController : Controller
     {
         private UserContext db = new UserContext();
@@ -21,6 +23,10 @@ namespace University.Areas.Admin.Controllers
       /// <returns></returns>
         public ActionResult Index()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             var teacherInSubjects = db.TeacherInSubjects.Include(t => t.Subject).Include(t => t.User);
             return View(teacherInSubjects.ToList());
         }
@@ -31,6 +37,10 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         public ActionResult Details(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -49,6 +59,10 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         public ActionResult Create()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             ViewBag.SubjectId = new SelectList(db.Subjects.Where(x => x.IsActive == true), "Id", "Name");
             ViewBag.UserId = new SelectList(db.Users.Where(x=>x.RoleId==3 && x.IsActive == true), "UserId", "FirstName");
             return View();
@@ -63,6 +77,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,UserId,SubjectId")] TeacherInSubject teacherInSubject)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (ModelState.IsValid)
             {
                 db.TeacherInSubjects.Add(teacherInSubject);
@@ -83,6 +101,10 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult Edit(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -105,6 +127,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,UserId,SubjectId")] TeacherInSubject teacherInSubject)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(teacherInSubject).State = EntityState.Modified;
@@ -123,6 +149,10 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         public ActionResult Delete(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -144,6 +174,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             TeacherInSubject teacherInSubject = db.TeacherInSubjects.Find(id);
             db.TeacherInSubjects.Remove(teacherInSubject);
             db.SaveChanges();

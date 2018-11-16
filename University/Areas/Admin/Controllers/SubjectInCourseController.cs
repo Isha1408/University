@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using University.Controllers;
 using University.Entities;
 using University.Models;
 
 namespace University.Areas.Admin.Controllers
 {
+ 
     public class SubjectInCourseController : Controller
     {
         private UserContext db = new UserContext();
@@ -18,6 +20,10 @@ namespace University.Areas.Admin.Controllers
        // To get List of Course with their Subjects.
         public ActionResult Index()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             var subjectInCourses = db.SubjectInCourses.Include(s => s.Course).Include(s => s.Subject);
             return View(subjectInCourses.ToList());
         }
@@ -29,6 +35,10 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         public ActionResult Details(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -47,6 +57,10 @@ namespace University.Areas.Admin.Controllers
       /// <returns></returns>
         public ActionResult CreateSubject()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             ViewBag.CourseId = new SelectList(db.Courses.Where(x=>x.IsActive==true), "CourseId", "CourseName");
             ViewBag.SubjectId = new SelectList(db.Subjects.Where(x => x.IsActive == true), "Id", "Name");
             return View();
@@ -61,6 +75,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateSubject([Bind(Include = "Id,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (ModelState.IsValid)
             {
                 db.SubjectInCourses.Add(subjectInCourse);
@@ -80,6 +98,10 @@ namespace University.Areas.Admin.Controllers
     
         public ActionResult EditSubject(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -103,6 +125,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditSubject([Bind(Include = "Id,SubjectId,CourseId")] SubjectInCourse subjectInCourse)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(subjectInCourse).State = EntityState.Modified;
@@ -121,6 +147,10 @@ namespace University.Areas.Admin.Controllers
      /// <returns></returns>
         public ActionResult DeleteSubject(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -141,6 +171,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             SubjectInCourse subjectInCourse = db.SubjectInCourses.Find(id);
             db.SubjectInCourses.Remove(subjectInCourse);
             db.SaveChanges();

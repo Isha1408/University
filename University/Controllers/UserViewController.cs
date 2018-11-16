@@ -164,17 +164,19 @@ namespace University.Controllers
             if (userDetails != null && userDetails.IsActive == true && userDetails.IsVerified==true)
             {
 
-
+                Session["RoleId"] = userDetails.RoleId.ToString();
                 Session["UserId"] = userDetails.UserId.ToString();
                 Session["UserName"] = userDetails.Email.ToString();
                 //For SuperAdmin
                 if (userDetails.RoleId == 1)
                 {
+                    Session["RoleId"] = 1;
                     return RedirectToAction("GetAllUsers", "SuperAdmin");
                 }
                 //For Admin
                 else if (userDetails.RoleId == 2)
                 {
+                    Session["RoleId"] = 2;
                     // return RedirectToAction("GetAllUsers", "Admin");
                     return RedirectToAction("GetAllUsers", "Admin", new { area = "Admin" });
                 }
@@ -222,6 +224,12 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult LogOut()
         {
+            Session.Clear();
+            Session.Abandon();
+            Session.RemoveAll();
+            Session.Remove("UserId");
+            Session.Remove("UserName");
+            Session.Remove("User");
 
             ////back button 
             //Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
@@ -247,7 +255,6 @@ namespace University.Controllers
             Response.AddHeader("Expires", "0");
             Session.Abandon();
             Session.Clear();
-            Response.Cookies.Clear();
             Session.RemoveAll();
             Session["UserId"] = null;
             Session["UserName"] = null;

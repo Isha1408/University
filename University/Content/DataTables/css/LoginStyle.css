@@ -1,0 +1,41 @@
+﻿body {
+    margin :0;
+    padding: 0;
+    background: transparent;
+    background-size: cover;
+    font-family: saqns-serif;
+
+}
+.loginBox
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+    width:350px;
+    height: 420px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,.5);
+
+}
+h2 {
+    margin: 0;
+    padding: 0 0 20px;
+    color: #4440ef;
+    text-align: center;
+}
+.loginBox input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+    background: #ff267e;
+    cursor: pointer;
+    border-radius: 20px;
+}
+    .loginBox input[type="submit"]:hover {
+    background:#efed40;
+    color:#262626;
+    
+    }

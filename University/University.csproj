@@ -171,6 +171,7 @@
     <Compile Include="Areas\Admin\Controllers\SubjectInCourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\TeacherInSubjectController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SessionMaintainController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -294,6 +295,7 @@
     <Content Include="Content\DataTables\css\keyTable.jqueryui.min.css" />
     <Content Include="Content\DataTables\css\keyTable.semanticui.css" />
     <Content Include="Content\DataTables\css\keyTable.semanticui.min.css" />
+    <Content Include="Content\DataTables\css\LoginStyle.css" />
     <Content Include="Content\DataTables\css\responsive.bootstrap.css" />
     <Content Include="Content\DataTables\css\responsive.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\responsive.bootstrap4.css" />
@@ -544,6 +546,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Views\SessionMaintain\" />
     <Folder Include="Views\View\" />
   </ItemGroup>
   <ItemGroup>

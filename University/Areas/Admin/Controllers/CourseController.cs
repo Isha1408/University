@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using University.Controllers;
 using University.Entities;
 using University.Models;
 
@@ -22,6 +23,10 @@ namespace University.Areas.Admin.Controllers
      
         public ActionResult Index()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             return View(db.Courses.ToList());
         }
 
@@ -32,6 +37,10 @@ namespace University.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult CourseDetails(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -50,6 +59,10 @@ namespace University.Areas.Admin.Controllers
       /// <returns></returns>
         public ActionResult CreateCourse()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             return View();
         }
         /// <summary>
@@ -62,6 +75,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateCourse([Bind(Include = "CourseId,CourseName,IsActive")] Course course)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
@@ -79,6 +96,10 @@ namespace University.Areas.Admin.Controllers
       /// <returns></returns>
         public ActionResult EditCourse(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -100,6 +121,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditCourse([Bind(Include = "CourseId,CourseName,IsActive")] Course course)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;
@@ -116,6 +141,10 @@ namespace University.Areas.Admin.Controllers
        /// <returns></returns>
         public ActionResult DeleteCourse(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -137,6 +166,10 @@ namespace University.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCourse(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView", new { area = "" });
+            }
             Course course = db.Courses.Find(id);
             db.Courses.Remove(course);
             db.SaveChanges();

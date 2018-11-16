@@ -5,8 +5,9 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
 
-</head>
+
 @if (Session["UserId"] != null)
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
@@ -19,14 +20,16 @@
     }
 </style>
 
-@*@<script>
+<script>
 
         $(document).ready(function () {
-
+       
             $("#country").change(function () {
+                
                 var id = $(this).val();
-
+              
                 $("#state").empty();
+                history.pushState(null, null, '/University/SuperAdmin/');
                 $.getJSON("StateBind", { countryId: id }, function (data) {
 
                     var v = "<option>..Select State..</option>";
@@ -37,11 +40,14 @@
                     $("#state").html(v);
                 });
             });
-
+           
             $("#state").change(function () {
-
+               
                 var id = $(this).val();
+               
                 $("#city").empty();
+                history.pushState(null, null, '/University/SuperAdmin/');
+               
                 $.getJSON("CityBind", { stateId: id }, function (data) {
 
                     var v = "<option>..Select City..</option>";
@@ -54,20 +60,20 @@
             });
 
         });
-    </script>*@
+    </script>
 
 
 
 
 
-<h2>Edit</h2>
+<h2>Edit User</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Edit User</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @*@Html.HiddenFor(model => model.UserId)*@
@@ -173,21 +179,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label required col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CountryId", ViewBag.CountryList as SelectList, "--select--", htmlAttributes: new { id = "country", @class = "form-control", required = "required" })
+                @Html.DropDownList("CountryId", ViewBag.CountryList as SelectList, "--select--", htmlAttributes: new { @id = "country", @name="CountryId", @class = "form-control", required = "required" })
                 @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label required col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("StateId", ViewBag.StateList as SelectList, "--select--", htmlAttributes: new { id = "country", @class = "form-control", required = "required" })
+                @Html.DropDownList("StateId", ViewBag.StateList as SelectList, "--select--", htmlAttributes: new { @id = "state", @name = "StateId",@class = "form-control", required = "required" })
                 @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label required col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CityId", ViewBag.CityList as SelectList, "--select--", htmlAttributes: new { id = "country", @class = "form-control", required = "required" })
+                @Html.DropDownList("CityId", ViewBag.CityList as SelectList, "--select--", htmlAttributes: new { @id = "city", @name = "CityId", @class = "form-control", required = "required" })
                 @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -5,24 +5,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 
 }
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<head>
-    <script type="text/javascript">
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
 
-        function preventBack() { window.history.forward(); }
-        setTimeout("preventBack()", 0);
-        window.onunload = function () { null };
-
-    </script>
-</head>
 @if (Session["UserId"] != null)
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
-else
-{
-    return 
-}
+
 <style>
     .form-group .required:after {
         content: "*";

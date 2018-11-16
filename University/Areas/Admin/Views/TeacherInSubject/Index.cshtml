@@ -7,6 +7,25 @@
 {
     <h4>Hello @Session["UserName"].ToString()</h4>
 }
+    <style>
+        .table {
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 5px;
+            vertical-align: middle;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        .table-responsive {
+            border: 1px solid #333;
+        }
+    </style>
 
 <!DOCTYPE html>
 <h2>Teacher In Subject List</h2>
@@ -24,16 +43,17 @@
         }
 
         a {
-            color: palevioletred;
+            color: #337ab7;
         }
+
     </style>
 </head>
 <body>
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-    <table class="table">
-        <tr>
+    <table class="table table-striped">
+        <tr class="success">
             <th>
                 @Html.DisplayName("Subject")
             </th>

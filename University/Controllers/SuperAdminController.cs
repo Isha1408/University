@@ -12,8 +12,10 @@ using University.Models;
 
 namespace University.Controllers
 {
+    
     public class SuperAdminController : Controller
     {
+      
         // Object of Context class is made.
         private UserContext db = new UserContext();
 
@@ -35,6 +37,11 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult GetAllUsers(string searching)
         {
+            if(Session["UserId"]==null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login","UserView");
+            }
+
             var users = from s in db.Users where s.RoleId !=1 select s;
             if (!String.IsNullOrEmpty(searching))
             {
@@ -53,6 +60,10 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult UserDetails(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
@@ -110,6 +121,10 @@ namespace University.Controllers
 
         public ActionResult CreateUser()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             // Code to show DropDown for Role.
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
@@ -132,6 +147,10 @@ namespace University.Controllers
         [HttpPost]
         public ActionResult CreateUser(UserViewModel objUserModel)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             // Code to show Roles in DropDown
             List<Role> roleList = GetRoles();
             ViewBag.RoleList = new SelectList(roleList, "RoleId", "RoleName");
@@ -223,6 +242,10 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult EditUser(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
@@ -232,12 +255,7 @@ namespace University.Controllers
             // Code to show Countries in DropDown
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
-            //Code to Show State Dropdown
-            List<State> statesList = db.States.ToList();
-            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
-            //Code to show City dropDown
-            List<City> citiesList = db.City.ToList();
-            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+          
 
             if (id == 0)
             {
@@ -268,6 +286,13 @@ namespace University.Controllers
             objUserViewModel.CityId = objUser.Address.CityId;
             objUserViewModel.ZipCode = objUser.Address.ZipCode;
 
+            //Code to Show State Dropdown
+            List<State> statesList = db.States.Where(x=>x.CountryId == objUserViewModel.CountryId).ToList();
+            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+            //Code to show City dropDown
+            List<City> citiesList = db.City.Where(x => x.StateId == objUserViewModel.StateId).ToList();
+            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+
             if (objUser == null)
             {
                 return HttpNotFound();
@@ -284,6 +309,10 @@ namespace University.Controllers
         [HttpPost]
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
@@ -354,6 +383,10 @@ namespace University.Controllers
 
         public ActionResult DeleteUser(int? id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
 
             if (id == null)
             {
@@ -399,6 +432,10 @@ namespace University.Controllers
         [HttpPost]
         public ActionResult DeleteUser(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             try
             {
                 if (ModelState.IsValid)

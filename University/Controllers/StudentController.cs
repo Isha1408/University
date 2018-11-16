@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -9,6 +12,7 @@ using University.Models;
 
 namespace University.Controllers
 {
+   
     public class StudentController : Controller
     {
         UserContext db = new UserContext();
@@ -20,6 +24,10 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult MyProfile()
         {
+            if (Session["UserId"] == null && Session["UserName"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             //Code to show details opf Logged in Student
             User user = (User)Session["User"];
             var usr = db.Users.Find(user.UserId);
@@ -38,6 +46,10 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult SubjectList(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             var subjectList = db.SubjectInCourses.Where(m => m.CourseId == id).ToList();
 
             return View(subjectList.ToList());
@@ -49,6 +61,10 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult TeachersList(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
 
             var teachersList = db.TeacherInSubjects.Where(x => x.UserId == id).ToList();
 
@@ -56,6 +72,10 @@ namespace University.Controllers
         }
         public ActionResult TeachersCourseList(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
 
             var teachersList = db.Users.Where(x => x.CourseId == id && x.RoleId == 3 && x.IsActive == true).ToList();
 
@@ -68,6 +88,10 @@ namespace University.Controllers
         /// <returns></returns>
         public ActionResult EditUser(int id)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             // Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
@@ -78,12 +102,7 @@ namespace University.Controllers
             List<Country> countryList = db.Country.ToList();
             ViewBag.CountryList = new SelectList(countryList, "CountryId", "Name");
 
-            //Code to Show State Dropdown
-            List<State> statesList = db.States.ToList();
-            ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
-            //Code to show City dropDown
-            List<City> citiesList = db.City.ToList();
-            ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
+            
 
 
             if (id == 0)
@@ -120,6 +139,12 @@ namespace University.Controllers
 
 
                 }
+                //Code to Show State Dropdown
+                List<State> statesList = db.States.Where(x => x.CountryId == objUserViewModel.CountryId).ToList();
+                ViewBag.StateList = new SelectList(statesList, "StateId", "Name");
+                //Code to show City dropDown
+                List<City> citiesList = db.City.Where(x => x.StateId == objUserViewModel.StateId).ToList();
+                ViewBag.CityList = new SelectList(citiesList, "CityId", "Name");
                 return View(objUserViewModel);
 
             }
@@ -140,6 +165,10 @@ namespace University.Controllers
         [HttpPost]
         public ActionResult EditUser(int id, UserViewModel objUserViewModel)
         {
+            if (Session["UserId"] == null && Session["UserName"] == null && Session["User"] == null)
+            {
+                return RedirectToAction("Login", "UserView");
+            }
             /// Code to show Roles in DropDown
             List<Role> objRoleList = GetRoles();
             ViewBag.Role = objRoleList;
@@ -205,6 +234,76 @@ namespace University.Controllers
                 var roleList = db.Roles.Where(x => x.RoleId != 1 && x.RoleId !=2 && x.RoleId!=3);
                 return roleList.ToList();
             }
+        }
+        public DataSet GetStates(string countryId)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
+
+            SqlCommand com = new SqlCommand("Select * from State where CountryId=@catid", con);
+            com.Parameters.AddWithValue("@catid", countryId);
+
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            return ds;
+
+        }
+
+        /// <summary>
+        /// Code to bind States.
+        /// </summary>
+        /// <param name="countryId"></param>
+        /// <returns></returns>
+        public JsonResult StateBind(string countryId)
+        {
+            DataSet ds = GetStates(countryId);
+            List<SelectListItem> stateList = new List<SelectListItem>();
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                stateList.Add(new SelectListItem { Text = dr["Name"].ToString(), Value = dr["StateId"].ToString() });
+
+            }
+
+            return Json(stateList, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Get all Cities
+        /// </summary>
+        /// <param name="stateId"></param>
+        /// <returns></returns>
+        public DataSet GetCity(string stateId)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBContext"].ConnectionString);
+
+            SqlCommand com = new SqlCommand("Select * from City where StateId=@staid", con);
+            com.Parameters.AddWithValue("@staid", stateId);
+
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            return ds;
+
+        }
+        /// <summary>
+        /// Code To bind City
+        /// </summary>
+        /// <param name="stateId"></param>
+        /// <returns></returns>
+        public JsonResult CityBind(string stateId)
+        {
+
+            DataSet ds = GetCity(stateId);
+
+            List<SelectListItem> cityList = new List<SelectListItem>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                cityList.Add(new SelectListItem { Text = dr["Name"].ToString(), Value = dr["CityId"].ToString() });
+            }
+
+            return Json(cityList, JsonRequestBehavior.AllowGet);
         }
     }
 }
