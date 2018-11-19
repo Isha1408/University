@@ -195,7 +195,7 @@ namespace University.Controllers
                     return RedirectToAction("MyProfile", "Student");
                 }
             }
-
+           
             else if (userDetails == null)
             {
                 ModelState.AddModelError("", "UserName or Password is wrong");
@@ -204,7 +204,7 @@ namespace University.Controllers
            
             else if (userDetails.IsVerified != true)
             {
-                ModelState.AddModelError("", "Please Verify Your Email");
+                ModelState.AddModelError("", "Please Verify Your Email By Admin");
             }
             else if (userDetails.IsActive != true)
             {

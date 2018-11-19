@@ -13,8 +13,8 @@
         color: red;
     }
     a{
-        color:black;
-        font-size:17px;
+        color:blue;
+        font-size:15px;
         font-family:'Times New Roman', Times, serif;
     }
 </style>
@@ -63,7 +63,7 @@
             $("#fillAddress").on("click", function(){
              if (this.checked) {
                  $("#AddressLine2").val($("#AddressLine1").val());
-                  
+                  .
         }
         else {
                  $("#AddressLine2").val('');
@@ -277,6 +277,7 @@
                 <input type="submit" value="Register" class="btn btn-success" />
                 <input type="reset" value="Clear" class="btn btn-primary" />
                 <div class="col-md-offset-2 col-md-10">
+                    @Html.DisplayName("Already a Member?")
                     @Html.ActionLink("Login Here!", "Login")
                 </div>
             </div>

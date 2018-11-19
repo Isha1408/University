@@ -5,6 +5,13 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <style>
+        .navbar-header img {
+            padding-top: 5px;
+            width: 150px;
+        }
+        .navbar-brand {
+            font-size: 25px;
+        }
         body {
             background-image: /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f5f6+0,e3eaed+37,c8d7dc+100;Grey+3D+%234 */
             background: rgb(242,245,246); /* Old browsers */
@@ -24,11 +31,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href=""><img src="http://www.amity.edu/images/logo.png" /></a>
+                @*@Html.ActionLink("Amity University", "Login", "UserView", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("LogOut", "LogOut", "UserView", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                <li>@Html.ActionLink("Logout", "LogOut", "UserView", routeValues: null, htmlAttributes: new { @class = "navbar-brand",id = "loginLink" })</li>
 
             </ul>
             <div class="navbar-collapse collapse">
@@ -46,7 +54,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - AMITY University</p>
         </footer>
     </div>
 

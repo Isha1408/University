@@ -15,6 +15,13 @@
         padding: 5px;
         vertical-align: middle;
     }
+    .table {
+        width: 400px;
+    }
+
+    th {
+        width: 50%;
+    }
 </style>
 <table class="table table-striped" cellpadding="0" cellspacing="0">
     <tr class="success">
@@ -117,11 +124,14 @@
                     @Html.DisplayFor(modelItem => item.DateModified)
                 </td>*@
             <td>
-                @Html.ActionLink("View Subjects", "TeachersList", new { id = item.UserId }) |
-                @Html.ActionLink("Back ", "MyProfile")
+                @Html.ActionLink("View Subjects", "TeachersList", new { id = item.UserId }) 
+             
                 @* @Html.ActionLink("Delete", "Delete", new { id = item.UserId })*@
             </td>
         </tr>
     }
 
 </table>
+<p>
+    @Html.ActionLink("BackToProfile", "MyProfile")
+</p>

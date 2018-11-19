@@ -3,6 +3,9 @@
     Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
 }
 
+<h2>
+    Teacher In Subject
+</h2>
 
 
 <style>
@@ -10,6 +13,13 @@
         border: 1px solid #333;
         padding: 5px;
         vertical-align: middle;
+    }
+    .table {
+        width: 400px;
+    }
+
+    th {
+        width: 30%;
     }
 </style>
 <table class="table table-striped" cellpadding="0" cellspacing="0">
@@ -41,6 +51,9 @@
                     @Html.ActionLink("Delete", "Delete", new { id=item.Id })
                  @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                 </td>*@
+            @*<td>
+                    @Html.ActionLink("BackToList", "TeachersList")
+                </td>*@
 
         </tr>
     }
@@ -48,7 +61,7 @@
 </table>
 
 <p>
-    @Html.ActionLink("Back", "MyProfile")
+    @Html.ActionLink("BackToProfile", "MyProfile")
 
 
 

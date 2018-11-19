@@ -6,6 +6,17 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     <style>
+        .navbar-header img {
+            padding-top: 5px;
+            width: 150px;
+        }
+        .navbar-brand {
+            font-size: 25px;
+        }
+        ul.nav.navbar-nav .DropDown a {
+            font-size: 17px;
+        }
+       
         body {
             background-image: /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f2f5f6+0,e3eaed+37,c8d7dc+100;Grey+3D+%234 */
             background: rgb(242,245,246); /* Old browsers */
@@ -26,12 +37,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href=""><img src="http://www.amity.edu/images/logo.png" /></a>
+                @*@Html.ActionLink("Amity University", "Login", "UserView", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-
-                    @Html.Partial("_AdminMenuPartial")
+                    <li>
+                        @Html.Partial("_AdminMenuPartial", new { @class = "navbar-brand" })
+                    </li>
+                  
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @*<li>@Html.ActionLink("Register", "UserRegistration", "UserView", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
@@ -42,9 +56,10 @@
     </div>
     <div class="container body-content">
         @RenderBody()
+    
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - AMITY University</p>
         </footer>
     </div>
 
